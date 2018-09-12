@@ -1,0 +1,86 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+#PHPMailer is used by UData
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once(PHPMAILER_DIR.'/Exception.php');
+require_once(PHPMAILER_DIR.'/OAuth.php');
+require_once(PHPMAILER_DIR.'/POP3.php');
+require_once(PHPMAILER_DIR.'/SMTP.php');
+require_once(PHPMAILER_DIR.'/PHPMailer.php');
+
+Class Mailer {
+
+    protected $config;
+    protected $mailer;
+    
+    public function __construct ($config) {
+        $this->config = $config;
+        $this->mailer = new PHPMailer(true);
+        try {
+            switch($this->config['mailer-type']) {
+                case 'SMTP': $this->mailer->isSMTP(); break;
+                case 'Mail': $this->mailer->isMail(); break;
+                case 'Sendmail': $this->mailer->isSendmail(); break;
+                default: $this->mailer->isSMTP();
+            }
+            if ($this->config['mailer-SMTPAuth']) {
+                $this->mailer->SMTPAuth = true;
+                $this->mailer->Username = $this->config['mailer-username'];
+                $this->mailer->Password = $this->config['mailer-password'];
+                $this->mailer->SMTPSecure = $this->config['mailer-security'];
+            }
+            $this->mailer->Host = $this->config['mailer-host'];
+            $this->mailer->Port = $this->config['mailer-port'];
+        }
+        catch (Exception $e) {
+            throw new \Exception($e->errorMeassge());
+        }
+    }
+
+    /*Array is indexed array in form of;
+      items in {..} are optional
+    [
+        'to'=>'address{,name}',
+        'subject'=>'subject',
+        'body'=>'body',
+        {'attach'=>['filepath', filepath2, ...]}
+    ]
+    */
+    public function sendMail (Array $mail) {
+        try {
+            $this->mailer->addAddress($mail['to']);
+            $this->mailer->setFrom($this->config['mailer-default-from-addr'], $this->config['mailer-default-from-name']);
+            $this->mailer->Subject = $mail['subject'];
+            $this->mailer->msgHTML($mail['body'], INCLUDE_ROOT.'/wwwroot/images');
+            if (!empty($mail['attach'])) {
+                foreach($mail['attach'] as $file) {
+                    $this->mailer->addAttachment($file);
+                }
+            }
+            $this->mailer->send();
+            return true;
+        }
+        catch (Exception $e) {
+            throw new \Exception($e->errorMessage());
+        }
+    }
+
+
+}

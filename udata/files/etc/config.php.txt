@@ -1,0 +1,58 @@
+<?php
+/* This file is part of Udata.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+$config = [
+    #Database configuration options
+    'dbuser' => 'udata',                     #Database user for the active db
+    'dbpass' => 'MonkeyFuck34',                     #Database users password for the active db
+    'dbpdo' => 'pgsql:host=localhost;port=5432;dbname=development;', #PDO database connection string 'dbdriver:host=mydbhost;port=mydbport;dbnam=mydbname;[sslmode=mydbencryption...]
+
+    #Errorhandler config options
+    'error-log-file-path' => '/var/www/dev/var/error_log.xml', #Where to save th error log file, hard disk location (URL not supported at this time)
+    'error-support-link' => 'https://github.com/kc9eye/UData.git/issues',         #A link to bug/issue reporting infrastructure, users will see this.
+
+    #PHPMailer configuration
+    'mailer-type' => 'SMTP',            #The mailer to use, SMTP (sends as SMTP), Mail (sends with PHP mail function), Sendmail (uses host sendmail server)
+    'mailer-default-from-addr' => 'noreply@nowhere.com',   #The address the server will send mail as if not defined at send time
+    'mailer-default-from-name' => 'UData Server',   #The name the server will send mail as if not defined at send time
+    'mailer-host' => '',                #comma separated list is acceptable in order of percedence
+    'mailer-SMTPAuth' => false,         #If this is set to true then the security type should also be set
+    'mailer-username' => '',            #Required if above is true
+    'mailer-password' => '',            #Same as above
+    'mailer-security' => '',            #Either 'tls' or 'ssl'
+    'mailer-port' => '25',              #The SMTP server port to connect to 
+    'mailer-custom-opts' => [],         #Custom SMTP options you may need to set for the mailer as an array
+
+    #Application settings dependant on server settings
+    'application-root' => 'http://10.59.0.185/dev',           #The applications URL (empty if application is in the server root)
+    'data-root' => '/var/www/dev/data/raw',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
+    
+    #ViewMaker pagedata settings, effect how the UI looks
+    'company-name' => 'Chicago Assembly',
+    'company-motto' => 'building Uhaul\'s Finest and Safest',
+    'home-name' => 'Safety',
+    'theme' => 'dark', #Not implemented as yet
+
+    #Main navbar links
+    'navbar-links' => [
+        'Production' => '/production/main',
+        'Material' => '/material/main',
+        'Maintenance' => '/maintenance/main',
+        'HR' => '/hr/main'
+    ]
+];
+

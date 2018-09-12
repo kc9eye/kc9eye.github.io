@@ -1,0 +1,31 @@
+<?php
+/* This file is part of Udata.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+#Instance constants
+define('INCLUDE_ROOT', dirname(__DIR__));
+define('PHPMAILER_DIR', dirname(__DIR__).'/third-party/PHPMailer/src');
+define('DIALOG_SUCCESS', true);
+define('DIALOG_FAILURE', false);
+
+#File upload constants usually references the table the file is associated with
+define('SDS_FILE_REF', 'sds');
+define('SBM_FILE_REF', 'sbm');
+define('PARTS_FILE_REF', 'discrepancy');
+define('INJURY_FILE_REF', 'injury');
+define('PRODUCTION_FILE_REF', 'products');
+define('EHS_FILE_REF', 'profile');
+define('MEDIA_FILE_REF', 'media');

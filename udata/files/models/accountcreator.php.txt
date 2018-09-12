@@ -1,0 +1,165 @@
+<?php
+/* This file is part of Udata.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+Class AccountCreator {
+
+    protected $dbh;
+    protected $mailer;
+    protected $root_url;
+
+    public function __construct (PDO $dbh, Mailer $mailer, $root_url) {
+        $this->dbh = $dbh;
+        $this->mailer = $mailer;
+        $this->root_url = $root_url;
+    }
+
+    public function createAccountToVerify ($data) {
+        try {
+            $verify_code = bin2hex(random_bytes(32));
+            $sql = 'INSERT INTO user_accts_holding VALUES (:id,:username,:password,:firstname,:lastname,:alt_email,now(),:verifycode)';
+            $pntr = $this->dbh->prepare($sql);
+            $insert = [
+                ':id' => uniqid(),
+                ':username' => $data['email'],
+                ':password' => password_hash($data['password'],PASSWORD_DEFAULT),
+                ':firstname' => $data['firstname'],
+                ':lastname' => $data['lastname'],
+                ':alt_email' => $data['altemail'],
+                ':verifycode' => hash('sha256', $verify_code)
+            ];
+
+            $this->dbh->beginTransaction();
+            $pntr->execute($insert);
+
+            $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/verifyemail.html');
+            $body .= '<a href="'.$this->root_url.'/user/verify?id='.urlencode($verify_code).'"><strong>Verify Email</strong></a>';
+            $this->mailer->sendMail(['to'=>$data['email'],'subject'=>'Verify Email/Changes','body'=>$body]);
+            
+            $this->dbh->commit();
+            return true;
+        }
+        catch (Exception $e) {
+            $this->dbh->rollBack();
+            throw $e;
+        }
+    }
+
+    public function verifyAccount ($data) {
+        $hashed_data = hash('sha256', $data);
+        $sql = 'SELECT * FROM user_accts_holding WHERE verify_code = ?';
+        $pntr = $this->dbh->prepare($sql);
+        $pntr->execute([$hashed_data]);
+        $res = $pntr->fetchAll(PDO::FETCH_ASSOC);
+        if ( count($res) != 1) {
+            return false;
+        }
+        elseif ( hash_equals($res[0]['verify_code'], $hashed_data) ) {
+            if ($this->copyUserData($res[0]['id'])) {
+                if ($this->emailAdmin($res[0]['id'])) {
+                    return true;
+                }
+                else {
+                    throw new Exception('Unknown verification error occured');
+                }
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function checkUsername ($username) {
+        $sql = 'SELECT count(*) FROM user_accts WHERE username = ?';
+        $pntr = $this->dbh->prepare($sql);
+        if (! $pntr->execute([$username])) {
+            throw new Exception('Failed to check username status. Unknown database error');
+        }
+        if ($pntr->fetchAll(PDO::FETCH_ASSOC)[0]['count'] != 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private function copyUserData ($uid) {
+        try {
+            $sql = 'SELECT * FROM user_accts_holding WHERE id = ?';
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$uid]);
+            $res = $pntr->fetchAll(PDO::FETCH_ASSOC);
+            $insert = [
+                ':id'=>$res[0]['id'],
+                ':username'=>$res[0]['username'],
+                ':password'=>$res[0]['password'],
+                ':firstname'=>$res[0]['firstname'],
+                ':lastname'=>$res[0]['lastname'],
+                ':alt_email'=>$res[0]['alt_email'],
+                ':date'=>$res[0]['_date'],
+                ':code'=>$res[0]['verify_code'],
+                ':pid'=>uniqid()
+            ];
+            $sql = 'INSERT INTO user_accts VALUES (:id,:username,:password,:firstname,:lastname,:alt_email,:date,:code,:pid)';
+            $sql1 = 'INSERT INTO profiles (id,first,last,email) VALUES (:id,:first,:last,:email)';
+            $sql2 = 'DELETE FROM user_accts_holding WHERE id = ?';
+            $pntr = $this->dbh->prepare($sql);
+            $pntr1 = $this->dbh->prepare($sql1);            
+            $pntr2 = $this->dbh->prepare($sql2);
+
+            $this->dbh->beginTransaction();
+            $pntr->execute($insert);
+            $pntr1->execute([':id'=>$insert[':pid'],':first'=>$insert[':firstname'],':last'=>$insert[':lastname'],':email'=>$insert[':username']]);
+            $pntr2->execute([$uid]);
+            $this->dbh->commit();
+
+            return true;
+        }
+        catch(PDOException $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    private function emailAdmin ($uid) {
+        try {
+            $sql = 
+                'SELECT username FROM user_accts WHERE id in (
+                    SELECT uid FROM user_roles WHERE rid = (
+                        SELECT id FROM roles WHERE name = ?
+                    )
+                )';
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute(['Administrator']);
+            $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/adminnewacct.html');
+            $body .= '<a href="'.$this->root_url.'/admin/user_admin?uid='.$uid.'"><strong>Click Here</strong></a>';
+            while (($res = $pntr->fetch(PDO::FETCH_ASSOC))) {
+                $this->mailer->sendMail(['to'=>$res['username'],'subject'=>'New Account Created','body'=>$body]);
+            }
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->message,E_USER_WARNING);
+            return false;
+        }
+    }
+} 

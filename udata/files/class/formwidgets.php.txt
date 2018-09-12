@@ -1,0 +1,306 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+Class FormWidgets {
+    
+    public $formid;
+    public $scripts;
+    protected $validate;
+    protected $rules;
+
+    public function __construct ($scripts) {
+        $this->validate = false;
+        $this->scripts = $scripts;
+    }
+
+    public function newMultipartForm ($header=null,$uri=null,$id=null) {
+        if (is_null($id)) {
+            $this->formid = uniqid();
+        }
+        else {
+            $this->formid = $id;
+        }
+        ?>
+<div style='margin:10px'>
+    <?php if (!is_null($header)) {?>
+    <div class='center-text center-block'><h2><?php echo $header;?></h2></div>
+    <?php }?>
+    <form enctype='multipart/form-data' method='post' class='form-horizontal' id='<?php echo $this->formid;?>' <?php if (!is_null($uri)){echo "action='{$uri}'";};?>>
+    <?php
+    }
+
+    public function newForm ($header = null, $uri = null, $method = 'post', $id = null) {
+        if (is_null($id)) {
+            $this->formid = uniqid();
+        }
+        else {
+            $this->formid = $id;
+        }
+?>
+<div style='margin:10px'>
+    <?php if (!is_null($header)) {?>
+    <div class='center-text center-block'><h2><?php echo $header;?></h2></div>
+    <?php }?>
+    <form method='<?php echo $method;?>' class='form-horizontal' id='<?php echo $this->formid;?>' <?php if (!is_null($uri)){echo "action='{$uri}'";};?>>
+<?php
+    }
+
+    public function endForm () {
+        if ($this->validate) {
+            echo "</form>
+                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'></script>
+                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js'></script>
+                  <script src='{$this->scripts}/btstrapfileinputhack.js'></script>
+                  <script>
+                        $(document).ready(function(){
+                            $('#{$this->formid}').validate(".str_replace('"','',json_encode(['rules'=>$this->rules],JSON_FORCE_OBJECT)).");
+                        });
+                  </script>
+            </div>";            
+        }
+        else {
+            echo "</form></div>";
+        }
+    }
+
+    public function emailCapture ($name, $label = 'Email', $value = null, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+?>
+<div class='form-group'>
+    <div class='row'>
+        <div class='col-md-3'><!--Desktop spacing --></div>
+        <div class='col-xs-12 col-md-1 right-text'>
+            <label class='control-label' for='<?php echo $name;?>'><?php echo $label;?>:</label>
+        </div>
+        <div class='col-xs-12 col-md-5'>
+            <input type='email' class='form-control' id='<?php echo $name;?>' placeholder='<?php if ($required){echo "Required";}else{echo $label;}?>' name='<?php echo $name;?>' <?php if (!is_null($value)){echo "value='{$value}' ";} ?> />
+            <?php if (!is_null($helpBlock)) {
+            ?>
+            <span class='help-block'>
+                <?php echo $helpBlock;?>
+            </span>
+            <?php
+            }
+            ?>
+        </div>
+        <div class='col-md-3'><!-- This is for spacing on desktop --></div>
+    </div>
+</div>
+<?php
+    }
+    
+    public function passwordCapture ($name, $label = 'Password', $value = null, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+?>
+<div class='form-group'>
+    <div class='row'>
+        <div class='col-md-3'><!-- Desktop spacing --></div>
+        <div class='col-xs-12 col-md-1 right-text'>
+            <label class='control-label' for='<?php echo $name;?>'><?php echo $label;?>:</label>
+        </div>
+        <div class='col-xs-12 col-md-5'>
+            <input type='password' class='form-control' id='<?php echo $name;?>' name='<?php echo $name;?>' placeholder='<?php if ($required){echo "Required";}else{echo "Password";}?>' <?php if (!is_null($value)) {echo "value='{$value}' ";}?>/>
+            <?php if (!is_null($helpBlock)) {
+            ?>
+            <span class='help-block'>
+                <?php echo $helpBlock;?>
+            </span>
+            <?php
+            }
+            ?>
+        </div>
+        <div class='col-md-3'><!-- Desktop spacing --></div>
+    </div>
+</div>
+<?php
+    }
+
+    public function inputCapture ($name, $label = 'Entry', $value = null, $required = false, $helpBlock = null ) {
+        if ($required){
+            $this->addValidation($name, $required);
+        }
+?>
+<div class='form-group'>
+    <div class='row'>
+        <div class='col-md-3'></div>
+        <div class='col-xs-12 col-md-1 right-text'>
+            <label class='control-label' for='<?php echo $name;?>'><?php echo $label;?>:</label>
+        </div>
+        <div class='col-xs-12 col-md-5'>
+            <input type='text' class='form-control' id='<?php echo $name;?>' name='<?php echo $name;?>' placeholder='<?php if ($required) {echo 'Required';} else {echo $label;}?>' <?php if (!is_null($value)){echo "value='{$value}' ";}?>/>
+            <?php if (!is_null($helpBlock)) {
+            ?>
+            <span class='help-block'>
+                <?php echo $helpBlock;?>
+            </span>
+            <?php
+            }
+            ?>
+        </div>
+        <div class='col-md-3'></div>
+    </div>
+</div>
+<?php
+    }
+
+    public function labelContent ($label, $content = 'Default Content') {
+        $id = uniqid();
+        echo "<div class='form-group'>\n";
+        echo "  <div class='row'>\n";
+        echo "      <div class='col-md-3'></div>\n";
+        echo "      <div class='col-xs-12 col-md-1 right-text'>\n";
+        echo "          <label class='control-label' for='{$id}'>{$label}:</label>\n";
+        echo "      </div>\n";
+        echo "      <div class='col-xs-12 col-md-5'>\n";
+        echo "          <span name='{$id}' id='{$id}'>{$content}</span>\n";
+        echo "      </div>\n";
+        echo "      <div class='col-md-3'></div>\n";
+        echo "  </div>\n";
+        echo "</div>\n";
+    }
+
+    public function submitForm ($label = 'Submit', $reset = false, $cancel = null) {
+?>
+<div class='form-group'>
+    <div class='row'>
+        <div class='col-md-4'><!-- desktop spacing --></div>
+        <div class='col-xs-12 col-md-6'>
+            <button class='btn btn-lg btn-default' type='submit'><?php echo $label;?></button>&#160;
+            <?php
+                if ($reset) {
+                    echo "<button type='reset' class='btn btn-lg btn-default' type='reset'>Reset</button>&#160;";
+                }
+                if (!is_null($cancel)) {
+                    echo "<button type='button' class='btn btn-lg btn-default' onclick='window.location=\"{$cancel}\";'>Cancel</button>";
+                }
+            ?>
+        </div>
+        <div class='col-md-2'><!-- desktop spacing --></div>
+    </div>
+</div>
+<?php
+    }
+
+    public function radioButtons ($name, $label = 'Select', Array $value = null, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        echo "<div class='form-group'>\n";
+        echo "  <div class='row'>\n";
+        echo "      <div class='col-md-3'><!-- Desktop spacing --></div>\n";
+        echo "      <div class='col-xs-12 col-md-1 right-text'>\n";
+        echo "          <label class='control-label' for='{$name}'>{$label}:</label>\n";
+        echo "      </div>\n";
+        echo "      <div class='col-md-5 col-xs-12'>\n";
+        echo "      <label class='error' for='{$name}' generated='true'></label>\n";
+        foreach($value as $lb => $val) {
+            echo "          <div class='radio'>\n";
+            echo "              <label><input type='radio' name='{$name}' value='{$val}' />{$lb}</label>\n";
+            echo "          </div>\n";
+        }
+        if (!is_null($helpBlock)) {
+            echo "<span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "</div>\n";
+        echo "<div class='col-md-3'><!-- Desktop Spacing --></div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+    }
+
+    public function hiddenInput ($name, $value) {
+?> 
+        <input type='hidden' name='<?php echo $name;?>' value='<?php echo $value;?>' />
+<?php
+    }
+
+    protected function addValidation ($name, $rules) {
+        $this->validate = true;
+        $json_array['required'] = 'true';
+        if (is_array($rules)) {
+            foreach($rules as $rule=>$requirement) {
+                $json_array[$rule] = $requirement;
+            }
+        }
+        $this->rules[$name] = $json_array;
+    }
+
+    public function fileUpload ($name, $required = false) {
+        if ($required){
+            $this->addValidation($name, $required);
+        }
+?>
+<div class='form-group'>
+    <div class='row'>
+        <div class='col-md-3'></div>
+        <div class='col-xs-12 col-md-1 right-text'><label>File:</label></div>
+        <div class='col-xs-12 col-md-5'>
+            <div class='input-group'>
+                <label class='input-group-btn'>
+                    <span class='btn btn-info'>
+                        Browse&hellip;
+                        <input type='file' name='<?php echo $name;?>[]' style='display:none;' multiple <?php if ($required){echo 'required';}?>/>
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+        <div class='col-md-3'></div>
+    </div>
+</div>
+<?php     
+    }
+
+    public function checkBox ($name, Array $label, $value, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        echo "<div class='row'>\n";
+        echo "  <div class='form-group'>\n";
+        echo "      <div class='col-md-3'></div>\n";
+        echo "      <div class='col-md-1 col-xs-12 right-text'>\n";
+        echo "          <label class='control-label' for='{$name}'>{$label[0]}:</label>\n";
+        echo "      </div>\n";
+        echo "      <div class='col-md-5 col-xs-12'>\n";
+        echo "          <div class='checkbox'>\n";
+        echo "              <label><input type='checkbox' id='{$name}' name='{$name}' value='{$value}' />{$label[1]}</label>\n";
+        echo "          </div>\n";
+        echo "          <label class='error' for='{$name}' generated='true'></label>\n";
+        if (!is_null($helpBlock)) {
+            echo "          <span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "      </div>\n";
+        echo "      <div class='col-md-3'></div>\n";
+        echo "  </div>\n";
+        echo "</div>\n";
+    }
+
+    public function h2 ($content) {
+?>
+<div class='row'>
+    <div class='col-md-3'></div>
+    <div class='col-md-6 col-xs-12 left-text'>
+        <strong><?php echo $content;?></strong>
+    </div>
+    <div class='col-md-3'></div>
+</div>
+<?php
+    }
+}
