@@ -22,37 +22,37 @@
   * This class handles the spool of the PDO, Security model, and other methods
   * that make it easier to construct concise controllers.
   *
-  * @param array $config Should contain an array for comfiguration options. See *etc/config.php*
-  * 
+  * @param array $config Should contain an array for comfiguration options.
   * @return Instance
+  * @see etc/config.php
   */
 Class Instance {
     
     /**
      * Contains the publicly accessible configuraiton array
      * 
-     * @return Array
+     * @var Array
      */
     public $config;
 
     /**
      * Contains the publicly accessible PDO object
      * 
-     * @return PDO
+     * @var PDO
      */
     public $pdo;
 
     /**
      * Contains the publicly accessible security object
      * 
-     * @return Security
+     * @var Security
      */
     public $security;
 
     /**
      * Contains the publicly accessible mailer object
      * 
-     * @return Mailer
+     * @var Mailer
      */
     public $mailer;
 
@@ -62,10 +62,9 @@ Class Instance {
      * Creates the most needed objects for models and controllers and stores them 
      * in properties
      * 
-     * @param Array $config Should be the configuration array. See *etc/config.php*
-     * 
-     * @return Instance
-     * 
+     * @param Array $config Should be the configuration array. 
+     * @return Object Instance
+     * @see etc/config.php
      * @author Paul W. Lane
      */
     public function __construct ($config) {
@@ -86,7 +85,7 @@ Class Instance {
      * @param $pagetitle Optional pagetitle for the browser page. Defaults to configuration option
      * `$config['company-name']`.
      * 
-     * @return ViewMaker
+     * @return Object ViewMaker
      * 
      * @author Paul W. Lane
      */
@@ -133,7 +132,7 @@ Class Instance {
      * This method should not be called by any classes extending this one. Instead
      * extending classes should instantiated this class by using `parent::_construct($config);`
      * 
-     * @return Security
+     * @return Object Security
      * 
      * @author Paul W. Lane
      */
@@ -183,6 +182,19 @@ Class Instance {
     die();
     }
 
+    /**
+     * Determines is the current user is valid and logged in.
+     * 
+     * This method is used in controllers to determine whether the current
+     * user is logged in and that the log in is valid. It returns true if the 
+     * user is logged in and valid or outputs the `notAuthorized` interface
+     * and returns false otherwise. This is a must have method. This method
+     * can not return false as execution is halted if it fails.
+     * 
+     * @return Mixed Boolean|Void
+     * @see Instance::notAuthorized()
+     * @author Paul W. lane
+     */
     public function mustBeValidUser () {
         if (is_null($this->security->user)) {
             $this->notAuthorized();
@@ -192,6 +204,19 @@ Class Instance {
         }
     }
 
+    /**
+     * Checks whether or not the user has a specific permission.
+     * 
+     * The `Security` model is queried and a boolean is returned 
+     * to indicate whether of not the current user has the given
+     * permission. The method outputs the `notAuthorized()` interface
+     * to the stream on failure. This is a must have method. It can not
+     * return false as execution is halted if it fails.
+     * 
+     * @param String $perm The permission to check against the current user
+     * @return Mixed Boolean|Void
+     * @see Instance::notAuthorized()
+     */
     public function userMustHavePermission ($perm) {
         if ($this->checkPermission($perm)) {
             return true;
@@ -201,9 +226,24 @@ Class Instance {
         }
         else {
             $this->notAuthorized();
-        }
+         }
     }
 
+    /**
+     * Checks whether the current user has the given role.
+     * 
+     * The `Security` model is queried as to whether the current user 
+     * has the specified role. Returns true if the user has the 
+     * specified role or the user has the role of 'Administrator'.
+     * Otherwise returns false and outputs the `notAuthorized()` interface
+     * to the stream. This is a must have method. It can not return false
+     * as execution is halted if it fails.
+     * 
+     * @param String $role The role to check the current user against
+     * @return Mixed Boolean|Void
+     * @see Instance::notAuthorized()
+     * @author Paul W. Lane
+     */
     public function userMustHaveRole ($role) {
         if ($this->security->userHasRole($role)) {
             return true;
@@ -216,6 +256,17 @@ Class Instance {
         }
     }
 
+    /**
+     * Checks whether the current user has the given permission
+     * 
+     * Check whether or not the current user has the given permission
+     * and returns true on success, or false on failure. Unlike the 
+     * must have methods, this method does not terminate execution.
+     * 
+     * @param String $permission The permission to check the user for
+     * @return Boolean
+     * @author Paul W. Lane
+     */
     public function checkPermission ($permission) {
         if (is_null($this->security->user)) {
            return false;
@@ -231,6 +282,21 @@ Class Instance {
         }
     }
 
+    /**
+     * Checks a given array of strings against the current users permissions
+     * 
+     * Given an unindexed array of permission strings, with the optional `$and`
+     * parameter set to true then *all* permissions in the given array must be in the
+     * users permission set. Otherwise, will only succeed if *any* of the permissions
+     * are in the users permission set.
+     * 
+     * @param Array $perms The unindexed array of permissions to check
+     * @param Boolean $and If set to true requires all given permissions in the array be present in the 
+     * users permission set.
+     * @return Boolean
+     * @author Paul W. Lane
+     * 
+     */
     public function checkPermsArray (Array $perms, $and = false) {
         $aggregate = 0;
         foreach ($perms as $permission) {
@@ -255,6 +321,15 @@ Class Instance {
         return false;
     }
     
+    /**
+     * Stops script execution and outputs a not authorized interface to the stream.
+     * 
+     * This method stops current script execution after ouputing an interface to the 
+     * stream styled as not authorized.
+     * 
+     * @return Void
+     * @author Paul W. Lane 
+     */
     public function notAuthorized () {
         $buff = ob_get_contents();
         ob_clean();
@@ -273,6 +348,15 @@ Class Instance {
         die();
     }
 
+    /**
+     * Outputs a 404 error to the stream.
+     * 
+     * Method outputs a 404 error styled interface to the stream and 
+     * stops script execution.
+     * 
+     * @return Void
+     * @author Paul W. Lane
+     */
     public function pageNotFound () {
         $buff = ob_get_contents();
         ob_clean();
@@ -288,6 +372,21 @@ Class Instance {
         die();
     }
 
+    /**
+     * Represents a sane way to redirect to other links.
+     * 
+     * This method is used to redirect to other links in a sane manner,
+     * with little code. It must be called prior to any other output
+     * to the stream. Given a relative path link it uses the `$config['application-root']`
+     * configuration variable as preamble to the `$link` parameter. Otherwise setting the 
+     * optional paramter of `$offsite` to `true` will cause the link given to be untouched.
+     * 
+     * @param String $link The link to redirect to.
+     * @param Boolean $offsite Whether or not the `$link` should be preambled with the `$config['application-root']` variable.
+     * 
+     * @return Void
+     * @author Paul W. Lane
+     */
     public function redirect ($link, $offsite = false) {
         $buff = ob_get_contents();
         ob_clean();
@@ -303,6 +402,15 @@ Class Instance {
         die();
     }
 
+    /**
+     * I have no idea what this is for
+     * 
+     * This examplifies the reasons I started this documentation project.
+     * I am leaving it in place until I can not find where I used it. I believe
+     * it is obsoleted by something else.
+     * 
+     * @author Paul W. Lane
+     */
     public function loginRedirectHere ($url = null) {
         if (is_null($url)) {
             $replace = explode('/',$this->config['application-root']);

@@ -15,6 +15,18 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * Main configuration file
+ * 
+ * This file should contain only the `$config` variable. Which contains an indexed array
+ * of configuration options for the framework.
+ */
+
+ /**
+  * Main configuration variable.
+  *
+  * @var Array $config
+  */
 $config = [
     #Database configuration options
     'dbuser' => 'udata',                     #Database user for the active db

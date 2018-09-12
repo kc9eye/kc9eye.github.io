@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">484</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">429</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1514002076"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-82816395"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1514002076" class="accordion-body collapse in">
+            <div id="namespace-82816395" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,8 +185,10 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>Autoloader</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>The class autoloader</em></p>
+                    <p>All class files should be named after the class that resides in them in lowercase and ending
+in one of the extensions given by <code>spl_autoload_extension()</code> or given to the constructor
+in the <code>$class_ext</code> array.</p>
                     
                                         
                     <section id="summary">
@@ -260,7 +262,14 @@
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Paul W. Lane</p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -279,12 +288,12 @@
             <a id="property_dir" name="property_dir" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$dir</h3>
-                <pre class="signature">$dir : </pre>
-                <p><em></em></p>
+                <pre class="signature">$dir : String</pre>
+                <p><em>Holds the $initial_path</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                String
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -303,12 +312,12 @@
             <a id="property_extns" name="property_extns" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$extns</h3>
-                <pre class="signature">$extns : </pre>
-                <p><em></em></p>
+                <pre class="signature">$extns : Array</pre>
+                <p><em>Holds the $class_ext array</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                Array
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -335,21 +344,24 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$initial_path</span>,   <span class="argument">$class_ext = array()</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">__construct(String  <span class="argument">$initial_path</span>, Array  <span class="argument">$class_ext = array()</span>) </pre>
+                <p><em>Class constructor</em></p>
+                <p>Initializes the loader and sets all class paths and class file extension
+from the parameters given.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$initial_path </td>
-                                <td></td>
+                                <td><p>The string filepath of a directory to recursive look for
+class files. All directories under the one given are searched for class files.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Array</td>
                                 <td>$class_ext </td>
-                                <td></td>
+                                <td><p>Optional unindexed array of string to search for as class
+file extensions. Defaults to <code>spl_autoload_extensions()</code>.</p></td>
                             </tr>
                                             </table>
                 
@@ -363,7 +375,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -374,16 +393,16 @@
             <article class="method">
                 <h3 class="private ">load()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">load(  <span class="argument">$obj</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">load(String  <span class="argument">$obj</span>) </pre>
+                <p><em>Loads the class files on the fly</em></p>
+                <p>Loads class files using spl_autoload().</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$obj </td>
-                                <td></td>
+                                <td><p>The class name to load</p></td>
                             </tr>
                                             </table>
                 
@@ -397,7 +416,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -408,16 +434,16 @@
             <article class="method">
                 <h3 class="private ">SetIncludePath()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">SetIncludePath(  <span class="argument">$base</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">SetIncludePath(String  <span class="argument">$base</span>) </pre>
+                <p><em>Arms the PHP include path to the recursed `$initial_path` parameter</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$base </td>
-                                <td></td>
+                                <td><p>Base directory to iterate</p></td>
                             </tr>
                                             </table>
                 
@@ -442,16 +468,16 @@
             <article class="method">
                 <h3 class="private ">SetLoadableExtensions()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">SetLoadableExtensions(  <span class="argument">$exts</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">SetLoadableExtensions(Array  <span class="argument">$exts</span>) </pre>
+                <p><em>Arms the PHP extension to look for loadable classes</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>Array</td>
                                 <td>$exts </td>
-                                <td></td>
+                                <td><p>Extension to look for.</p></td>
                             </tr>
                                             </table>
                 
@@ -519,7 +545,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 12th, 2018 at 16:18.
+                    on September 12th, 2018 at 20:51.
                 </section>
             </section>
         </section>

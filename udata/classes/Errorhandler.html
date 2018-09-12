@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">484</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">429</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1691145161"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1118398203"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1691145161" class="accordion-body collapse in">
+            <div id="namespace-1118398203" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,8 +185,8 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>Errorhandler</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>The framework Error/Exception handler.</em></p>
+                    <p>Handles errors and exceptions in a sane manner</p>
                     
                                         
                     <section id="summary">
@@ -265,7 +265,14 @@
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Paul W. Lane</p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -284,12 +291,12 @@
             <a id="property_LogFile" name="property_LogFile" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$LogFile</h3>
-                <pre class="signature">$LogFile : </pre>
-                <p><em></em></p>
+                <pre class="signature">$LogFile : String</pre>
+                <p><em>Filepath to the log file</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                String
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -308,12 +315,12 @@
             <a id="property_ErrorXML" name="property_ErrorXML" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$ErrorXML</h3>
-                <pre class="signature">$ErrorXML : </pre>
-                <p><em></em></p>
+                <pre class="signature">$ErrorXML : String</pre>
+                <p><em>The XML to be written to the log</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                String
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -332,12 +339,12 @@
             <a id="property_ErrorID" name="property_ErrorID" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$ErrorID</h3>
-                <pre class="signature">$ErrorID : </pre>
-                <p><em></em></p>
+                <pre class="signature">$ErrorID : String</pre>
+                <p><em>The id number of the current error or exception.</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                String
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -356,12 +363,12 @@
             <a id="property_SupportLink" name="property_SupportLink" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$SupportLink</h3>
-                <pre class="signature">$SupportLink : </pre>
-                <p><em></em></p>
+                <pre class="signature">$SupportLink : String</pre>
+                <p><em>The support hyperlink to direct users in the event of an error/exception</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                String
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -388,21 +395,22 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$log_file = &#039;error_log.xml&#039;</span>,   <span class="argument">$support_link = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">__construct(String  <span class="argument">$log_file = &#039;error_log.xml&#039;</span>, String  <span class="argument">$support_link = null</span>) </pre>
+                <p><em>Class constructor</em></p>
+                <p>Initializes the class and sets the error and exception handlers.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$log_file </td>
-                                <td></td>
+                                <td><p>Optional file path to the log file. If it doesn't
+exist, it's creation is attempted.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$support_link </td>
-                                <td></td>
+                                <td><p>Optional hyper link to direct users to bug reporting.</p></td>
                             </tr>
                                             </table>
                 
@@ -416,7 +424,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -427,41 +442,47 @@
             <article class="method">
                 <h3 class="public ">ErrorHandler()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">ErrorHandler(  <span class="argument">$code</span>,   <span class="argument">$msg</span>,   <span class="argument">$file</span>,   <span class="argument">$line</span>,   <span class="argument">$trace</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">ErrorHandler(Int  <span class="argument">$code</span>, String  <span class="argument">$msg</span>, String  <span class="argument">$file</span>, String  <span class="argument">$line</span>, Mixed  <span class="argument">$trace</span>) : Mixed</pre>
+                <p><em>The error/exception handling method</em></p>
+                <p>Upon error's or exceptions this method is called to handle it.
+In the event the error level is either <code>E_USER_NOTICE || E_USER_WARNING</code>
+the error/exception is logged and script execution continues. Levels higher than
+this or unhandled will be logged and the error screen will be outputed to the stream
+indicating the error to the user and stopping script execution.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>Int</td>
                                 <td>$code </td>
-                                <td></td>
+                                <td><p>The error code/level.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$msg </td>
-                                <td></td>
+                                <td><p>The error message.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>The file the error occurred.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$line </td>
-                                <td></td>
+                                <td><p>The file line the error occurred.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$trace </td>
-                                <td></td>
+                                <td><p>Can be either a string or array of the error backtrace</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -470,7 +491,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -481,21 +509,24 @@
             <article class="method">
                 <h3 class="public ">ExceptionHandler()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">ExceptionHandler(  <span class="argument">$e</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">ExceptionHandler(\Exception  <span class="argument">$e</span>) : Mixed</pre>
+                <p><em>The exception handler</em></p>
+                <p>In the event of an exception this method is called. However,
+this method merely calls the <code>ErrorHandler()</code> method.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>\Exception</td>
                                 <td>$e </td>
-                                <td></td>
+                                <td><p>The exception object thrown.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -504,7 +535,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -515,34 +553,34 @@
             <article class="method">
                 <h3 class="protected ">PrepareXML()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">PrepareXML(  <span class="argument">$code</span>,   <span class="argument">$msg</span>,   <span class="argument">$file</span>,   <span class="argument">$line</span>,   <span class="argument">$trace = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">PrepareXML(Int  <span class="argument">$code</span>, String  <span class="argument">$msg</span>, String  <span class="argument">$file</span>, String  <span class="argument">$line</span>, Mixed  <span class="argument">$trace = null</span>) </pre>
+                <p><em>This method prepares the XML for writing to the log.</em></p>
+                <p>It sets the <code>ErrorXML</code> property.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>Int</td>
                                 <td>$code </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$msg </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$file </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$line </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$trace </td>
                                 <td></td>
                             </tr>
@@ -558,7 +596,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -569,13 +614,16 @@
             <article class="method">
                 <h3 class="protected ">WriteLog()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">WriteLog() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">WriteLog() : Void</pre>
+                <p><em>This is a buffer method.</em></p>
+                <p>This method determines which method will write the log to the
+error log based on whether or not it exists.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -584,7 +632,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -595,13 +650,16 @@
             <article class="method">
                 <h3 class="protected ">AppendLog()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">AppendLog() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">AppendLog() : Void</pre>
+                <p><em>Append the current error to the log file</em></p>
+                <p>This method appends the current error the already
+existsing error log file.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -610,7 +668,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -621,9 +686,10 @@
             <article class="method">
                 <h3 class="protected ">CreateLog()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">CreateLog() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">CreateLog() : void</pre>
+                <p><em>Creates the log file</em></p>
+                <p>This method creates the log file if it does not
+exists and appends the current error to it.</p>
 
                 
                 
@@ -636,7 +702,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -647,13 +720,15 @@
             <article class="method">
                 <h3 class="private ">DisplayErrorScreen()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">DisplayErrorScreen() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">DisplayErrorScreen() : Void</pre>
+                <p><em>Ouputs an error interface to the stream and stops script execution.</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -662,7 +737,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Paul W. Lane</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -716,7 +798,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 12th, 2018 at 16:18.
+                    on September 12th, 2018 at 20:51.
                 </section>
             </section>
         </section>
