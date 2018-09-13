@@ -15,6 +15,22 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+/**
+ * The main server init script.
+ * 
+ * This file should be sourced in the first line of any controller
+ * or model scripts. This file creates the server instance and makes 
+ * it available globally as the `$server` variable. This gives you access
+ * to the Security model, the instance PDO, configuration variables,
+ * interface widgets and the like. 
+ * 
+ * @return Instance in the form of the global variable `$server`
+ * @uses config.php Configuration variables
+ * @uses autoloader.php The class autoloader
+ * @uses errorhandler.php The application error/exception handler
+ * @uses instance.php The server class instance
+ */
 session_name('UDID');
 session_start();
 ob_start(null,0,PHP_OUTPUT_HANDLER_STDFLAGS^PHP_OUTPUT_HANDLER_REMOVABLE);

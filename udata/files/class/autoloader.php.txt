@@ -21,7 +21,7 @@
  * All class files should be named after the class that resides in them in lowercase and ending
  * in one of the extensions given by `spl_autoload_extension()` or given to the constructor
  * in the `$class_ext` array.
- * 
+ * @package UData
  * @author Paul W. Lane
  */
 Class Autoloader {

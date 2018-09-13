@@ -106,17 +106,17 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">429</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">268</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">10</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">8</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-211420776"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-117262702"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-211420776" class="accordion-body collapse in">
+            <div id="namespace-117262702" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,8 +185,10 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>Indexer</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>The application interface widgets</em></p>
+                    <p>Creates the main interface in a consistent manner.</p>
+<p>This class can be used stand alone, however it is best instanitated with the
+Instance class. In so doing all the heavy lifting is done for you.</p>
                     
                                         
                     <section id="summary">
@@ -334,13 +336,14 @@
             <a id="property_ViewData" name="property_ViewData" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$ViewData</h3>
-                <pre class="signature">$ViewData : </pre>
+                <pre class="signature">$ViewData : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Contains an array of strings used in th ecurrent view. Typically used by a model
+to push data to an interface.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -360,13 +363,13 @@
             <a id="property_PageData" name="property_PageData" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$PageData</h3>
-                <pre class="signature">$PageData : </pre>
+                <pre class="signature">$PageData : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Contains an array of strings which are typically used on a per page basis                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -434,20 +437,22 @@
             <a id="property_security" name="property_security" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$security</h3>
-                <pre class="signature">$security : </pre>
+                <pre class="signature">$security : \Security</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                <a href="../classes/Security.html">\Security</a>
+                &mdash; Contains the security object given from the server Instance.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Security.html"><span class="namespace-wrapper">\Security</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -460,20 +465,24 @@
             <a id="property_sideNav" name="property_sideNav" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$sideNav</h3>
-                <pre class="signature">$sideNav : </pre>
+                <pre class="signature">$sideNav : Boolean</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Boolean
+                &mdash; Switch used to deteremine if the current interface view has a side navigation bar.
+`true` if side navigation is present, `false` otherwise.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/ViewMaker.html#method_sideDropDownMenu"><span class="namespace-wrapper">\ViewMaker::sideDropDownMenu()</span></a></dd>
+                                            <dd><a href="../classes/ViewMaker.html#method_offCanvasSideNav"><span class="namespace-wrapper">\ViewMaker::offCanvasSideNav()</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -486,13 +495,13 @@
             <a id="property_config" name="property_config" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$config</h3>
-                <pre class="signature">$config : </pre>
+                <pre class="signature">$config : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Contains the configuration variables array received from the main Instance                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -568,8 +577,8 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\Security  <span class="argument">$security</span>, array  <span class="argument">$config</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Security  <span class="argument">$security</span>, array  <span class="argument">$config</span>) : \ViewMaker</pre>
+                <p><em>Class constructor</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -577,17 +586,19 @@
                                                     <tr>
                                 <td><a href="../classes/Security.html">\Security</a></td>
                                 <td>$security </td>
-                                <td></td>
+                                <td><p>Optional, but not very useful without.</p></td>
                             </tr>
                                                     <tr>
                                 <td>array</td>
                                 <td>$config </td>
-                                <td></td>
+                                <td><p>The configuration variables array.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/ViewMaker.html">\ViewMaker</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -607,13 +618,15 @@
             <article class="method">
                 <h3 class="public ">header()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">header() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">header() : Void</pre>
+                <p><em>The interface header.</em></p>
+                <p>Ouputs the beginning of the interface view to the stream.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -621,10 +634,20 @@
                                                             <dl>
                                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                                            <dt>Uses</dt>
+                                                                <dd>ViewMaker::sideNav</dd>
+                                            <dd>ViewMaker::navBar()</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>rewrite to use <code>echo</code> instead of hard coded html</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -635,21 +658,25 @@
             <article class="method">
                 <h3 class="public ">footer()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">footer(array  <span class="argument">$script_links = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">footer(Array  <span class="argument">$script_links = null</span>) : Void</pre>
+                <p><em>Outputs the interface view footer.</em></p>
+                <p>Closes the interface content section, once the view is complete.
+You are responsible for closing the view after your content.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>array</td>
+                                <td>Array</td>
                                 <td>$script_links </td>
-                                <td></td>
+                                <td><p>Optional array of hyperlinks to add as script files
+that may be required for you content.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -657,7 +684,9 @@
                                                             <dl>
                                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                                            <dt>Uses</dt>
+                                                                <dd>ViewMaker::sideNav</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -671,13 +700,17 @@
             <article class="method">
                 <h3 class="public ">navBar()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">navBar() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">navBar() : Void</pre>
+                <p><em>Generates the upper interface view navigation bar.</em></p>
+                <p>This method should not be called standalone as the <code>ViewMaker::header()</code>
+method calls it as part of the standard interface. It is a seperate method
+only as it would make the header method overly complex.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -685,7 +718,12 @@
                                                             <dl>
                                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                                            <dt>Uses</dt>
+                                                                <dd>ViewMaker::PageData</dd>
+                                            <dd>ViewMaker::ViewData</dd>
+                                            <dd>ViewMaker::security</dd>
+                                            <dd>ViewMaker::config</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -699,21 +737,26 @@
             <article class="method">
                 <h3 class="public ">offCanvasSideNav()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">offCanvasSideNav(array  <span class="argument">$navLinks = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">offCanvasSideNav(Array  <span class="argument">$navLinks = null</span>) : Void</pre>
+                <p><em>Generates an off canvas sliding navigation bar.</em></p>
+                <p>This method of navigation is optional and has been given up
+for the cleaner looking, on mobile, method of ViewMaker::sideDropDownMenu().
+it can however still be used per preference.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>array</td>
+                                <td>Array</td>
                                 <td>$navLinks </td>
-                                <td></td>
+                                <td><p>Optional indexed string array of navigation links.
+The array should be indexed as such: <code>link_text=&gt;link_address</code>.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -721,7 +764,9 @@
                                                             <dl>
                                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                                            <dt>Uses</dt>
+                                                                <dd>ViewMaker::sideNav</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -735,9 +780,11 @@
             <article class="method">
                 <h3 class="public ">preDebug()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">preDebug(  <span class="argument">$debug</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">preDebug(  <span class="argument">$debug</span>) : Void</pre>
+                <p><em>Simple debugging interface method</em></p>
+                <p>Generates a scrollable <code>&lt;pre&gt;</code> section to the output
+stream with whatever string is given to the <code>$debug</code>
+variable.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
@@ -749,7 +796,9 @@
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -771,21 +820,25 @@
             <article class="method">
                 <h3 class="public ">sideDropDownMenu()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">sideDropDownMenu(array  <span class="argument">$links</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">sideDropDownMenu(Array  <span class="argument">$links</span>) : Void</pre>
+                <p><em>Generates the left side drop down navigation menu.</em></p>
+                <p>Outputs a side navaigation drop down menu to the stream.
+Same parameters as ViewMaker::offCanvasSideNav(). Cleaner look
+on mobile than off canvas though.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>array</td>
+                                <td>Array</td>
                                 <td>$links </td>
-                                <td></td>
+                                <td><p>An indexed array in the form <code>link_text=&gt;link_address</code></p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -793,7 +846,11 @@
                                                             <dl>
                                                     <dt>Inherited from</dt>
                     <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
-                                                            </dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/ViewMaker.html#method_offCanvasSideNav"><span class="namespace-wrapper">\ViewMaker::offCanvasSideNav()</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>ViewMaker::sideNav</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -807,21 +864,26 @@
             <article class="method">
                 <h3 class="public ">getFileIcon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getFileIcon(  <span class="argument">$file_name</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">getFileIcon(String  <span class="argument">$file_name</span>) : Void</pre>
+                <p><em>Outputs a file icon image to screen.</em></p>
+                <p>Based on the filename extension given as parameter
+will output an image link to the stream. The images
+icons are the open source icons that are included
+with the Apache Web Server.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$file_name </td>
-                                <td></td>
+                                <td><p>The file name to use to retrieve an icon for.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -843,13 +905,16 @@
             <article class="method">
                 <h3 class="public ">addScrollTopBtn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addScrollTopBtn() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">addScrollTopBtn() : Void</pre>
+                <p><em>Outputs a scrolltopbutton to the stream</em></p>
+                <p>Generates a button upon view scrolling that allows the
+user to immediately reach the top of the current view scroll</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -871,21 +936,24 @@
             <article class="method">
                 <h3 class="public ">insertTab()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">insertTab(  <span class="argument">$num = 1</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">insertTab(Int  <span class="argument">$num = 1</span>) : Void</pre>
+                <p><em>Outputs a standard tab to the stream.</em></p>
+                <p>Inserts a standardized tab to the stream in the form
+of HTML nonbreaking spaces.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>Int</td>
                                 <td>$num </td>
-                                <td></td>
+                                <td><p>Optional, the number of tabs to insert.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -907,13 +975,15 @@
             <article class="method">
                 <h3 class="public ">hr()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">hr() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">hr() : Void</pre>
+                <p><em>Outputs an HTML horizontal rule to the stream</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -935,13 +1005,15 @@
             <article class="method">
                 <h3 class="public ">br()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">br() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">br() : Void</pre>
+                <p><em>Outputs an HTML line break to the stream</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -963,21 +1035,23 @@
             <article class="method">
                 <h3 class="public ">h1()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h1(  <span class="argument">$content</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">h1(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Encapsulates `$content` in an HTML heading.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The string to encapsulate.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -999,21 +1073,23 @@
             <article class="method">
                 <h3 class="public ">h2()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h2(  <span class="argument">$content</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">h2(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Ecapsulates `$content` in an HTML heading.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The string to encapsulate</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1035,21 +1111,23 @@
             <article class="method">
                 <h3 class="public ">h3()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h3(  <span class="argument">$content</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">h3(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Encapsulates `$content` in an HTML heading.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The string to encasulate</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1071,21 +1149,23 @@
             <article class="method">
                 <h3 class="public ">bold()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">bold(  <span class="argument">$content</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">bold(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Encapsulates `$content` in an HTML strong section.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The string to encapsulate.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1390,7 +1470,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 12th, 2018 at 20:51.
+                    on September 13th, 2018 at 19:57.
                 </section>
             </section>
         </section>

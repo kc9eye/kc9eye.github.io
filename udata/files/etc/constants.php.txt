@@ -16,16 +16,51 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #Instance constants
+/**
+ * @var String INCLUDE_ROOT File path to the directory root of the application, relative to the machine.
+ */
 define('INCLUDE_ROOT', dirname(__DIR__));
+/**
+ * @var String PHPMAILER_DIR File path to the current PHPMailer classes
+ */
 define('PHPMAILER_DIR', dirname(__DIR__).'/third-party/PHPMailer/src');
+/**
+ * @var Boolean DIALOG_SUCCESS Simplifies calls to newEndUserDialog
+ * @see Instance::newEndUserDialog()
+ */
 define('DIALOG_SUCCESS', true);
+/**
+ * @var Boolean DIALOG_FAILURE Simplifies calls to newEndUserDialog
+ * @see Instance::newEndUserDialog()
+ */
 define('DIALOG_FAILURE', false);
 
 #File upload constants usually references the table the file is associated with
+/**
+ * @deprecated
+ */
 define('SDS_FILE_REF', 'sds');
+/**
+ * @deprecated
+ */
 define('SBM_FILE_REF', 'sbm');
+/**
+ * @deprecated
+ */
 define('PARTS_FILE_REF', 'discrepancy');
+/**
+ * @deprecated
+ */
 define('INJURY_FILE_REF', 'injury');
+/**
+ * @deprecated
+ */
 define('PRODUCTION_FILE_REF', 'products');
+/**
+ * @deprecated
+ */
 define('EHS_FILE_REF', 'profile');
+/**
+ * @deprecated
+ */
 define('MEDIA_FILE_REF', 'media');

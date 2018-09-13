@@ -25,7 +25,7 @@
  /**
   * Main configuration variable.
   *
-  * @var Array $config
+  * @var Array $config An array that holds application configuration
   */
 $config = [
     #Database configuration options
@@ -54,7 +54,7 @@ $config = [
     'data-root' => '/var/www/dev/data/raw',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
     
     #ViewMaker pagedata settings, effect how the UI looks
-    'company-name' => 'Chicago Assembly',
+    'company-name' => 'Chicago Assembly[Development]',
     'company-motto' => 'building Uhaul\'s Finest and Safest',
     'home-name' => 'Safety',
     'theme' => 'dark', #Not implemented as yet

@@ -15,14 +15,56 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * The application interface widgets
+ * 
+ * Creates the main interface in a consistent manner.
+ * 
+ * This class can be used stand alone, however it is best instanitated with the 
+ * Instance class. In so doing all the heavy lifting is done for you.
+ * @package UData
+ * @see Instance::getViewer()
+ * @uses Security
+ * @uses config.php
+ * @author Paul W. Lane
+ */
 Class ViewMaker {
 
+    /**
+     * @var Array Contains an array of strings used in th ecurrent view. Typically used by a model
+     * to push data to an interface.
+     */
     public $ViewData;
+    /**
+     * @var Array Contains an array of strings which are typically used on a per page basis
+     */
     public $PageData;
+    /**
+     * @var Security Contains the security object given from the server Instance.
+     * @see Security
+     */
     protected $security;
+    /**
+     * @var Boolean Switch used to deteremine if the current interface view has a side navigation bar.
+     * `true` if side navigation is present, `false` otherwise.
+     * @see ViewMaker::sideDropDownMenu()
+     * @see ViewMaker::offCanvasSideNav()
+     */
     protected $sideNav;
+    /**
+     * @var Array Contains the configuration variables array received from the main Instance
+     * @uses config.php
+     */
     protected $config;
 
+    /**
+     * Class constructor
+     * @param Security $security Optional, but not very useful without.
+     * @param Array $config The configuration variables array.
+     * @uses Security
+     * @see Instance::getViewer()
+     * @return ViewMaker
+     */
     public function __construct (Security $security = null, $config) {
         $this->security = $security;
         $this->config = $config;
@@ -34,7 +76,15 @@ Class ViewMaker {
         $this->PageData['navbarBrand'] = $config['home-name'];
     }
 
-#The views header information
+    /**
+     * The interface header.
+     * 
+     * Ouputs the beginning of the interface view to the stream.
+     * @return Void
+     * @uses ViewMaker::sideNav
+     * @uses ViewMaker::navBar()
+     * @todo rewrite to use `echo` instead of hard coded html
+     */
     public function header () {
 ?>
 <!DOCTYPE html>
@@ -81,8 +131,17 @@ Class ViewMaker {
 <?php
     }
 
-
-#The views footer information, closes out header tags
+    /**
+     * Outputs the interface view footer.
+     * 
+     * Closes the interface content section, once the view is complete.
+     * You are responsible for closing the view after your content.
+     * 
+     * @param Array $script_links Optional array of hyperlinks to add as script files
+     * that may be required for you content.
+     * @uses ViewMaker::sideNav
+     * @return Void
+     */
     public function footer (Array $script_links = null) {
         if ($this->sideNav) {
             echo "</div></div>\n";
@@ -104,6 +163,18 @@ Class ViewMaker {
 <?php
     }
 
+    /**
+     * Generates the upper interface view navigation bar.
+     * 
+     * This method should not be called standalone as the `ViewMaker::header()`
+     * method calls it as part of the standard interface. It is a seperate method
+     * only as it would make the header method overly complex.
+     * @uses ViewMaker::PageData
+     * @uses ViewMaker::ViewData
+     * @uses ViewMaker::security
+     * @uses ViewMaker::config
+     * @return Void
+     */
     public function navBar () {
 ?>
 <nav class='navbar navbar-inverse'>
@@ -153,6 +224,17 @@ Class ViewMaker {
 <?php        
     }
 
+    /**
+     * Generates an off canvas sliding navigation bar.
+     * 
+     * This method of navigation is optional and has been given up
+     * for the cleaner looking, on mobile, method of ViewMaker::sideDropDownMenu().
+     * it can however still be used per preference.
+     * @uses ViewMaker::sideNav
+     * @param Array $navLinks Optional indexed string array of navigation links. 
+     * The array should be indexed as such: `link_text=>link_address`.
+     * @return Void
+     */
     public function offCanvasSideNav (Array $navLinks = null) {
         $this->sideNav = true;
         echo "<div class='row'>\n";
@@ -182,10 +264,31 @@ Class ViewMaker {
         echo "<div class='col-md-11 col-xs-12'>\n";        
     }
 
+    /**
+     * Simple debugging interface method
+     * 
+     * Generates a scrollable `<pre>` section to the output
+     * stream with whatever string is given to the `$debug`
+     * variable.
+     * @param String @debug What ever you want output to the stream inside
+     * a scrollable pre section.
+     * @return Void
+     */
     public function preDebug ($debug) {
         echo "<pre class='pre-scrollable'>{$debug}</pre><br />";
     }
 
+    /**
+     * Generates the left side drop down navigation menu.
+     * 
+     * Outputs a side navaigation drop down menu to the stream.
+     * Same parameters as ViewMaker::offCanvasSideNav(). Cleaner look
+     * on mobile than off canvas though.
+     * @param Array $links An indexed array in the form `link_text=>link_address`
+     * @see ViewMaker::offCanvasSideNav()
+     * @uses ViewMaker::sideNav
+     * @return Void
+     */
     public function sideDropDownMenu (Array $links) {
         $this->sideNav = true;
 ?>
@@ -218,6 +321,16 @@ Class ViewMaker {
 <?php
     }
 
+    /**
+     * Outputs a file icon image to screen.
+     * 
+     * Based on the filename extension given as parameter
+     * will output an image link to the stream. The images 
+     * icons are the open source icons that are included 
+     * with the Apache Web Server.
+     * @param String $file_name The file name to use to retrieve an icon for.
+     * @return Void
+     */
     public function getFileIcon ($file_name) {
         $ext = @pathinfo($file_name, PATHINFO_EXTENSION);
         $dir = $this->PageData['wwwroot'].'/images/icons';
@@ -254,6 +367,13 @@ Class ViewMaker {
         }
     }
 
+    /**
+     * Outputs a scrolltopbutton to the stream
+     * 
+     * Generates a button upon view scrolling that allows the 
+     * user to immediately reach the top of the current view scroll
+     * @return Void
+     */
     public function addScrollTopBtn () {
         echo "<button type='button'
                 class='btn btn-lg btn-info'
@@ -277,31 +397,68 @@ Class ViewMaker {
             </script>";
     }
 
+    /**
+     * Outputs a standard tab to the stream.
+     * 
+     * Inserts a standardized tab to the stream in the form
+     * of HTML nonbreaking spaces.
+     * @param Int $num Optional, the number of tabs to insert.
+     * @return Void
+     */
     public function insertTab ($num = 1) {
         for ($cnt = 0; $cnt != $num; $cnt++) {
             echo "&#160;&#160;&#160;";
         }
     }
 
+    /**
+     * Outputs an HTML horizontal rule to the stream
+     * @return Void
+     */
     public function hr () {
         echo "<hr />\n";
     }
+
+    /**
+     * Outputs an HTML line break to the stream
+     * @return Void
+     */
     public function br () {
         echo "<br />\n";
     }
 
+    /**
+     * Encapsulates `$content` in an HTML heading.
+     * @param String $content The string to encapsulate.
+     * @return Void
+     */
     public function h1 ($content) {
         echo "<h1>{$content}</h1>\n";
     }
 
+    /**
+     * Ecapsulates `$content` in an HTML heading.
+     * @param String $content The string to encapsulate
+     * @return Void
+     */
     public function h2 ($content) {
         echo "<h2>{$content}</h2>\n";
     }
 
+    /**
+     * Encapsulates `$content` in an HTML heading.
+     * @param String $content The string to encasulate
+     * @return Void
+     */
     public function h3 ($content) {
         echo "<h3>{$content}</h3>\n";
     }
 
+    /**
+     * Encapsulates `$content` in an HTML strong section.
+     * @param String $content The string to encapsulate.
+     * @return Void
+     */
     public function bold ($content) {
         echo "<strong>{$content}</strong>";
     }

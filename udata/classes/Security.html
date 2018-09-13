@@ -106,17 +106,17 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">429</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">268</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">10</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">8</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1774295846"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-150299552"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1774295846" class="accordion-body collapse in">
+            <div id="namespace-150299552" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,8 +185,13 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>Security</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>The application security model.</em></p>
+                    <p>This class defines the security model employed by the applcation.
+This class should not be used stand alone. Instead it is instantiated
+by the Instance class. The methods here should rarely if ever be required
+to be used stand alone. Instead they are called by other methods in the
+Instance class. Those methods in Instance class should be employed, not
+the ones here.</p>
                     
                                         
                     <section id="summary">
@@ -258,7 +263,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/class.security.html"><div class="path-wrapper">class\security.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">UData</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\Security</div>
@@ -267,7 +272,14 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                        <dd><a href="../classes/Instance.html#method_getAuthority"><span class="namespace-wrapper">\Instance::getAuthority()</span></a></dd>
+                                                            <dd><a href="../classes/Instance.html#method_mustBeValidUser"><span class="namespace-wrapper">\Instance::mustBeValidUser()</span></a></dd>
+                                                            <dd><a href="../classes/Instance.html#method_userMustHavePermission"><span class="namespace-wrapper">\Instance::userMustHavePermission()</span></a></dd>
+                                                            <dd><a href=""><span class="namespace-wrapper">\Instance::userMusthaveRole()</span></a></dd>
+                                                            <dd><a href="../classes/Instance.html#method_checkPermission"><span class="namespace-wrapper">\Instance::checkPermission()</span></a></dd>
+                                                            <dd><a href="../classes/Instance.html#method_checkPermsArray"><span class="namespace-wrapper">\Instance::checkPermsArray()</span></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -361,13 +373,14 @@
             <a id="property_secureUserID" name="property_secureUserID" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$secureUserID</h3>
-                <pre class="signature">$secureUserID : </pre>
-                <p><em></em></p>
+                <pre class="signature">$secureUserID : String</pre>
+                <p><em>The current users ID.</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                String
+                &mdash; The current users ID, defaults to null if the current user is
+not signed in or valid.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -385,13 +398,13 @@
             <a id="property_user" name="property_user" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$user</h3>
-                <pre class="signature">$user : </pre>
-                <p><em></em></p>
+                <pre class="signature">$user : Array</pre>
+                <p><em>The current signed in users account information.</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Indexed array of user information of the current signed in user, default is null.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -409,12 +422,12 @@
             <a id="property_dbh" name="property_dbh" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$dbh</h3>
-                <pre class="signature">$dbh : </pre>
-                <p><em></em></p>
+                <pre class="signature">$dbh : \PDO</pre>
+                <p><em>The PDO object</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                \PDO
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -433,13 +446,13 @@
             <a id="property_persistentid" name="property_persistentid" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$persistentid</h3>
-                <pre class="signature">$persistentid : </pre>
-                <p><em></em></p>
+                <pre class="signature">$persistentid : String</pre>
+                <p><em>Used if there is an active persistent log on present</em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                String
+                &mdash; Holds the persistent log on ID for the machine                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -465,8 +478,8 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$dbh</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$dbh</span>) : \Security</pre>
+                <p><em>Class constructor</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -474,12 +487,14 @@
                                                     <tr>
                                 <td>\PDO</td>
                                 <td>$dbh </td>
-                                <td></td>
+                                <td><p>A PDO object to the current application database.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/Security.html">\Security</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -499,19 +514,23 @@
             <article class="method">
                 <h3 class="public ">setUser()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setUser() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setUser() : Void</pre>
+                <p><em>Sets security data for the current user</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>Security::$secureUserID</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -525,19 +544,25 @@
             <article class="method">
                 <h3 class="public ">checkPersistentLogOn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">checkPersistentLogOn() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">checkPersistentLogOn() : Boolean</pre>
+                <p><em>Validates any persistent log on requests</em></p>
+                <p>If the user has requested a persistent log on,
+this method checks that log on upon user return.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p><code>true</code> if valid, otherwise <code>fasle</code></p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>Security::COOKIE_ID</dd>
+                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -551,26 +576,30 @@
             <article class="method">
                 <h3 class="public ">verifyLogOn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">verifyLogOn(  <span class="argument">$username</span>,   <span class="argument">$password</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">verifyLogOn(String  <span class="argument">$username</span>, String  <span class="argument">$password</span>) : Boolean</pre>
+                <p><em>Verifies a given username and password combo.</em></p>
+                <p>Takes a username and password as paramters and compares them
+against a valid users credentials.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$username </td>
-                                <td></td>
+                                <td><p>The username to compare passwords</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$password </td>
-                                <td></td>
+                                <td><p>The given password to compare</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p><code>true</code> if passwords match for given user, <code>false</code> otherwise.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -590,21 +619,25 @@
             <article class="method">
                 <h3 class="public ">setPersistentLogOn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setPersistentLogOn(  <span class="argument">$uid</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">setPersistentLogOn(String  <span class="argument">$uid</span>) : Boolean</pre>
+                <p><em>Sets a persistent log on for a given user.</em></p>
+                <p>Upon a successful log on the user has the option to remain
+signed in. This method sets that persistent log on to
+be used on subsequent log on's from the given users machine.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$uid </td>
-                                <td></td>
+                                <td><p>The users ID to use for persistent log on's</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -624,13 +657,16 @@
             <article class="method">
                 <h3 class="public ">deletePersistentLogOn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">deletePersistentLogOn() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">deletePersistentLogOn() : Boolean</pre>
+                <p><em>Removes a persistent log on for a user.</em></p>
+                <p>Persistent log on's set with Security::setPersistentLogOn() are
+removed with this method.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -650,21 +686,23 @@
             <article class="method">
                 <h3 class="public ">userHasRole()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">userHasRole(  <span class="argument">$role</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">userHasRole(String  <span class="argument">$role</span>) : Boolean</pre>
+                <p><em>Determines if the current user has the given role.</em></p>
+                <p>Returns true if user has the role, false otherwise.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$role </td>
-                                <td></td>
+                                <td><p>The role to check the user for</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -684,21 +722,23 @@
             <article class="method">
                 <h3 class="public ">userHasPermission()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">userHasPermission(  <span class="argument">$permission</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">userHasPermission(String  <span class="argument">$permission</span>) : Boolean</pre>
+                <p><em>Determines if the current user has the given permission</em></p>
+                <p>Returns true if user has the permission, false otherwise.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$permission </td>
-                                <td></td>
+                                <td><p>The permission to check the user for</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -718,21 +758,24 @@
             <article class="method">
                 <h3 class="public ">getUsersByPerm()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getUsersByPerm(  <span class="argument">$perm</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">getUsersByPerm(String  <span class="argument">$perm</span>) : Mixed</pre>
+                <p><em>Get a array of users who have the given permission</em></p>
+                <p>Returns either a PDO array of users who have the given permission
+or false if no users have the permission.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$perm </td>
-                                <td></td>
+                                <td><p>The permission to search for</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -752,21 +795,24 @@
             <article class="method">
                 <h3 class="public ">getUsersByRole()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getUsersByRole(  <span class="argument">$role</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">getUsersByRole(String  <span class="argument">$role</span>) : Mixed</pre>
+                <p><em>Returns a PDO array of users who have the given role.</em></p>
+                <p>Either an array of users with the given role is returned
+or false if no users have the role.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$role </td>
-                                <td></td>
+                                <td><p>The role to search for.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -786,13 +832,17 @@
             <article class="method">
                 <h3 class="protected ">updatePersistentLogOn()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">updatePersistentLogOn() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">updatePersistentLogOn() : Boolean</pre>
+                <p><em>Updates a persitent log upon successful automatic log in.</em></p>
+                <p>This method is called if the user has successfully logged on
+using a persistent log in ID. This rotates the persistent log
+on ID.</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -812,21 +862,24 @@
             <article class="method">
                 <h3 class="protected ">verifyUsername()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">verifyUsername(  <span class="argument">$username</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">verifyUsername(String  <span class="argument">$username</span>) : Boolean</pre>
+                <p><em>Verifies that the supplied username is not already in use.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$username </td>
-                                <td></td>
+                                <td><p>The username to check.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p>Returns <code>false</code> if the username is not already in use, <code>true</code> if it is</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -835,7 +888,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Possibly rewrite so true is returned if it is not in the database</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -889,7 +949,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 12th, 2018 at 20:51.
+                    on September 13th, 2018 at 19:57.
                 </section>
             </section>
         </section>

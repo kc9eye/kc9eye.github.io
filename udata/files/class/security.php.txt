@@ -15,22 +15,70 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * The application security model.
+ * 
+ * This class defines the security model employed by the applcation.
+ * This class should not be used stand alone. Instead it is instantiated
+ * by the Instance class. The methods here should rarely if ever be required
+ * to be used stand alone. Instead they are called by other methods in the 
+ * Instance class. Those methods in Instance class should be employed, not 
+ * the ones here.
+ * @package UData
+ * @see Instance::getAuthority()
+ * @see Instance::mustBeValidUser()
+ * @see Instance::userMustHavePermission()
+ * @see Instance::userMusthaveRole()
+ * @see Instance::checkPermission()
+ * @see Instance::checkPermsArray()
+ */
 Class Security {
     const BAD_USERNAME = 2112;
     const BAD_PASSWORD = 1221;
     const COOKIE_ID = 'UDIDIT';
 
+    /**
+     * The PDO object
+     * @var PDO $dbh
+     */
     private $dbh;
+
+    /**
+     * Used if there is an active persistent log on present
+     * @var String $persistentid Holds the persistent log on ID for the machine
+     */
     private $persistentid;
+
+    /**
+     * The current users ID.
+     * @var String $secureUserID The current users ID, defaults to null if the current user is
+     * not signed in or valid.
+     */
     public $secureUserID;
+
+    /**
+     * The current signed in users account information.
+     * @var Array $user Indexed array of user information of the current signed in user, default is null.
+     */
     public $user;
 
+    /**
+     * Class constructor
+     * @param PDO $dbh A PDO object to the current application database.
+     * @return Security
+     */
     public function __construct (PDO $dbh) {
         $this->dbh = $dbh;
         $this->secureUserID = null;
         $this->user = null;
     }
 
+    /**
+     * Sets security data for the current user
+     * 
+     * @uses Security::$secureUserID
+     * @return Void
+     */
     public function setUser () {
         $test = $this->dbh->prepare('SELECT COUNT(*) FROM user_accts WHERE id = ?');
         $test->execute([$this->secureUserID]);
@@ -54,11 +102,14 @@ Class Security {
         }
     }
 
-    /*
-        Checks whether or not a persistent log on exists
-        and validates if it does.
-        [ bool checkPersistentLogOn() ];
-    */
+    /**
+     * Validates any persistent log on requests
+     * 
+     * If the user has requested a persistent log on,
+     * this method checks that log on upon user return.
+     * @uses Security::COOKIE_ID
+     * @return Boolean `true` if valid, otherwise `fasle`
+     */
     public function checkPersistentLogOn () {
         #Verify the cache exists
         if (! isset($_COOKIE[self::COOKIE_ID]) ) {
@@ -85,11 +136,15 @@ Class Security {
         }
     }
 
-    /*
-        Verify's a given username and passowrd
-        [mixed verifyLogOn([string $username], [string $password])]
-        Returns true on success, failure code on failure, or false for errors
-    */
+    /**
+     * Verifies a given username and password combo.
+     * 
+     * Takes a username and password as paramters and compares them
+     * against a valid users credentials.
+     * @return Boolean `true` if passwords match for given user, `false` otherwise.
+     * @param String $username The username to compare passwords
+     * @param String $password The given password to compare
+     */
     public function verifyLogOn ($username, $password) {
         #Verify the username exists
         if (! $this->verifyUsername($username)) {
@@ -113,6 +168,15 @@ Class Security {
         return false;
     }
 
+    /**
+     * Sets a persistent log on for a given user.
+     * 
+     * Upon a successful log on the user has the option to remain
+     * signed in. This method sets that persistent log on to 
+     * be used on subsequent log on's from the given users machine.
+     * @param String $uid The users ID to use for persistent log on's
+     * @return Boolean
+     */
     public function setPersistentLogOn ($uid) {
         $selector = hash('sha256', uniqid());
         $validator = bin2hex(random_bytes(32));
@@ -134,6 +198,13 @@ Class Security {
         return true;
     }
 
+    /**
+     * Removes a persistent log on for a user.
+     * 
+     * Persistent log on's set with Security::setPersistentLogOn() are
+     * removed with this method.
+     * @return Boolean
+     */
     public function deletePersistentLogOn () {
         $sql = 'DELETE FROM auth_tokens WHERE uid = ?';
         $pntr = $this->dbh->prepare($sql);
@@ -148,10 +219,14 @@ Class Security {
         return false;
     }
 
-    /* 
-        Updates a persistent log on cache.
-        [bool updatePersistentLogOn([string $dataID])]
-    */
+    /**
+     * Updates a persitent log upon successful automatic log in.
+     * 
+     * This method is called if the user has successfully logged on
+     * using a persistent log in ID. This rotates the persistent log
+     * on ID.
+     * @return Boolean
+     */
     protected function updatePersistentLogOn () {
         $selector = hash('sha256', uniqid());
         $validator = bin2hex(random_bytes(32));
@@ -176,10 +251,12 @@ Class Security {
         }
     }
 
-    /*
-        Verify's whther or not a username appears in the database exactly once
-        [bool verifyUsername( [string $username] )]
-    */
+    /**
+     * Verifies that the supplied username is not already in use.
+     * @param String $username The username to check.
+     * @return Boolean Returns `false` if the username is not already in use, `true` if it is
+     * @todo Possibly rewrite so true is returned if it is not in the database
+     */
     protected function verifyUsername ($username) {
         $sql = 'SELECT count(*) FROM user_accts WHERE username = ?';
         $pntr = $this->dbh->prepare($sql);
@@ -196,6 +273,13 @@ Class Security {
         }
     }
 
+    /**
+     * Determines if the current user has the given role.
+     * 
+     * Returns true if user has the role, false otherwise.
+     * @param String $role The role to check the user for
+     * @return Boolean 
+     */
     public function userHasRole ($role) {
         if (is_null($this->secureUserID)) {
             return false;
@@ -219,6 +303,13 @@ Class Security {
         }
     }
 
+    /**
+     * Determines if the current user has the given permission
+     * 
+     * Returns true if user has the permission, false otherwise.
+     * @param String $permission The permission to check the user for
+     * @return Boolean
+     */
     public function userHasPermission ($permission) {
         if (is_null($this->secureUserID)) {
             return false;
@@ -249,6 +340,14 @@ Class Security {
         }
     }
 
+    /**
+     * Get a array of users who have the given permission
+     * 
+     * Returns either a PDO array of users who have the given permission
+     * or false if no users have the permission.
+     * @param String $perm The permission to search for
+     * @return Mixed
+     */
     public function getUsersByPerm ($perm) {
         try {
             $sql = 'SELECT DISTINCT 
@@ -272,6 +371,14 @@ Class Security {
         }
     }
 
+    /**
+     * Returns a PDO array of users who have the given role.
+     * 
+     * Either an array of users with the given role is returned 
+     * or false if no users have the role.
+     * @param String $role The role to search for.
+     * @return Mixed
+     */
     public function getUsersByRole ($role) {
         try {
             $sql = 'SELECT DISTINCT user_accts.id,user_accts.username,user_accts.password,user_accts.firstname,user_accts.lastname,user_accts.alt_email

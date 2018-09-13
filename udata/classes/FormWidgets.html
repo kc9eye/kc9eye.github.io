@@ -106,17 +106,17 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">429</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">268</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">10</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">8</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-301971043"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-646402139"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-301971043" class="accordion-body collapse in">
+            <div id="namespace-646402139" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,10 +185,60 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>FormWidgets</h1>
-                    <p><em></em></p>
+                    <p><em>Form widgets, for easily creating forms with PHP instead of HTML</em></p>
+                    <p>This class contains methods for creating standard framework styled
+horizontal forms with simple PHP calls. Includes a validation model, utilizing
+the jquery.validate() plugin.</p>
                     
-                    
-                                        
+                                                                        <h3>Examples</h3>
+                                                                            <h4>Of form widget use in a controller</h4>
+                            <pre class="pre-scrollable">&lt;?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane &lt;kc9eye@outlook.com&gt;
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+require_once(dirname(__DIR__).&#039;/lib/init.php&#039;);
+include(&#039;submenu.php&#039;);
+
+$server-&gt;userMustHavePermission(&#039;addSDS&#039;);
+$sds = new SDSHandler($server-&gt;pdo, $server-&gt;config[&#039;data-root&#039;]);
+
+if (!empty($_REQUEST)) {
+    $sds-&gt;addUploaded($_REQUEST) &amp;&amp;
+    $server-&gt;newEndUserDialog(&#039;File uploaded successfully&#039;,DIALOG_SUCCESS) ||
+    $server-&gt;newEndUserDialog(&#039;Something went wrong with the request&#039;,DIALOG_FAILURE);
+}
+
+$view = $server-&gt;getViewer(&#039;Add SDS&#039;);
+$view-&gt;sideDropDownMenu($submenu);
+
+$form = new FormWidgets($view-&gt;PageData[&#039;wwwroot&#039;].&#039;/scripts&#039;);
+
+$form-&gt;newMultipartForm(&#039;Add SDS&#039;);
+$form-&gt;hiddenInput(&#039;MAX_FILE_SIZE&#039;,&#039;100000000&#039;);
+$form-&gt;hiddenInput(&#039;uid&#039;,$server-&gt;security-&gt;secureUserID);
+$form-&gt;inputCapture(&#039;name&#039;,&#039;Product Name&#039;,null,true);
+$form-&gt;inputCapture(&#039;dist&#039;,&#039;Distributor&#039;,null,true);
+$form-&gt;inputCapture(&#039;used&#039;,&#039;Location Used&#039;,null,true);
+$form-&gt;inputCapture(&#039;meta&#039;,&#039;Keywords&#039;);
+$form-&gt;fileUpload(FileIndexer::UPLOAD_NAME,true);
+$form-&gt;submitForm(&#039;Add SDS&#039;,false,$server-&gt;config[&#039;application-root&#039;].&#039;/safety/main&#039;);
+$form-&gt;endForm();
+
+$view-&gt;footer();</pre>
+                                                                
                     <section id="summary">
                         <h2>Summary</h2>
                         <section class="row-fluid heading">
@@ -259,7 +309,7 @@
                         <dt>File</dt>
                             <dd><a href="../files/class.formwidgets.html"><div class="path-wrapper">class\formwidgets.php</div></a></dd>
                                                 <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
+                            <dd><div class="namespace-wrapper">UData</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
                                                                                                                                                                     <div class="namespace-wrapper">\FormWidgets</div>
@@ -268,11 +318,20 @@
                         
                         
                         
-                        
+                                                                            <dt>See also</dt>
+                                                                                        <dd><a href="https://jqueryvalidation.org/documentation/"><span class="namespace-wrapper">https://jqueryvalidation.org/documentation/</span></a></dd>
+                                                    
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Paul W. Lane</p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -291,13 +350,13 @@
             <a id="property_formid" name="property_formid" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$formid</h3>
-                <pre class="signature">$formid : </pre>
+                <pre class="signature">$formid : String</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                String
+                &mdash; The forms ID atrribute, auto generated if not given in newForm()                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -315,13 +374,13 @@
             <a id="property_scripts" name="property_scripts" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$scripts</h3>
-                <pre class="signature">$scripts : </pre>
+                <pre class="signature">$scripts : String</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                String
+                &mdash; The base file path to script files called                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -339,13 +398,13 @@
             <a id="property_validate" name="property_validate" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$validate</h3>
-                <pre class="signature">$validate : </pre>
+                <pre class="signature">$validate : Boolean</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Boolean
+                &mdash; Whether the jquery.validate() plugin is required                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -363,13 +422,13 @@
             <a id="property_rules" name="property_rules" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$rules</h3>
-                <pre class="signature">$rules : </pre>
+                <pre class="signature">$rules : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Array eventually encoded to JSON for the jquery.validate() plugin                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -395,16 +454,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$scripts</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(String  <span class="argument">$scripts</span>) </pre>
+                <p><em>Class constructor</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$scripts </td>
-                                <td></td>
+                                <td><p>The base filepath to any called scripts, including the jquery.validate() plugin</p></td>
                             </tr>
                                             </table>
                 
@@ -429,31 +488,33 @@
             <article class="method">
                 <h3 class="public ">newMultipartForm()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">newMultipartForm(  <span class="argument">$header = null</span>,   <span class="argument">$uri = null</span>,   <span class="argument">$id = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">newMultipartForm(String  <span class="argument">$header = null</span>, String  <span class="argument">$uri = null</span>, String  <span class="argument">$id = null</span>) : Void</pre>
+                <p><em>Generates a new multipart form heading to the stream</em></p>
+                <p>Required to handle file uploads</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$header </td>
-                                <td></td>
+                                <td><p>Optional string to use a header to the form</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$uri </td>
-                                <td></td>
+                                <td><p>Optional link to the handler for this form</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>Optional ID attribute. Autogenerated if not supplied</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -462,7 +523,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite using php instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -473,36 +541,38 @@
             <article class="method">
                 <h3 class="public ">newForm()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">newForm(  <span class="argument">$header = null</span>,   <span class="argument">$uri = null</span>,   <span class="argument">$method = &#039;post&#039;</span>,   <span class="argument">$id = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">newForm(String  <span class="argument">$header = null</span>, String  <span class="argument">$uri = null</span>, String  <span class="argument">$method = &#039;post&#039;</span>, String  <span class="argument">$id = null</span>) : Void</pre>
+                <p><em>Outputs a new form header to the stream</em></p>
+                <p>Required for new forms</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$header </td>
-                                <td></td>
+                                <td><p>Optional header for the form</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$uri </td>
-                                <td></td>
+                                <td><p>Optional URI to a handler for the form</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$method </td>
-                                <td></td>
+                                <td><p>Optional method the form is returned, one of 'post' or 'get'. Post is default.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>Optional ID attribute. Autogenerated if not supplied</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -511,7 +581,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite with PHP instead fo HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -522,13 +599,15 @@
             <article class="method">
                 <h3 class="public ">endForm()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">endForm() </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">endForm() : Void</pre>
+                <p><em>Outputs the closing of the form</em></p>
+                <p>Required at the end of the form</p>
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -548,41 +627,43 @@
             <article class="method">
                 <h3 class="public ">emailCapture()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">emailCapture(  <span class="argument">$name</span>,   <span class="argument">$label = &#039;Email&#039;</span>,   <span class="argument">$value = null</span>,   <span class="argument">$required = false</span>,   <span class="argument">$helpBlock = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">emailCapture(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;Email&#039;</span>, String  <span class="argument">$value = null</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) : Void</pre>
+                <p><em>Outputs a standard styled email form entry</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name the data will have in the <code>$_REQUEST</code> array</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>Optional name used in the label for the user</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>Optional data to prepopulate the entry with</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional array of jquery.validate() properties or <code>true</code> if simply required</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$helpBlock </td>
-                                <td></td>
+                                <td><p>Optional string to put in a help block for the entry</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -591,7 +672,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite with PHP instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -602,36 +690,36 @@
             <article class="method">
                 <h3 class="public ">passwordCapture()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">passwordCapture(  <span class="argument">$name</span>,   <span class="argument">$label = &#039;Password&#039;</span>,   <span class="argument">$value = null</span>,   <span class="argument">$required = false</span>,   <span class="argument">$helpBlock = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">passwordCapture(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;Password&#039;</span>, String  <span class="argument">$value = null</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) </pre>
+                <p><em>Outputs a standard styled password form entry</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name given to <code>$_REQUEST</code> for the entry</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>Optional label for the user of the entry</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>Optional value to prepopulate the entry with</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$helpBlock </td>
-                                <td></td>
+                                <td><p>Optional string for user helpblock</p></td>
                             </tr>
                                             </table>
                 
@@ -645,7 +733,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite with PHP instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -656,41 +751,43 @@
             <article class="method">
                 <h3 class="public ">inputCapture()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">inputCapture(  <span class="argument">$name</span>,   <span class="argument">$label = &#039;Entry&#039;</span>,   <span class="argument">$value = null</span>,   <span class="argument">$required = false</span>,   <span class="argument">$helpBlock = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">inputCapture(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;Entry&#039;</span>, String  <span class="argument">$value = null</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) : Void</pre>
+                <p><em>Outputs a standarn styled input entry form element</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name given to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>Optional label for the user</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>Optional data to prepopulate the entry with</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$helpBlock </td>
-                                <td></td>
+                                <td><p>Optional string for user helpblock</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -699,7 +796,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite with PHP instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -710,26 +814,30 @@
             <article class="method">
                 <h3 class="public ">labelContent()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">labelContent(  <span class="argument">$label</span>,   <span class="argument">$content = &#039;Default Content&#039;</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">labelContent(String  <span class="argument">$label</span>, String  <span class="argument">$content = &#039;Default Content&#039;</span>) : Void</pre>
+                <p><em>Outputs a standarized label element to the stream</em></p>
+                <p>Keeps the format of the form, yet allows you to place a
+label where it is needed. Any content can be label keeping
+the form styling.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>The label</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The content if any being labeled.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -749,31 +857,33 @@
             <article class="method">
                 <h3 class="public ">submitForm()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">submitForm(  <span class="argument">$label = &#039;Submit&#039;</span>,   <span class="argument">$reset = false</span>,   <span class="argument">$cancel = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">submitForm(String  <span class="argument">$label = &#039;Submit&#039;</span>, Boolean  <span class="argument">$reset = false</span>, String  <span class="argument">$cancel = null</span>) : Void</pre>
+                <p><em>Outputs a form submittal to the stream</em></p>
+                <p>Generates the submit buttons and optional reset and cancel buttons</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>Optional name for the submit button default is 'Submit'</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Boolean</td>
                                 <td>$reset </td>
-                                <td></td>
+                                <td><p>Optional to include a form reset button</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$cancel </td>
-                                <td></td>
+                                <td><p>Optional hyperlink to use for a cancel button</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -793,41 +903,44 @@
             <article class="method">
                 <h3 class="public ">radioButtons()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">radioButtons(  <span class="argument">$name</span>,   <span class="argument">$label = &#039;Select&#039;</span>, array  <span class="argument">$value = null</span>,   <span class="argument">$required = false</span>,   <span class="argument">$helpBlock = null</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">radioButtons(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;Select&#039;</span>, Array  <span class="argument">$value = null</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) : Void</pre>
+                <p><em>Outputs a radio button selection to the stream</em></p>
+                <p>Generates radio buttons in the standard style based on the <code>$value</code>
+array. The value array should be indexed thusly: <code>button_label=&gt;button_value</code></p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name given to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>The label for the user for the buttons</p></td>
                             </tr>
                                                     <tr>
-                                <td>array</td>
+                                <td>Array</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>The array containing labels and values for the buttons</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$helpBlock </td>
-                                <td></td>
+                                <td><p>Optional helpblock text for the user</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -847,26 +960,28 @@
             <article class="method">
                 <h3 class="public ">hiddenInput()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">hiddenInput(  <span class="argument">$name</span>,   <span class="argument">$value</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">hiddenInput(String  <span class="argument">$name</span>, String  <span class="argument">$value</span>) : Void</pre>
+                <p><em>Outputs a hidden form value to the stream</em></p>
+                <p>A PHP centric wat to add a hidden value to a form</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name givne to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>The value for the name</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -875,7 +990,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrtie in PHP instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -886,21 +1008,22 @@
             <article class="method">
                 <h3 class="public ">fileUpload()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">fileUpload(  <span class="argument">$name</span>,   <span class="argument">$required = false</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">fileUpload(String  <span class="argument">$name</span>, Mixed  <span class="argument">$required = false</span>) </pre>
+                <p><em>Outputs a form upload dialog entry to the stream</em></p>
+                <p>A file upload entry stylized for Bootstrap and the
+standard framework.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name given to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
                             </tr>
                                             </table>
                 
@@ -914,7 +1037,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>rewrite for PHP instead of HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -925,41 +1055,45 @@
             <article class="method">
                 <h3 class="public ">checkBox()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">checkBox(  <span class="argument">$name</span>, array  <span class="argument">$label</span>,   <span class="argument">$value</span>,   <span class="argument">$required = false</span>,   <span class="argument">$helpBlock = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">checkBox(String  <span class="argument">$name</span>, Array  <span class="argument">$label</span>, String  <span class="argument">$value</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) : Void</pre>
+                <p><em>Outputs a styled form checkbox to the stream.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name given to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
-                                <td>array</td>
+                                <td>Array</td>
                                 <td>$label </td>
-                                <td></td>
+                                <td><p>Unindexed array of string labels, the first
+for the label of the section describing the checkbox, the second
+for the checkbox itself.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$value </td>
-                                <td></td>
+                                <td><p>The value of the element if the checkbox is checked</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Mixed</td>
                                 <td>$required </td>
-                                <td></td>
+                                <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$helpBlock </td>
-                                <td></td>
+                                <td><p>Optional helpblock message for the user</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -979,21 +1113,23 @@
             <article class="method">
                 <h3 class="public ">h2()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h2(  <span class="argument">$content</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">h2(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Outputs a standard stylized heading to the stream</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$content </td>
-                                <td></td>
+                                <td><p>The heading content</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1002,7 +1138,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Rewrite for PHP and not HTML</p>
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1013,26 +1156,28 @@
             <article class="method">
                 <h3 class="protected ">addValidation()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addValidation(  <span class="argument">$name</span>,   <span class="argument">$rules</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">addValidation(String  <span class="argument">$name</span>, Array  <span class="argument">$rules</span>) : Void</pre>
+                <p><em>Adds the required jquery.validate() validation properties for the form</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name of the element requiring validation.</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>Array</td>
                                 <td>$rules </td>
-                                <td></td>
+                                <td><p>The jquery.validate() rules for the named element</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1095,7 +1240,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 12th, 2018 at 20:51.
+                    on September 13th, 2018 at 19:57.
                 </section>
             </section>
         </section>
