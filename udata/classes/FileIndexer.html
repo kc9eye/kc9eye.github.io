@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">268</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">244</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-229297454"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1906210381"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-229297454" class="accordion-body collapse in">
+            <div id="namespace-1906210381" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,7 +185,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>FileIndexer</h1>
-                    <p><em></em></p>
+                    <p><em>Indexes uploaded files in the application database</em></p>
                     
                     
                                         
@@ -265,7 +265,22 @@
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                uses
+                            </th>
+                            <td>
+                                                                    
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Paul W. Lane</p>
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -334,13 +349,13 @@
             <a id="property_dbh" name="property_dbh" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$dbh</h3>
-                <pre class="signature">$dbh : </pre>
+                <pre class="signature">$dbh : \PDO</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                \PDO
+                &mdash; The application database handle                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -358,13 +373,13 @@
             <a id="property_storage" name="property_storage" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$storage</h3>
-                <pre class="signature">$storage : </pre>
+                <pre class="signature">$storage : String</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                String
+                &mdash; File path to where files will be stored on disk                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -382,13 +397,14 @@
             <a id="property_indexed" name="property_indexed" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$indexed</h3>
-                <pre class="signature">$indexed : </pre>
+                <pre class="signature">$indexed : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; Files that have been indexed already in the case 
+of a multiple file upload.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -406,13 +422,14 @@
             <a id="property_indexed_ids" name="property_indexed_ids" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$indexed_ids</h3>
-                <pre class="signature">$indexed_ids : </pre>
+                <pre class="signature">$indexed_ids : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; File ID&#039;s that have been indexed in the case 
+of multiple file uploads.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -438,8 +455,8 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$dbh</span>,   <span class="argument">$storage</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$dbh</span>, String  <span class="argument">$storage</span>) : \FileIndexer</pre>
+                <p><em>Class constructor</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -447,17 +464,19 @@
                                                     <tr>
                                 <td>\PDO</td>
                                 <td>$dbh </td>
-                                <td></td>
+                                <td><p>The application database handle</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$storage </td>
-                                <td></td>
+                                <td><p>The filepath to where files are being stored after being indexed</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/FileIndexer.html">\FileIndexer</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -477,8 +496,8 @@
             <article class="method">
                 <h3 class="public ">indexFiles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">indexFiles(\FileUpload  <span class="argument">$f</span>,   <span class="argument">$uid</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">indexFiles(\FileUpload  <span class="argument">$f</span>, String  <span class="argument">$uid</span>) : Boolean</pre>
+                <p><em>Indexes files given in a FileUpload class</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -486,17 +505,20 @@
                                                     <tr>
                                 <td><a href="../classes/FileUpload.html">\FileUpload</a></td>
                                 <td>$f </td>
-                                <td></td>
+                                <td><p>The files to be indexed given in a FileUpload class</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$uid </td>
-                                <td></td>
+                                <td><p>The user ID of the current user indexing the files</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p><code>true</code> on success, otherwise <code>false</code></p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -517,8 +539,10 @@
                 <h3 class="public ">removeIndexedFiles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">removeIndexedFiles(array  <span class="argument">$index</span>) </pre>
-                <p><em></em></p>
-                
+                <p><em>A transaction rollback method</em></p>
+                <p>In case of a transaction interruption this method prevents
+partial files from being indexed and stored. It attempts to remove any files
+already indexed or stored on files.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
@@ -550,21 +574,24 @@
             <article class="method">
                 <h3 class="public ">getIndexByID()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getIndexByID(  <span class="argument">$id</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">getIndexByID(String  <span class="argument">$id</span>) : Mixed</pre>
+                <p><em>Returns an array of a requested file index</em></p>
+                <p>Gets a database indexed array of a requested file by file index ID</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>The files index ID</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                            &mdash; <p>An array on success, otherwise <code>false</code></p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -584,21 +611,25 @@
             <article class="method">
                 <h3 class="public ">getIndexByFilename()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getIndexByFilename(  <span class="argument">$search</span>) </pre>
-                <p><em></em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">getIndexByFilename(String  <span class="argument">$search</span>) : Mixed</pre>
+                <p><em>Gets a files index information by file name</em></p>
+                <p>Searches the database for file indexes by a given
+string filename</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$search </td>
-                                <td></td>
+                                <td><p>The file name search pattern</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Mixed
+                                            &mdash; <p>Array on succes, <code>false</code> otheriwse.</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -661,7 +692,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 13th, 2018 at 19:57.
+                    on September 15th, 2018 at 01:29.
                 </section>
             </section>
         </section>

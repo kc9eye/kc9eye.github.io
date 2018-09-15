@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">268</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">244</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-80221841"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1959266242"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-80221841" class="accordion-body collapse in">
+            <div id="namespace-1959266242" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -185,8 +185,9 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\</small>FileUpload</h1>
-                    <p><em></em></p>
-                    
+                    <p><em>Handles file uploads in a sane manner</em></p>
+                    <p>This handles file uploads in a sane manner for
+the FileIndexer class.</p>
                     
                                         
                     <section id="summary">
@@ -259,7 +260,22 @@
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Paul W. Lane</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                uses
+                            </th>
+                            <td>
+                                                                    
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -278,13 +294,13 @@
             <a id="property_multiple" name="property_multiple" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$multiple</h3>
-                <pre class="signature">$multiple : </pre>
+                <pre class="signature">$multiple : Boolean</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Boolean
+                &mdash; Whether the file upload contains multiple files                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -302,13 +318,14 @@
             <a id="property_files" name="property_files" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$files</h3>
-                <pre class="signature">$files : </pre>
+                <pre class="signature">$files : Array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                Array
+                &mdash; A sane array of the uploaded file information in a 
+standard format for the FileIndexer                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -334,27 +351,32 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$input_name</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(String  <span class="argument">$input_name</span>) : \FileUpload</pre>
+                <p><em>Class construtor</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$input_name </td>
-                                <td></td>
+                                <td><p>The name of the file form entry. This should
+most times be FileIndexer::UPLOAD_NAME.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/FileUpload.html">\FileUpload</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/FileIndexer.html#constant_UPLOAD_NAME"><span class="namespace-wrapper">\FileIndexer::UPLOAD_NAME</span></a></dd>
+                                                                </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -368,21 +390,23 @@
             <article class="method">
                 <h3 class="protected ">multipleFiles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">multipleFiles(  <span class="argument">$input_name</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">multipleFiles(String  <span class="argument">$input_name</span>) : Void</pre>
+                <p><em>Handles multiple file entry uploads</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$input_name </td>
-                                <td></td>
+                                <td><p>The form file entry name.</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -402,21 +426,23 @@
             <article class="method">
                 <h3 class="protected ">handleFile()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">handleFile(  <span class="argument">$input_name</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">handleFile(String  <span class="argument">$input_name</span>) : Void</pre>
+                <p><em>Handles a single file entry upload</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>String</td>
                                 <td>$input_name </td>
-                                <td></td>
+                                <td><p>The form file entry name</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    Void
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -479,7 +505,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 13th, 2018 at 19:57.
+                    on September 15th, 2018 at 01:29.
                 </section>
             </section>
         </section>

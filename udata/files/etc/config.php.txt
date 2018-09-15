@@ -29,13 +29,13 @@
   */
 $config = [
     #Database configuration options
-    'dbuser' => 'udata',                     #Database user for the active db
-    'dbpass' => 'MonkeyFuck34',                     #Database users password for the active db
-    'dbpdo' => 'pgsql:host=localhost;port=5432;dbname=development;', #PDO database connection string 'dbdriver:host=mydbhost;port=mydbport;dbnam=mydbname;[sslmode=mydbencryption...]
+    'dbuser' => '',                     #Database user for the active db
+    'dbpass' => '',                     #Database users password for the active db
+    'dbpdo' => '', #PDO database connection string 'dbdriver:host=mydbhost;port=mydbport;dbnam=mydbname;[sslmode=mydbencryption...]
 
     #Errorhandler config options
-    'error-log-file-path' => '/var/www/dev/var/error_log.xml', #Where to save th error log file, hard disk location (URL not supported at this time)
-    'error-support-link' => 'https://github.com/kc9eye/UData.git/issues',         #A link to bug/issue reporting infrastructure, users will see this.
+    'error-log-file-path' => '', #Where to save th error log file, hard disk location (URL not supported at this time)
+    'error-support-link' => '',         #A link to bug/issue reporting infrastructure, users will see this.
 
     #PHPMailer configuration
     'mailer-type' => 'SMTP',            #The mailer to use, SMTP (sends as SMTP), Mail (sends with PHP mail function), Sendmail (uses host sendmail server)
@@ -50,12 +50,12 @@ $config = [
     'mailer-custom-opts' => [],         #Custom SMTP options you may need to set for the mailer as an array
 
     #Application settings dependant on server settings
-    'application-root' => 'http://10.59.0.185/dev',           #The applications URL (empty if application is in the server root)
-    'data-root' => '/var/www/dev/data/raw',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
+    'application-root' => '',           #The applications URL (empty if application is in the server root)
+    'data-root' => '',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
     
     #ViewMaker pagedata settings, effect how the UI looks
-    'company-name' => 'Chicago Assembly[Development]',
-    'company-motto' => 'building Uhaul\'s Finest and Safest',
+    'company-name' => '',
+    'company-motto' => '',
     'home-name' => 'Safety',
     'theme' => 'dark', #Not implemented as yet
 
