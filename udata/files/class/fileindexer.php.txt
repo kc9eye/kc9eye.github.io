@@ -19,6 +19,7 @@
  * Indexes uploaded files in the application database
  * 
  * @uses FileUpload
+ * @package UData
  * @author Paul W. Lane
  */
 class FileIndexer {

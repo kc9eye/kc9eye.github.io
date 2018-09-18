@@ -24,6 +24,7 @@
   *
   * @param array $config Should contain an array for comfiguration options.
   * @package UData
+  * @example ../class/example_ui.php
   * @return Instance
   * @see etc/config.php
   */
@@ -65,7 +66,7 @@ Class Instance {
      * 
      * @param Array $config Should be the configuration array. 
      * @return Object Instance
-     * @see etc/config.php
+     * @see config.php
      * @author Paul W. Lane
      */
     public function __construct ($config) {

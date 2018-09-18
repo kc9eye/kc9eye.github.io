@@ -23,6 +23,7 @@
  * 
  * @author Paul W. Lane
  * @uses FileIndexer
+ * @package UData
  */
 class FileUpload {
 
