@@ -36,7 +36,7 @@ class InlineFormWidgets extends FormWidgets {
     /**
      * Outputs a new inline form element to the stream
      * @param String $header Optional header for the form.
-     * @param String &uri Optional URI to a handler for the form
+     * @param String $uri Optional URI to a handler for the form
      * @param String $method Optional method for submitting, 'post' or 'get'. Default is 'post'
      * @param String $id Optional form ID, auto generated if not given.
      * @return Void
@@ -140,6 +140,16 @@ class InlineFormWidgets extends FormWidgets {
         }
     }
 
+    /**
+     * Adds an inline checkbox element to the stream.
+     * 
+     * Outputs to the stream an inline stylized checkbox.
+     * @param String $name The name given to $_REQUEST
+     * @param String $label The user seen label to the checkbox
+     * @param String $value The value of the checkbox if checked
+     * @param Mixed $required Optional `true` or array of jquery.validate() properties if required
+     * @return Void
+     */
     public function inlineCheckbox ($name, $label, $value, $required = false) {
         echo "<div class='checkbox'>\n";
         echo "<label>\n";
@@ -152,7 +162,18 @@ class InlineFormWidgets extends FormWidgets {
         }
     }
 
-    public function fullPageSearchBar($name, $label, $value = null, $required = false) {
+    /**
+     * Outputs a full page width search bar to the stream
+     * 
+     * This method will output a search bar the will extend the 
+     * full width of the element it is called within.
+     * @param String $name The name given to $_REQUEST
+     * @param String $label Optional placeholder label for the bar, default is 'Search'
+     * @param String $value Optional value to intialize in the bar
+     * @param Mixed $required Optional `true` or array of jquery.validate() properties if required
+     * @return Void
+     */
+    public function fullPageSearchBar($name, $label = 'Search', $value = null, $required = false) {
         echo "<form>\n";
         echo "<div class='input-group'>\n";
         echo "<input type='text' class='form-control' placeholder='{$label}' name='{$name}' >\n";
@@ -169,6 +190,17 @@ class InlineFormWidgets extends FormWidgets {
         echo "</form>\n";
     }
 
+    /**
+     * Outputs an inline button group to the stream
+     * 
+     * The array given should be in the form
+     * `['btn_label'=>'onclick_action',...]`.
+     * You do not typically need to call `InlineFormWidgets::newInlineForm()`
+     * to use this method. However, wif the clickable actions are functions
+     * for a form you will have to.
+     * @param Array $btns An array of the form `['btn_label'=>'onclick_action']`
+     * @return Void
+     */
     public function inlineButtonGroup (Array $btns) {
         echo "<div class='btn-group'>\n";
         foreach($btns as $label=>$action) {

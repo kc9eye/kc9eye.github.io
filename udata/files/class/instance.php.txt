@@ -33,30 +33,37 @@ Class Instance {
     /**
      * Contains the publicly accessible configuraiton array
      * 
-     * @var Array
+     * @var Array $config
      */
     public $config;
 
     /**
      * Contains the publicly accessible PDO object
      * 
-     * @var PDO
+     * @var PDO $pdo
      */
     public $pdo;
 
     /**
      * Contains the publicly accessible security object
      * 
-     * @var Security
+     * @var Security $security
      */
     public $security;
 
     /**
      * Contains the publicly accessible mailer object
      * 
-     * @var Mailer
+     * @var Mailer $mailer
      */
     public $mailer;
+
+    /**
+     * Contains the current user ID
+     * 
+     * @var String $currentUserID Null if no valid users
+     */
+    public $currentUserID;
 
     /**
      * The class constructor
@@ -74,6 +81,7 @@ Class Instance {
         $this->pdo = new PDO($this->config['dbpdo'], $this->config['dbuser'], $this->config['dbpass']);
         $this->security = $this->getAuthority($this->pdo);
         $this->mailer = new Mailer($this->config);
+        $this->currentUserID = $this->security->secureUserID;
     }
 
     /**
@@ -256,6 +264,36 @@ Class Instance {
         }
         else {
             $this->notAuthorized();
+        }
+    }
+
+    /**
+     * Determines if the current user has a role.
+     * 
+     * If the current user has the given role or has the role
+     * of Adminstrator; returns true, otherwise false. 
+     * This is a shortcut method to the Security model.
+     * @param String $role The role to check if the users has.
+     * @return Boolean True if user has the role, false otherwise.
+     * @see Security::userHasRole()
+     * @author Paul W. Lane
+     */
+    public function checkRole ($role) {
+        try {
+            if (is_null($this->security->secureUserID)) {
+                return false;
+            }
+            elseif ($this->security->userHasRole('Administrator')) {
+                return true;
+            }
+            else {
+                return $this->security->userHasRole($role);
+            }
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
         }
     }
 
