@@ -38,12 +38,12 @@ $config = [
     'mailer-type' => 'SMTP',            #The mailer to use, SMTP (sends as SMTP), Mail (sends with PHP mail function), Sendmail (uses host sendmail server)
     'mailer-default-from-addr' => 'noreply@nowhere.com',   #The address the server will send mail as if not defined at send time
     'mailer-default-from-name' => 'UData Server',   #The name the server will send mail as if not defined at send time
-    'mailer-host' => '',                #comma separated list is acceptable in order of percedence
+    'mailer-host' => 'smtp.uhi.amerco',                #comma separated list is acceptable in order of percedence
     'mailer-SMTPAuth' => false,         #If this is set to true then the security type should also be set
     'mailer-username' => '',            #Required if above is true
     'mailer-password' => '',            #Same as above
     'mailer-security' => '',            #Either 'tls' or 'ssl'
-    'mailer-port' => '25',              #The SMTP server port to connect to 
+    'mailer-port' => '',              #The SMTP server port to connect to 
     'mailer-custom-opts' => [],         #Custom SMTP options you may need to set for the mailer as an array
 
     #Application settings dependant on server settings
@@ -51,7 +51,7 @@ $config = [
     'data-root' => '/var/www/dev/data/raw',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
     
     #ViewMaker pagedata settings, effect how the UI looks
-    'company-name' => 'Chicago Assembly Division',
+    'company-name' => 'Chicago Assembly Division(DEVELOPMENT)',
     'company-motto' => 'Building Uhaul\'s Finest and Safest',
     'home-name' => 'Safety',
     'theme' => 'dark', #Not implemented as yet

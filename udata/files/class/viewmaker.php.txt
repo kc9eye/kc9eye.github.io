@@ -204,7 +204,7 @@ Class ViewMaker {
                     echo "              <a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-user'></span>&#160;".$username."&#160;<span class='caret'></span></a>\n";
                     echo "              <ul class='dropdown-menu'>\n";
                     if ($this->security->userHasPermission('adminAll')) {
-                        echo "                  <li><a href='{$this->PageData['approot']}/admin/site_admin'><span class='glyphicon glyphicon-cog'></span>&#160;Site Settings</a></li>\n";
+                        echo "                  <li><a href='{$this->PageData['approot']}/admin/main'><span class='glyphicon glyphicon-cog'></span>&#160;Site Settings</a></li>\n";
                     }
                     echo "                  <li><a href='{$this->PageData['approot']}/user/myaccount'>My Account</a></li>\n";
                     echo "                  <li><a href='{$this->PageData['approot']}/user/logout'>Log Out</a></li>\n";

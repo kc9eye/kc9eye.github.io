@@ -1,0 +1,98 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+class Product {
+    private $dbh;
+
+    public $beginDate;
+    public $endDate;
+    public $pKey;
+    public $pDescription;
+    public $pState;
+    public $pCreator;
+    public $pCreateDate;
+    public $pQualityControl;
+    public $pLog;
+    public $pStats;
+
+    /**
+     * Class constructor
+     * @param PDO $dbh The database handle
+     * @param String $prokey The products master key
+     * @param String $beginDate Optional beginning of a date range
+     * @param String $endData Optional ending of a date range
+     */
+    public function __construct (PDO $dbh, $prokey, $beginDate = null, $endDate = null) {
+        $this->dbh = $dbh;
+        $this->pKey = $prokey;
+        $this->beginDate = $beginDate;
+        $this->endDate = $endDate;
+        $this->getProduct();
+        $this->calcProductStatistics();
+    }
+
+    private function getProduct () {
+        $sql = 'SELECT * FROM products WHERE id = ?';
+        $pntr = $this->dbh->prepare($sql);
+        if (!$nptr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
+        $p = $pntr->fetchAll(PDO::FETCH_ASSOC)[0];
+        $this->pDescription = $p['description'];
+        $this->pState = ($p['stat'] == 'true') ? 'Active' : 'Not Active';
+        $this->pCreateDate = $p['_date'];
+
+        $sql = "SELECT firstname||' '||lastname as name FROM user_accts WHERE id = ?";
+        $pntr = $this->dbh->prepare($sql);
+        if (!$pntr->execute([$p['uid']])) throw new Exception("Select failed: {$sql}");
+        $this->pCreator = $pntr->fetch(PDO::FETCH_ASSOC)['name'];
+
+        $sql = 'SELECT * FROM quality_control WHERE prokey = ?';
+        $pntr = $this->dbh->prepare($sql);
+        if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
+        $this->pQualityControl = $pntr->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql = 'SELECT * FROM production_log WHERE prokey = ?';
+        $pntr = $this->dbh->prepare($sql);
+        if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
+        $this->pLog = $pntr->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    private function calcProductStatistics () {
+        if (is_null($this->beginDate) && is_null($this->endDate)) {
+            $sql = [
+                'total_count' => "SELECT count(*) as \"number\" FROM prodcution_log WHERE prokey = :prokey",
+                'today_count' => "SELECT count(*) as \"number\" FROM production_log WHERE prokey = :prokey AND date_trunc('day', _date) = CURRENT_DATE",
+                'total_ftc' => "SELECT avg(ftc) as \"number\" FROM production_log WHERE prokey = :prokey"
+            ];
+            $execute = [':prokey'=>$this->pKey];
+        }
+        else {
+            $sql = [
+                'total_count' => "SELECT count(*) as \"number\" FROM production_log WHERE prokey = :prokey AND date_trunc('day',_date) BETWEEN :begin AND :end",
+                'today_count' => "SELECT count(*) as \"number\" FROM production_log WHERE prokey = :prokey AND date_trunc('day',_date) = CURRENT_DATE",
+                'total_ftc' => "SELECT avg(ftc) as \"number\" FROM production_log WHERE prokey = :prokey AND date_trunc('day',_date) BETWEEN :begin AND :end"
+            ];
+            $execute = [':prokey'=>$this->pKey,':begin'=>$this->beginDate,':end'=>$this->endDate];
+        }
+
+        foreach($sql as $i=>$v) {
+            $pntr = $this->dbh->prepare($v);
+            if (!$pntr->execute($execute)) throw new Exception("SQL Failed: {$v}");
+            $this->pStats[$i] = $pntr->fetch(PDO::FETCH_ASSOC)['number'];
+        }
+    }
+
+}

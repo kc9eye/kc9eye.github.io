@@ -24,7 +24,7 @@
   *
   * @param array $config Should contain an array for comfiguration options.
   * @package UData
-  * @example ../class/example_ui.php
+  * @example ../docs/example_ui.php
   * @return Instance
   * @see etc/config.php
   */
@@ -138,13 +138,9 @@ Class Instance {
     }
 
     /**
-     * Is called by the constructor to instantiate the *Security* model and object
-     * 
-     * This method should not be called by any classes extending this one. Instead
-     * extending classes should instantiated this class by using `parent::_construct($config);`
+     * Is called by the constructor to instantiate the `Security` model and object
      * 
      * @return Object Security
-     * 
      * @author Paul W. Lane
      */
     private function getAuthority () {
@@ -152,10 +148,12 @@ Class Instance {
         if ($security->checkPersistentLogOn()) {
             $security->setUser();
             $_SESSION['uid'] = $security->secureUserID;
+            $this->currentUserID = $security->secureUserID;
         }
         elseif (isset($_SESSION['uid'])) {
             $security->secureUserID = $_SESSION['uid'];
             $security->setUser();
+            $this->currentUserID = $security->secureUserID;
         }
         return $security;
     }
@@ -361,7 +359,7 @@ Class Instance {
         }
         return false;
     }
-    
+
     /**
      * Stops script execution and outputs a not authorized interface to the stream.
      * 

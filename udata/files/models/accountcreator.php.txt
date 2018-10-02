@@ -59,25 +59,30 @@ Class AccountCreator {
     }
 
     public function verifyAccount ($data) {
-        $hashed_data = hash('sha256', $data);
-        $sql = 'SELECT * FROM user_accts_holding WHERE verify_code = ?';
-        $pntr = $this->dbh->prepare($sql);
-        $pntr->execute([$hashed_data]);
-        $res = $pntr->fetchAll(PDO::FETCH_ASSOC);
-        if ( count($res) != 1) {
-            return false;
-        }
-        elseif ( hash_equals($res[0]['verify_code'], $hashed_data) ) {
-            if ($this->copyUserData($res[0]['id'])) {
-                if ($this->emailAdmin($res[0]['id'])) {
-                    return true;
-                }
-                else {
-                    throw new Exception('Unknown verification error occured');
-                }
+        try {
+            $data = hash('sha256', $data);
+            $pntr = $this->dbh->prepare('SELECT * FROM user_accts_holding WHERE verify_code = ?');
+            $pntr->execute([$data]);
+            $user = $pntr->fetchAll(PDO::FETCH_ASSOC);
+            if (count($user) != 1) {
+                throw new Exception("Database corrupt, wrong number of results returned.");
+            }
+            elseif (!hash_equals($user[0]['verify_code'],$data)) {
+                throw new Exception("Hashes not equal, possible hash timing exploit.");
+            }
+            elseif (!$this->copyUserData($user[0])) {
+                throw new Exception("Failed to copy the users data.");
+            }
+            else {
+                return true;
             }
         }
-        else {
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
         }
     }
@@ -96,39 +101,37 @@ Class AccountCreator {
         }
     }
 
-    private function copyUserData ($uid) {
+    private function copyUserData (Array $data) {
+        $pid = uniqid();
+        $sql = [
+            'INSERT INTO user_accts VALUES (:id,:uname,:pword,:first,:last,:alt,:date,:code,:pid)',
+            'INSERT INTO profiles (id, first, last, email, alt_email) VALUES (:pid,:fname,:lname,:mail,:alt)',
+            'DELETE FROM user_accts_holding WHERE id = :id'
+        ];
+        $inserts = [
+            [
+                ':id'=>$data['id'],':uname'=>$data['username'],':pword'=>$data['password'],':first'=>$data['firstname'],
+                ':last'=>$data['lastname'],':alt'=>$data['alt_email'],':date'=>$data['_date'],':code'=>$data['verify_code'],
+                ':pid'=>$pid
+            ],
+            [
+                ':pid'=>$pid,':fname'=>$data['firstname'],':lname'=>$data['lastname'],':mail'=>$data['username'],':alt'=>$data['alt_email']
+            ],
+            [':id'=>$data['id']]
+        ];
         try {
-            $sql = 'SELECT * FROM user_accts_holding WHERE id = ?';
-            $pntr = $this->dbh->prepare($sql);
-            $pntr->execute([$uid]);
-            $res = $pntr->fetchAll(PDO::FETCH_ASSOC);
-            $insert = [
-                ':id'=>$res[0]['id'],
-                ':username'=>$res[0]['username'],
-                ':password'=>$res[0]['password'],
-                ':firstname'=>$res[0]['firstname'],
-                ':lastname'=>$res[0]['lastname'],
-                ':alt_email'=>$res[0]['alt_email'],
-                ':date'=>$res[0]['_date'],
-                ':code'=>$res[0]['verify_code'],
-                ':pid'=>uniqid()
-            ];
-            $sql = 'INSERT INTO user_accts VALUES (:id,:username,:password,:firstname,:lastname,:alt_email,:date,:code,:pid)';
-            $sql1 = 'INSERT INTO profiles (id,first,last,email) VALUES (:id,:first,:last,:email)';
-            $sql2 = 'DELETE FROM user_accts_holding WHERE id = ?';
-            $pntr = $this->dbh->prepare($sql);
-            $pntr1 = $this->dbh->prepare($sql1);            
-            $pntr2 = $this->dbh->prepare($sql2);
-
             $this->dbh->beginTransaction();
-            $pntr->execute($insert);
-            $pntr1->execute([':id'=>$insert[':pid'],':first'=>$insert[':firstname'],':last'=>$insert[':lastname'],':email'=>$insert[':username']]);
-            $pntr2->execute([$uid]);
+            for($cnt = 0; $cnt < count($sql); $cnt++) {
+                $pntr = $this->dbh->prepare($sql[$cnt]);
+                if (!$pntr->execute($inserts[$cnt])) {
+                    throw new Exception($sql[$cnt].' failed!');
+                }
+            }
             $this->dbh->commit();
-
+            $this->emailAdmin($data['id']);
             return true;
         }
-        catch(PDOException $e) {
+        catch (PDOException $e) {
             $this->dbh->rollBack();
             trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
@@ -151,7 +154,7 @@ Class AccountCreator {
             $pntr = $this->dbh->prepare($sql);
             $pntr->execute(['Administrator']);
             $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/adminnewacct.html');
-            $body .= '<a href="'.$this->root_url.'/admin/user_admin?uid='.$uid.'"><strong>Click Here</strong></a>';
+            $body .= '<a href="'.$this->root_url.'/admin/users?action=get&uid='.$uid.'"><strong>Click Here</strong></a>';
             while (($res = $pntr->fetch(PDO::FETCH_ASSOC))) {
                 $this->mailer->sendMail(['to'=>$res['username'],'subject'=>'New Account Created','body'=>$body]);
             }

@@ -106,12 +106,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">50</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">198</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">11</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">11</span>
                                 </a>
                             </li>
                             <li>
@@ -136,27 +136,38 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1403017442"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1045097495"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1403017442" class="accordion-body collapse in">
+            <div id="namespace-1045097495" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/Autoloader.html">Autoloader</a></li>
+                                                                                                    <li class="class"><a href="../classes/AccountCreator.html">AccountCreator</a></li>
+                                                    <li class="class"><a href="../classes/Application.html">Application</a></li>
+                                                    <li class="class"><a href="../classes/Autoloader.html">Autoloader</a></li>
                                                     <li class="class"><a href="../classes/DBObjects.html">DBObjects</a></li>
                                                     <li class="class"><a href="../classes/DocumentViewer.html">DocumentViewer</a></li>
+                                                    <li class="class"><a href="../classes/Employee.html">Employee</a></li>
                                                     <li class="class"><a href="../classes/Errorhandler.html">Errorhandler</a></li>
                                                     <li class="class"><a href="../classes/FileIndexer.html">FileIndexer</a></li>
                                                     <li class="class"><a href="../classes/FileUpload.html">FileUpload</a></li>
                                                     <li class="class"><a href="../classes/FormWidgets.html">FormWidgets</a></li>
+                                                    <li class="class"><a href="../classes/HerbHandler.html">HerbHandler</a></li>
                                                     <li class="class"><a href="../classes/Indexer.html">Indexer</a></li>
                                                     <li class="class"><a href="../classes/InlineFormWidgets.html">InlineFormWidgets</a></li>
                                                     <li class="class"><a href="../classes/Instance.html">Instance</a></li>
                                                     <li class="class"><a href="../classes/Mailer.html">Mailer</a></li>
+                                                    <li class="class"><a href="../classes/Product.html">Product</a></li>
+                                                    <li class="class"><a href="../classes/Products.html">Products</a></li>
+                                                    <li class="class"><a href="../classes/SafetyBoardMinutes.html">SafetyBoardMinutes</a></li>
+                                                    <li class="class"><a href="../classes/SafetyMedia.html">SafetyMedia</a></li>
+                                                    <li class="class"><a href="../classes/SDSHandler.html">SDSHandler</a></li>
                                                     <li class="class"><a href="../classes/Security.html">Security</a></li>
                                                     <li class="class"><a href="../classes/UploadException.html">UploadException</a></li>
+                                                    <li class="class"><a href="../classes/UserAdministrator.html">UserAdministrator</a></li>
+                                                    <li class="class"><a href="../classes/UserReset.html">UserReset</a></li>
                                                     <li class="class"><a href="../classes/ViewMaker.html">ViewMaker</a></li>
                                             </ul>
                 </div>
@@ -208,7 +219,7 @@ require_once(dirname(__DIR__).&#039;/lib/init.php&#039;);
  * if they are not satisfied.
  */
 $server-&gt;mustBeValidUser();
-$server-&gt;userMustHaveRole(&#039;My User Role&#039;);
+$server-&gt;userMustHaveRole(&#039;User Role&#039;);
 $server-&gt;userMustHavePermission(&#039;myPermission&#039;);
 
 /**
@@ -222,16 +233,19 @@ $view = $server-&gt;getViewer(&#039;Example Interface&#039;);
  * through out your content, so only specified users see certain
  * content.
  */
+if ($server-&gt;checkRole(&#039;User Role&#039;)) {
+    $view-&gt;h1(&quot;Only users with the role &#039;User Role&#039; see this!&quot;);
+}
 if ($server-&gt;checkPermission(&#039;myPermission&#039;)) {
-    echo &quot;&lt;h1&gt;Only users with&#039;myPermission&#039; see this.&lt;/h1&gt;&quot;;
+    $view-&gt;h1(&quot;Only users with &#039;myPermission&#039; see this!&quot;);
 }
 
 if ($server-&gt;checkPermission(&#039;myOtherPermission&#039;)) {
-    echo &quot;&lt;h1&gt;Only users with &#039;myOtherPermission&#039; see this.&lt;/h1&gt;&quot;;
+    $view-&gt;h1(&quot;Only users with &#039;myOtherPermission&#039; see this!&quot;);
 }
 
 if ($server-&gt;checkPermsArray([&#039;myPermission&#039;,&#039;myOtherPermission&#039;],true)) {
-    echo &quot;&lt;h1&gt;Only users that have &#039;myPermission&#039; AND &#039;myOtherPermission&#039; see this.&lt;/h1&gt;&quot;;
+    $view-&gt;h1(&quot;Only users with both &#039;myPermission&#039; and &#039;myOtherPermission&#039; see this!&quot;);
 }
 
 /**
@@ -1134,9 +1148,8 @@ it is obsoleted by something else.</p>
                 <h3 class="private ">getAuthority()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">getAuthority() : Object</pre>
-                <p><em>Is called by the constructor to instantiate the *Security* model and object</em></p>
-                <p>This method should not be called by any classes extending this one. Instead
-extending classes should instantiated this class by using <code>parent::_construct($config);</code></p>
+                <p><em>Is called by the constructor to instantiate the `Security` model and object</em></p>
+                
 
                 
                 
@@ -1213,7 +1226,7 @@ extending classes should instantiated this class by using <code>parent::_constru
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 19th, 2018 at 21:06.
+                    on October 2nd, 2018 at 18:04.
                 </section>
             </section>
         </section>

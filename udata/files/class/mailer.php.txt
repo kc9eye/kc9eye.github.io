@@ -81,7 +81,8 @@ Class Mailer {
             $this->mailer->Port = $this->config['mailer-port'];
         }
         catch (Exception $e) {
-            throw new \Exception($e->errorMeassge());
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
         }
     }
 
@@ -107,11 +108,15 @@ Class Mailer {
                     $this->mailer->addAttachment($file);
                 }
             }
-            $this->mailer->send();
-            return true;
+            return $this->mailer->send();            
         }
         catch (Exception $e) {
-            throw new \Exception($e->errorMessage());
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+        catch (\Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
         }
     }
 

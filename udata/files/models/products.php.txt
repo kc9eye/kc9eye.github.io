@@ -1,0 +1,260 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+class Products {
+    protected $dbh;
+
+    public $NewProductKey;
+
+    public function __construct (PDO $dbh) {
+        $this->dbh = $dbh;
+        $this->NewProductKey = null;
+    }
+
+    /**
+     * Verifies if a product description does not already exists
+     * @param String $description The product description to verify
+     * @return Boolean Returns 'true' if the product does not exist,
+     * otherwise false.
+     */
+    public function verifyProductDescription ($description) {
+        $sql = 'SELECT count(*) FROM products WHERE description = ?';
+        $pntr = $this->dbh->prepare($sql);
+        try {
+            $pntr->execute([$description]);
+            $count = $pntr->fetchAll(PDO::FETCH_ASSOC);
+            if ($count[0]['count'] == 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Adds a new product to the master product list
+     * @param Array $data In the form `['product_description'=>'description','uid'=>'users_id_number']`
+     * Generally in the form of $_REQUEST array.
+     * @return Boolean `true` on success, `false` otherwise.
+     */
+    public function addNewProduct ($data) {
+        $sql = 
+            'INSERT INTO products (product_key,description,active,_date,uid)
+            VALUES (:product_key,:description,:active,now(),:uid)';
+        $pntr = $this->dbh->prepare($sql);
+        $insert = [
+            ':product_key'=>uniqid('master_product_key_'),
+            ':description'=>$data['product_description'],
+            ':active'=>$data['active_product'],
+            ':uid'=>$data['uid']
+        ];
+        try {
+            $this->dbh->beginTransaction();
+            $pntr->execute($insert);
+            $this->dbh->commit();
+            if ($pntr->rowCount() == 0) {
+                throw new Exception('Zero rows inserted');
+            }
+            else {
+                $this->NewProductKey = $insert[':product_key'];
+                return true;
+            }
+        }
+        catch (PDOException $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Searches the master list for products
+     * 
+     * Either returns an array of matches found or false if
+     * no matches were found.
+     * @param String $search_term The terms to search for
+     * @return Mixed Either an array of found rows, or false
+     */
+    public function searchProducts($search_term) {
+        $search_term = str_replace(' ', ' | ', $search_term);
+        $sql = 'SELECT * FROM products WHERE to_tsquery(?) @@ search';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$search_term]);
+            $result = $pntr->fetchAll(PDO::FETCH_ASSOC);
+            if (count($result) != 0) {
+                return $result;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+    }
+
+
+    /**
+     * Removes a product from the master list
+     * 
+     * Removes a product from only the master list. The parameter array
+     * can have either the `product_description` index, or `product_key` index.
+     * If both are given, the product matching both will be removed
+     * @param Array $data An array containing either or both of the given indexes
+     * @return Boolean `true` on succes, otherwise `false`
+     */
+    public function removeProductFromMaster (Array $data) {
+        $description = !empty($data['product_description']) ? $data['product_description'] : false;
+        $key = !empty($data['product_key']) ? $data['product_key'] : false;
+        if ($description === false && $key === false) {
+            throw new Exception("Null argument value exception, array needs one of 'product_description' or 'product_key'.");
+        }
+        elseif ($description !== false && $key !== false) {
+            $sql = 'DELETE FROM products WHERE product_key = :key AND product_description = :description';
+            $insert = [':description'=>$description,':key'=>$key];
+        }
+        elseif ($description !== false && $key === false) {
+            $sql = 'DELETE FROM products WHERE product_description = :description';
+            $insert = [':description'=>$description];
+        }
+        elseif ($description === false && $key !== false) {
+            $sql = 'DELETE FROM products WHERE product_key = :key';
+            $insert = [':key'=>$key];
+        }
+        else {
+            throw new Exception("No array indexes matched.");
+        }
+
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute($insert);
+            if ($pntr->rowCount() != 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+
+    }
+
+    /**
+     * Returns the product description given it's product key
+     * @param String $key The product key to look up.
+     * @return Mixed Either the product description or false on failure.
+     */
+    public function getProductDescriptionFromKey ($key) {
+        $sql = 'SELECT description FROM products WHERE product_key = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$key]);
+            if (!empty(($result = $pntr->fetchAll(PDO::FETCH_ASSOC)[0]['description']))) {
+                return $result;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves the checkpoints for a given product
+     * 
+     * @param String $key The product master key to retrives checkponits for
+     * @return Mixed Either a multi-dimensional array of checkpoints or false on error
+     */
+    public function getCheckPoints ($key) {
+        $sql = 'SELECT * FROM quality_control WHERE prokey = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$key]);
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Adds a given checkpoint to a product
+     * 
+     * The `$data` parameter needs to be an indexed array containing the data to insert.
+     * Namely the users uid, and a description of the checkpoint as well as the product 
+     * key the product belongs to in the form `['uid'=>'usersid','description'=>'checkpointdescription','prokey'=>'product_key']`
+     * @param Array $data Usually the $_REQUEST array from a form to add the point.
+     * @return Boolean `true` on success, otherwise `false`
+     */
+    public function addCheckPoint (Array $data) {
+        $sql = 'INSERT INTO quality_control VALUES (:id,:prokey,:description,now(),:uid)';
+        $pntr = $this->dbh->prepare($sql);
+        $insert = [
+            ':id'=>uniqid(),
+            ':prokey'=>$data['prokey'],
+            ':description'=>$data['description'],
+            ':uid'=>$data['uid']
+        ];
+        try {
+            $this->dbh->beginTransaction();
+            $pntr->execute($insert);
+            $this->dbh->commit();
+            return true;
+        }
+        catch (PDOException $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Removes a quality checkpoint from a product 
+     * @param String $prokey The product key to remove the checkpoint from
+     * @param String $id The ID of the check point to remove
+     * @return Boolean
+     */
+    public function removeCheckpoint ($prokey, $id) {
+        $sql = 'DELETE FROM quality_control WHERE prokey = :prokey AND id = :id';
+        $pntr = $this->dbh->prepare($sql);
+        try {
+            $this->dbh->beginTransaction();
+            $pntr->execute([':prokey'=>$prokey,':id'=>$id]);
+            $this->dbh->commit();
+            return true;
+        }
+        catch (PDOException $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+}
