@@ -37,8 +37,8 @@ ob_start(null,0,PHP_OUTPUT_HANDLER_STDFLAGS^PHP_OUTPUT_HANDLER_REMOVABLE);
 
 require_once(dirname(__DIR__).'/etc/constants.php');
 require_once(dirname(__DIR__).'/etc/config.php');
-require_once(dirname(__DIR__).'/class/autoloader.php');
-require_once(dirname(__DIR__).'/class/errorhandler.php');
+require_once(dirname(__DIR__).'/framework/autoloader.php');
+require_once(dirname(__DIR__).'/framework/errorhandler.php');
 
 $loader = new Autoloader(dirname(__DIR__),['.php','.lib.php','.class.php','.obj.php','.int.php']);
 $error = new Errorhandler($config['error-log-file-path'], $config['error-support-link']);

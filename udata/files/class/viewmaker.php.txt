@@ -118,6 +118,13 @@ Class ViewMaker {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="<?php echo $this->PageData['wwwroot'];?>/scripts/header.js"></script>
+        <?php
+        if (!empty($this->PageData['headinserts']) && is_array($this->PageData['headinserts'])) {
+            foreach($this->PageData['headinserts'] as $insert) {
+                echo "{$insert}\n";
+            }
+        }
+        ?>
     </head>
     <body>
         <div class='page-header' id='template-header'>
@@ -161,6 +168,7 @@ Class ViewMaker {
     </body>
 </html>
 <?php
+    die();
     }
 
     /**

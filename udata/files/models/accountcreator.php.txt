@@ -16,6 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 Class AccountCreator {
+    const AWAITING_VERIFICATION = 12121212;
 
     protected $dbh;
     protected $mailer;
@@ -28,6 +29,9 @@ Class AccountCreator {
     }
 
     public function createAccountToVerify ($data) {
+        if (!$this->verifySingleSignUpAttempt($data['email'])) {
+            return self::AWAITING_VERIFICATION;
+        }
         try {
             $verify_code = bin2hex(random_bytes(32));
             $sql = 'INSERT INTO user_accts_holding VALUES (:id,:username,:password,:firstname,:lastname,:alt_email,now(),:verifycode)';
@@ -163,6 +167,25 @@ Class AccountCreator {
         catch (Exception $e) {
             trigger_error($e->message,E_USER_WARNING);
             return false;
+        }
+    }
+
+    private function verifySingleSignUpAttempt ($username) {
+        $sql = "SELECT count(*) FROM user_accts_holding WHERE username = ?";
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$username]);
+            $res = $pntr->fetch(PDO::FETCH_ASSOC);
+            if ($res['count'] > 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return null;
         }
     }
 } 

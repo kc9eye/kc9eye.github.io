@@ -87,6 +87,32 @@ class Products {
     }
 
     /**
+     * Updates an already existsing product.
+     * @param String $prokey The products master key
+     * @param String $description The products updated description
+     * @param String $status Either 'true' for active or 'false' for inactive status
+     * @return Boolean
+     */
+    public function updateExistsingProduct ($prokey,$description,$status) {
+        $sql = 'UPDATE products SET description = :descr,active = :active WHERE product_key = :prokey';
+        $update = [
+            ':descr'=>$description,
+            ':active'=>$status,
+            ':prokey'=>$prokey
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($update)) throw new Exception("Update failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+
+    }
+
+    /**
      * Searches the master list for products
      * 
      * Either returns an array of matches found or false if
@@ -187,6 +213,61 @@ class Products {
     }
 
     /**
+     * Retrieves a product QC log entry by it's ID
+     * @param String $id The log entries ID
+     * @return Array The log entries data
+     */
+    public function getQCLogEntryByID ($id) {
+        $sql = 'SELECT * FROM production_log WHERE id = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Select failed: {$sql}");
+            return $pntr->fetchAll(PDO::FETCH_ASSOC)[0];
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Updates an existsing QC log entry from an Array
+     * @param Array $data The data for the entry; 
+     * `['id'=>string,'serial'=>string,'sequence'=>string,'misc'=>string,'ftc'=>string,'comments'=>string,'uid'=>string]`
+     * @return Boolean
+     */
+    public function updateExistingQCLog ($data) {
+        $sql = 
+            'UPDATE production_log 
+             SET sequence_number = :sequence,
+             serial_number = :serial,
+             misc = :misc,
+             ftc = :ftc,
+             comments = :comments,
+             uid = :uid
+             WHERE id = :id';
+        $update = [
+            ':sequence'=>$data['sequence'],
+            ':serial'=>$data['serial'],
+            ':misc'=>$data['misc'],
+            ':ftc'=>$data['ftc'],
+            ':comments'=>$data['comments'],
+            ':uid'=>$data['uid'],
+            ':id'=>$data['id']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($update)) throw new Exception("Update failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+
+    /**
      * Retrieves the checkpoints for a given product
      * 
      * @param String $key The product master key to retrives checkponits for
@@ -257,4 +338,52 @@ class Products {
             return false;
         }
     }
+
+    /**
+     * Adds an entry to the Quality Control Log
+     * 
+     * The `$data` array should be in the form
+     * `['prokey'=>string,'uid'=>string,serial'=>string,'misc'=>string,'comments'=>string,['qc'=>[1/0,...]]]`
+     * The array can contain others, but they are not used or changed.
+     * @param Array $data The data to insert
+     * @return Boolean
+     */
+    public function addToQcLog (Array $data) {
+        $sql = 
+            "INSERT INTO production_log 
+             SELECT :id,:prokey,:serial_num,(
+                (SELECT count(*) from production_log WHERE prokey = :pkey) + 1
+             ),:misc,:ftc,:comments,:uid,now()";
+        
+        #Calculate FTC
+        $qc = count($data['qc']);
+        $defect = 0;
+        for($cnt=0;$cnt<$qc;$cnt++) {
+            if ($data['qc'][$cnt] == 1) $defect++; 
+        }
+        $ftc = round((($defect/$qc) * 100),2,PHP_ROUND_HALF_UP);
+
+        #insert the data
+        $insert = [
+            ':id'=>uniqid(),
+            ':prokey'=>$data['prokey'],
+            ':pkey'=>$data['prokey'],
+            ':serial_num'=>$data['serial'],
+            ':misc'=>$data['misc'],
+            ':ftc'=>$ftc,
+            ':comments'=>$data['comments'],
+            ':uid'=>$data['uid']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+
+    }
 }
+

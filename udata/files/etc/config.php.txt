@@ -51,14 +51,14 @@ $config = [
     'data-root' => '/var/www/dev/data/raw',                  #Where data files are going to be stored. SDS files, images, etc... Must be writtable by the server process
     
     #ViewMaker pagedata settings, effect how the UI looks
-    'company-name' => 'Chicago Assembly Division(DEVELOPMENT)',
+    'company-name' => 'Chicago Assembly Division(DEV BUILD)',
     'company-motto' => 'Building Uhaul\'s Finest and Safest',
     'home-name' => 'Safety',
     'theme' => 'dark', #Not implemented as yet
 
     #Main navbar links
     'navbar-links' => [
-        'Production' => '/production/main',
+        'Products' => '/products/main',
         'Material' => '/material/main',
         'Maintenance' => '/maintenance/main',
         'HR' => '/hr/main'

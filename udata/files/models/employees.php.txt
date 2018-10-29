@@ -1,0 +1,66 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+class Employees {
+
+    protected $dbh;
+    protected $storage;
+
+    public function __construct (PDO $dbh, $storage) {
+        $this->dbh = $dbh;
+        $this->storage = $storage;
+    }
+
+    public function listCurrentEmployees (Array $filter = null) {
+        try {
+            $sql = 
+            'SELECT employee.id as id, employee.start_date as start, employee.term_date as term, employee.status as status,
+            profiles.first as first, profiles.middle as middle, profiles.last as last, profiles.other as other
+            FROM employee
+            INNER JOIN profiles
+            ON employee.pid = profiles.id
+            WHERE employee.term_date IS NULL';
+            $pntr = $this->dbh->query($sql);
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+    
+    public function listAllEmployees () {
+        try {
+            $sql =
+            'SELECT employee.id as id, employee.start_date as start, employee.term_date as term, employee.status as status,
+            profiles.first as first, profiles.middle as middle, profiles.last as last, profiles.other as other
+            FROM employee
+            INNER JOIN profiles
+            ON employee.pid = profiles.id';
+            $pntr = $this->dbh->query($sql);
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    public function addNewEmployee (Array $data) {
+         
+    }
+}

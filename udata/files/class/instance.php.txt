@@ -92,16 +92,23 @@ Class Instance {
      * with a `$myobjectvar->footer()` method call. This method also returns the
      * ViewMaker object. It should be called thusly: `$view = $server->getViewer('My Page Title')`.
      * 
-     * @param $pagetitle Optional pagetitle for the browser page. Defaults to configuration option
+     * @param String $pagetitle Optional pagetitle for the browser page. Defaults to configuration option
      * `$config['company-name']`.
-     * 
+     * @param Array $pagedata Optional array of PageData for content manipulation.
      * @return Object ViewMaker
      * @uses ViewMaker
      * 
      * @author Paul W. Lane
      */
-    public function getViewer ($pagetitle = null) {
+    public function getViewer ($pagetitle = null, $pagedata = null) {
         $view = new ViewMaker($this->security, $this->config);
+        if (!is_null($pagedata)) {
+            if (is_array($pagedata)) {
+                foreach($pagedata as $i=>$v) {
+                    $view->PageData[$i] = $v;
+                }
+            }
+        }
         $view->ViewData['pagetitle'] = is_null($pagetitle) ? $this->config['company-name'] : $pagetitle;
         $view->header();
         return $view;
@@ -131,7 +138,7 @@ Class Instance {
         echo "<pre class='scrollable'>\n";
         echo "Your debug info:\n----------\n{$debug}\n---------\n\n";
         echo "Session info\n--------\n".print_r($_SESSION, true)."\n----------\n\n";
-        echo "Server Variables\n-----------\n".print_r($_SESSION, true)."\n-----------\n\n";
+        echo "Server Variables\n-----------\n".print_r($_SERVER, true)."\n-----------\n\n";
         echo "</pre>\n";
         $view->footer();
         die();
