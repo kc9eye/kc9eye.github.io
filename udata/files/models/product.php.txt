@@ -76,6 +76,7 @@ class Product {
         $this->beginDate = $beginDate;
         $this->endDate = $endDate;
         $this->getProduct();
+        $this->getBOM();
         $this->calcProductStatistics();
     }
 
@@ -114,14 +115,8 @@ class Product {
             }
             $this->pLog = $pntr->fetchAll(PDO::FETCH_ASSOC);
         }
-
-        $sql = 'SELECT * FROM bom WHERE prokey = :key';
-        $pntr = $this->dbh->prepare($sql);
-        if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
-        $res = $pntr->fetchAll(PDO::FETCH_ASSOC);
-        if (count($res) == 0) $this->pBOM = null;
-        else $this->pBOM = $res;
     }
+
     private function calcProductStatistics () {
         if (is_null($this->beginDate) && is_null($this->endDate)) {
             $sql = [
@@ -153,4 +148,36 @@ class Product {
         $this->pStats['today_count'] = round($pntr->fetch(PDO::FETCH_ASSOC)['number'],2,PHP_ROUND_HALF_UP);
     }
 
+    private function getBOM () {
+        $sql = 'SELECT count(*) FROM bom WHERE prokey = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
+            if ($pntr->fetch(PDO::FETCH_ASSOC)['count'] == 0) {
+                $this->pBOM = null;
+            }
+            else {
+                $sql = 
+                    'SELECT 
+                        id,
+                        (SELECT number FROM material WHERE id = a.partid),
+                        (SELECT description FROM material WHERE id = a.partid), 
+                        qty,
+                        (SELECT cell_name FROM work_cell WHERE id = a.cellid)
+                    FROM bom as a 
+                    WHERE prokey = :key';
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
+            $this->pBOM = $pntr->fetchAll(PDO::FETCH_ASSOC);
+            }
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            $this->pBOM = null;
+        }
+    }
 }

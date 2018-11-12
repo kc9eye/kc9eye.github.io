@@ -296,7 +296,8 @@ class Application {
      * @return Mixed An array on success, otheriwse false
      */
     public function searchUsers ($search) {
-        $search_term = str_replace(' ', ' | ', $search);
+        $s = new SearchStringFormater();
+        $search_term = $s->formatSearchString($search);
         $sql = 
             "SELECT * FROM user_accts WHERE 
              to_tsvector(
@@ -434,6 +435,11 @@ class Application {
             }
             $this->dbh->commit();
             return true;
+        }
+        catch (PDOException $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
         }
         catch (Exception $e) {
             $this->dbh->rollBack();

@@ -27,14 +27,15 @@ class SDSHandler {
 
     public function searchSDS ($search_term) {
         try{
-        $search_term = str_replace(' ', ' | ', $search_term);        
-        $sql = 'SELECT sds.id,sds.name,sds.dist,sds.fid,file_index.file
-                FROM sds 
-                INNER JOIN file_index ON sds.fid = file_index.id 
-                WHERE to_tsquery(?) @@ sds.search';        
-        $pntr = $this->dbh->prepare($sql);
-        $pntr->execute([$search_term]);
-        return $pntr->fetchAll(PDO::FETCH_ASSOC);
+            $search = new SearchStringFormater();
+            $search_term = $search->formatSearchString($search_term);        
+            $sql = 'SELECT sds.id,sds.name,sds.dist,sds.fid,file_index.file
+                    FROM sds 
+                    INNER JOIN file_index ON sds.fid = file_index.id 
+                    WHERE to_tsquery(?) @@ sds.search';        
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$search_term]);
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
         }
         catch (PDOException $e) {
             trigger_error($e->getMessage(),E_USER_WARNING);

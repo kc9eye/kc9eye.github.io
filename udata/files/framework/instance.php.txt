@@ -234,7 +234,7 @@ Class Instance {
             echo "<script>
             setTimeout(function(){
                 window.open('{$view->PageData['approot']}{$_SESSION['bg_process']['pid']}','_self');
-            },5000);";
+            },3000);";
             echo "</script>\n";
             $view->footer();
         };
@@ -266,17 +266,33 @@ Class Instance {
         elseif (empty($_SESSION['bg_process']['status'])) {
             $dialog();
         }
-        elseif ($_SESSION['bg_process']['status'] == 'success') {
-            $url = $_SESSION['bg_process']['redirect'];
-            unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
-            unset($_SESSION['bg_process']);
-            $this->newEndUserDialog("Request succeeded.",DIALOG_SUCCESS,$url);
-        }
-        elseif ($_SESSION['bg_process']['status'] == 'failed') {
-            $url = $_SESSION['bg_process']['redirect'];
-            unlink(INLCUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
-            unset($_SESSOIN['bg_process']);
-            $this->newEndUserDialog("Something went wrong with the request.",DIALOG_FAILURE,$url);
+        elseif (!empty($_SESSION['bg_process']['status'])) {
+            switch($_SESSION['bg_process']['status']) {
+                case 'error':
+                    $url = $_SESSION['bg_process']['redirect'];
+                    unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
+                    unset($_SESSION['bg_process']);
+                    $this->newEndUserDialog("There was an error processing the request.",DIALOG_FAILURE,$url);
+                break;
+                case 'failed':
+                    $url = $_SESSION['bg_process']['redirect'];
+                    unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
+                    unset($_SESSION['bg_process']);
+                    $this->newEndUserDialog("Something went wrong with the request.",DIALOG_FAILURE,$url);
+                break;
+                case 'success':
+                    $url = $_SESSION['bg_process']['redirect'];
+                    unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
+                    unset($_SESSION['bg_process']);
+                    $this->newEndUserDialog("Request succeeded.",DIALOG_SUCCESS,$url);
+                break;
+                default:
+                    $url = $_SESSION['bg_process']['redirect'];
+                    unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
+                    unset($_SESSOIN['bg_process']);
+                    $this->newEndUserDialog("An Unkown Error Occurred.",DIALOG_FAILURE,$url);
+                break;
+            }            
         }
         die();
      }

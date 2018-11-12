@@ -175,6 +175,7 @@ Class ViewMaker {
                         echo "<li class='list-group-item'>{$role}</li>\n";
                         $displayed = $role;
                     }
+                    echo "</ul>\n";
                 }
                 if ($i == 'permissions') {
                     echo "<strong>Page Access Permissions:</strong>\n";
@@ -184,6 +185,7 @@ Class ViewMaker {
                         echo "<li class='list-group-item'>{$perm}</li>\n";
                         $displayed = $perm;
                     }
+                    echo "</ul>\n";
                 }
             }
             echo "</div></div>\n";
@@ -500,5 +502,28 @@ Class ViewMaker {
      */
     public function bold ($content) {
         echo "<strong>{$content}</strong>";
+    }
+
+    /**
+     * Encapsulate `$content` in an HTML paragraph section in the bg-info bootstrap style.
+     * @param String $content The string to be in the paragraph.
+     * @return Void
+     */
+    public function bgInfoParagraph ($content) {
+        echo "<p class='bg-primary'>{$content}</p>\n";
+    }
+
+    /**
+     * Outputs an edit button that when clicked goes to the given application centric addtress
+     * @param String $api The application centric API address the user should be sent to.
+     * @param Boolean $passthru If true the address is passed through with alteration.
+     * @param Boolean $return If true the method returns the string instead of echoing it
+     * @return Mixed
+     */
+    public function editBtnSm ($addr, $return = false, $passthru = false) {
+        $addr = $passthru ? $addr : $this->PageData['approot'].$addr;
+        $str = "<a href='{$addr}' class='btn btn-sm btn-warning' role='button'><span class='glyphicon glyphicon-pencil'></span></a>";
+        if ($return) return $str;
+        else echo $str;
     }
 }

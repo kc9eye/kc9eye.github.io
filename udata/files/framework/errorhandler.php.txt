@@ -82,6 +82,9 @@ Class Errorhandler {
      * @return Mixed
      */
     public function ErrorHandler ($code,$msg,$file,$line,$trace) {
+        if (isset($_SESSION['bg_process'])) {
+            $_SESSION['bg_process']['status'] = 'error';
+        }
         if (!is_null($trace) && is_array($trace)) {
             $trace = htmlentities(print_r($trace,true));
         }
@@ -91,6 +94,10 @@ Class Errorhandler {
         $this->PrepareXML($code,$msg,$file,$line,$trace);
         $this->WriteLog ();
         if (($code === E_USER_NOTICE) || ($code === E_USER_WARNING)) {
+            return true;
+        }
+        elseif(isset($_SESSION['bg_process']) && $_SESSION['bg_process']['status'] == 'error') {
+            #deferr the blue screen of death and let processingDialog() handle it
             return true;
         }
         else {
@@ -206,7 +213,7 @@ Class Errorhandler {
      * @return Void
      * @author Paul W. Lane
      */
-    private function DisplayErrorScreen () {
+    public function DisplayErrorScreen () {
         $oldbuff = ob_get_contents();
         ob_clean();
         

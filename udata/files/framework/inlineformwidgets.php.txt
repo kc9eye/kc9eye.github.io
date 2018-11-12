@@ -182,11 +182,11 @@ class InlineFormWidgets extends FormWidgets {
         echo "<span class='glyphicon glyphicon-search'></span>\n";
         echo "</button>\n";
         echo "</div>\n";
+        echo "</div>\n";
         if ($required) {
             $this->addValidation($name,$required);
             echo "<label class='error' for='{$name}' generated='true'></label>\n";
         }
-        echo "</div>\n";
         echo "</form>\n";
     }
 

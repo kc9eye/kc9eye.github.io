@@ -17,10 +17,118 @@
  */
 class BillOfMaterials {
     protected $dbh;
+    protected $prokey;
+    protected $uid;
 
     public function __construct (PDO $dbh) {
         $this->dbh = $dbh;
+        $this->prokey = null;
+        $this->uid = null;
     }
 
-    
+    public function importBOMCSV ($data) {
+        $bom = [];
+        $upload = new FileUpload(FileIndexer::UPLOAD_NAME);
+        $this->prokey = $data['prokey'];
+        $this->uid = $data['uid'];
+        try {
+            $fh = fopen($upload->files[0]['tmp_name'],'r');
+            while(($line = fgetcsv($fh)) !== false) {
+                $line[0] = str_ireplace('-','',$line[0]);
+                $line[1] = trim($line[1]);
+                $line[2] = (float) $line[2];
+                array_push($bom,$line);
+            }
+            if ($this->addNewMaterialsFromArray($bom)) 
+                return $this->addBOMArray($bom);
+            else
+                throw new Exception("Failed to add new materials");
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    public function addBOMArray (Array $materials) {
+        $addMaterials = [];
+        if (is_array($materials[0])) {
+            foreach($materials as $part) {
+                array_push($addMaterials,$part);
+            }
+        }
+        else {
+            array_push($addMaterials, $materials);
+        }
+
+        try {
+            $sql = 
+            'INSERT INTO bom (id,prokey,qty,uid,partid)
+             SELECT :id,:prokey,:qty,:uid,id FROM material WHERE number = :num';
+            $this->dbh->beginTransaction();
+            $pntr = $this->dbh->prepare($sql);
+            foreach($addMaterials as $part) {
+                $data = [
+                    ':id'=>uniqid(),
+                    ':prokey'=>$this->prokey,
+                    ':num'=>$part[0],
+                    ':qty'=>(float) $part['2'],
+                    ':uid'=>$this->uid
+                ];
+                if (!$pntr->execute($data)) throw new Exception("Insert failed: ".print_r($part,true));
+            }
+            $this->dbh->commit();
+            return true;
+        }
+        catch (Exception $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    public function addNewMaterialsFromArray (Array $materials) {
+        $addMaterials = [];
+        if (is_array($materials[0])) {
+            foreach($materials as $part) {
+                if ($this->verifyMaterialNotEntered($part[0])) array_push($addMaterials, $part);
+            }
+        }
+        elseif ($this->verifyMaterialNotEntered($materials[0])) {
+            array_push($addMaterials,$materials);
+        }
+
+        try {
+            if (!empty($addMaterials)) {
+                $sql = 'INSERT INTO material (id,number,description,uid) VALUES (:id,:number,:description,:uid)';
+                $this->dbh->beginTransaction();
+                $pntr = $this->dbh->prepare($sql);
+                foreach($addMaterials as $part) {
+                    if (!$pntr->execute([':id'=>uniqid(),':number'=>$part[0],':description'=>$part[1],':uid'=>$this->uid]))
+                        throw new Exception("Insert new material failed: ".print_r($part,true));
+                }
+                $this->dbh->commit();
+            }
+            return true;
+        }
+        catch (Exception $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    protected function verifyMaterialNotEntered ($number) {
+        $sql = 'SELECT count(*) FROM material WHERE number = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr->execute([$number]);
+            if ($pntr->fetch(PDO::FETCH_ASSOC)['count'] == 0) return true;
+            else return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+    }
 }

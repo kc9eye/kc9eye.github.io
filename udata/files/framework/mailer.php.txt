@@ -51,39 +51,13 @@ Class Mailer {
      * @var Array $config The application configuraion array
      */
     protected $config;
-    /**
-     * @var PHPMailer $mailer The background mailer worker instance
-     */
-    protected $mailer;
     
     /**
      * Class constructor
      * @param Array $config The application configuration array
-     * @return Mailer
      */
     public function __construct ($config) {
         $this->config = $config;
-        $this->mailer = new PHPMailer(true);
-        try {
-            switch($this->config['mailer-type']) {
-                case 'SMTP': $this->mailer->isSMTP(); break;
-                case 'Mail': $this->mailer->isMail(); break;
-                case 'Sendmail': $this->mailer->isSendmail(); break;
-                default: $this->mailer->isSMTP();
-            }
-            if ($this->config['mailer-SMTPAuth']) {
-                $this->mailer->SMTPAuth = true;
-                $this->mailer->Username = $this->config['mailer-username'];
-                $this->mailer->Password = $this->config['mailer-password'];
-                $this->mailer->SMTPSecure = $this->config['mailer-security'];
-            }
-            $this->mailer->Host = $this->config['mailer-host'];
-            $this->mailer->Port = $this->config['mailer-port'];
-        }
-        catch (Exception $e) {
-            trigger_error($e->getMessage(),E_USER_WARNING);
-            return false;
-        }
     }
 
     /**
@@ -99,22 +73,58 @@ Class Mailer {
      */
     public function sendMail (Array $mail) {
         try {
-            $this->mailer->addAddress($mail['to']);
-            $this->mailer->setFrom($this->config['mailer-default-from-addr'], $this->config['mailer-default-from-name']);
-            $this->mailer->Subject = $mail['subject'];
-            $this->mailer->msgHTML($mail['body'], INCLUDE_ROOT.'/wwwroot/images');
+            if (($mailer = $this->spoolMailer()) === false) throw new Exception("PHPMailer failed to start.");
+            $mailer->addAddress($mail['to']);
+            $mailer->setFrom($this->config['mailer-default-from-addr'], $this->config['mailer-default-from-name']);
+            $mailer->Subject = $mail['subject'];
+            $mailer->msgHTML($mail['body'], INCLUDE_ROOT.'/wwwroot/images');
             if (!empty($mail['attach'])) {
                 foreach($mail['attach'] as $file) {
-                    $this->mailer->addAttachment($file);
+                    $mailer->addAttachment($file);
                 }
             }
-            return $this->mailer->send();            
+            $pntr = $mailer->send();
+            unset($mail, $mailer);
+            return $pntr;            
         }
         catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
+            unset($mail,$mailer);
             return false;
         }
         catch (\Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            unset($mail,$mailer);
+            return false;
+        }
+    }
+
+    private function spoolMailer () {
+        try {
+            $mailer = new PHPMailer(true);
+            switch($this->config['mailer-type']) {
+                case 'SMTP': $mailer->isSMTP(); break;
+                case 'Mail': $mailer->isMail(); break;
+                case 'Sendmail': $mailer->isSendmail(); break;
+                default: $mailer->isSMTP(); break;
+            }
+            if ($this->config['mailer-SMTPAuth']) {
+                $mailer->SMTPAuth = true;
+                $mailer->Username = $this->config['mailer-username'];
+                $mailer->Password = $this->config['mailer-password'];
+                $mailer->SMTPSecure = $this->config['mailer-security'];
+            }
+            $mailer->Host = $this->config['mailer-host'];
+            $mailer->Port = $this->config['mailer-port'];
+            return $mailer;
+        }
+        catch (Exception $e) {
+            unset($mailer);
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (\Exception $e) {
+            unset($mailer);
             trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
         }
