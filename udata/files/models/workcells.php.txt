@@ -28,12 +28,13 @@ class WorkCells {
      * Adds a new work cell with the given data
      * 
      * @param Array $data The cell data given in an indexed array,
-     * generally the $_REQUEST array is given.
-     * @return Mixed Returns true on success, self::CELL_EXISTS
+     * generally the $_REQUEST array is given with the following indexes;
+     * `['cell_name'=>string,'uid'=>string,'prokey'=>string]`.
+     * @return Mixed Returns true on success, false otherwise.
      * if the given description is already in use, or false on error.
      */
     public function addNewCell (Array $data) {
-        $sql = 'INSERT INTO work_cell VALUES (:id,:cell_name,now(),:uid,:prokey)';
+        $sql = 'INSERT INTO work_cell (id,cell_name,_date,uid,prokey) VALUES (:id,:cell_name,now(),:uid,:prokey)';
         $insert = [
             ':id'=>uniqid(),
             ':cell_name'=>$data['cell_name'],
@@ -172,5 +173,43 @@ class WorkCells {
             trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
         }
+    }
+
+    /**
+     * Updates a work cell with given data
+     * @param Array $data The data given in array in the form `['cellid'=>string id,'cell_name'=>string name,'transfer_to_product'=>string prokey]`
+     * @return Boolean True on success, otherwise false.
+     * @todo Implement transfer function with materials cross ref to BOM
+     */
+    public function updateWorkCell (Array $data) {
+        $sql = 'UPDATE work_cell SET cell_name = :name,uid = :uid WHERE id = :id';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([':name'=>$data['cell_name'],':uid'=>$data['uid'],':id'=>$data['cellid']]))
+                throw new Exception("Update failed: {$sql}");
+            if (!empty($data['transfer_to_product']))
+                return $this->transferWorkCell($data);
+            else 
+                return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Tranfers a work cell from one product to another
+     * @param Array $data The data regarding the transfer in the form `['cellid'=>string id,'tranfer_to product'=>string prokey]`
+     * @return Boolean True on succes, false otheriwse
+     * @todo Finsih this feature, currently always returns true
+     */
+    public function transferWrokCell (Array $data) {
+        trigger_error('Someone called this method',E_USER_WARNING);
+        return true;
     }
 }

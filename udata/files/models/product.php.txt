@@ -108,7 +108,7 @@ class Product {
         }
         else {
             $sql = 'SELECT *,(SELECT firstname||\' \'||lastname as "inspector" FROM user_accts WHERE id = a.uid)
-            FROM production_log as a WHERE prokey = :key AND date_trunc(\'day\',_date) BETWEEN :begin AND :end';
+            FROM production_log as a WHERE prokey = :key AND date_trunc(\'day\',_date) BETWEEN :begin AND :end ORDER BY sequence_number DESC';
             $pntr = $this->dbh->prepare($sql);
             if (!$pntr->execute([':key'=>$this->pKey,':begin'=>$this->beginDate,':end'=>$this->endDate])) {
                  throw new Exception("Select failed: {$sql}");

@@ -111,7 +111,7 @@
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">11</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-489081892"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1597853353"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-489081892" class="accordion-body collapse in">
+            <div id="namespace-1597853353" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -217,6 +217,8 @@
                                                                     <a href="../classes/WorkCells.html#method_searchCells" class="">searchCells()</a><br />
                                                                     <a href="../classes/WorkCells.html#method_getCheckPointsByCellID" class="">getCheckPointsByCellID()</a><br />
                                                                     <a href="../classes/WorkCells.html#method_removeWorkCell" class="">removeWorkCell()</a><br />
+                                                                    <a href="../classes/WorkCells.html#method_updateWorkCell" class="">updateWorkCell()</a><br />
+                                                                    <a href="../classes/WorkCells.html#method_transferWrokCell" class="">transferWrokCell()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <em>No public properties found</em>
@@ -364,14 +366,15 @@
                                 <td>Array</td>
                                 <td>$data </td>
                                 <td><p>The cell data given in an indexed array,
-generally the $_REQUEST array is given.</p></td>
+generally the $_REQUEST array is given with the following indexes;
+<code>['cell_name'=&gt;string,'uid'=&gt;string,'prokey'=&gt;string]</code>.</p></td>
                             </tr>
                                             </table>
                 
                 
                                     <h4>Returns</h4>
                     Mixed
-                                            &mdash; <p>Returns true on success, self::CELL_EXISTS
+                                            &mdash; <p>Returns true on success, false otherwise.
 if the given description is already in use, or false on error.</p>
                                     				
                             </article>
@@ -572,6 +575,94 @@ if the given description is already in use, or false on error.</p>
         </aside>
     </div>
 
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_updateWorkCell" name="method_updateWorkCell" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">updateWorkCell()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">updateWorkCell(Array  <span class="argument">$data</span>) : Boolean</pre>
+                <p><em>Updates a work cell with given data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$data </td>
+                                <td><p>The data given in array in the form <code>['cellid'=&gt;string id,'cell_name'=&gt;string name,'transfer_to_product'=&gt;string prokey]</code></p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p>True on success, otherwise false.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Implement transfer function with materials cross ref to BOM</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_transferWrokCell" name="method_transferWrokCell" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">transferWrokCell()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">transferWrokCell(Array  <span class="argument">$data</span>) : Boolean</pre>
+                <p><em>Tranfers a work cell from one product to another</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$data </td>
+                                <td><p>The data regarding the transfer in the form <code>['cellid'=&gt;string id,'tranfer_to product'=&gt;string prokey]</code></p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p>True on succes, false otheriwse</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Finsih this feature, currently always returns true</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
                                                                     </div>
     </section>
 
@@ -621,7 +712,7 @@ if the given description is already in use, or false on error.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 12th, 2018 at 13:01.
+                    on November 19th, 2018 at 16:59.
                 </section>
             </section>
         </section>

@@ -59,6 +59,7 @@ $config = [
     #Main navbar links
     'navbar-links' => [
         'Products' => '/products/main',
+        'Work Cells' =>'/cells/main',
         'Material' => '/material/main',
         'Maintenance' => '/maintenance/main',
         'HR' => '/hr/main'

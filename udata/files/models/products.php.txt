@@ -277,8 +277,8 @@ class Products {
         $entry = $this->getQCLogEntryByID($id);
         $delete = 'DELETE FROM production_log WHERE id = ?';
         $update = 
-            'UPDATE production_log SET sequence_number = CAST(CAST(sequence_number as integer) - 1 as varchar)
-             WHERE prokey = :pkey AND CAST(sequence_number as integer) > cast(:seq as integer)';
+            'UPDATE production_log SET sequence_number = (sequence_number - 1)
+             WHERE prokey = :pkey AND sequence_number > :seq';
         $this->dbh->beginTransaction();
         try {
             $rm = $this->dbh->prepare($delete);
@@ -329,7 +329,7 @@ class Products {
      * 
      * The `$data` parameter needs to be an indexed array containing the data to insert.
      * Namely the users uid, and a description of the checkpoint as well as the product 
-     * key the product belongs to in the form `['uid'=>'usersid','description'=>'checkpointdescription','prokey'=>'product_key']`
+     * key the product belongs to in the form `['uid'=>string,'description'=>string,'prokey'=>string,'cellid'=>string]`
      * @param Array $data Usually the $_REQUEST array from a form to add the point.
      * @return Boolean `true` on success, otherwise `false`
      */
