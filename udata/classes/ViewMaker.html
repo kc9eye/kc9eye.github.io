@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1734583024"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1089652048"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1734583024" class="accordion-body collapse in">
+            <div id="namespace-1089652048" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -155,11 +155,11 @@
                                                     <li class="class"><a href="../classes/FileIndexer.html">FileIndexer</a></li>
                                                     <li class="class"><a href="../classes/FileUpload.html">FileUpload</a></li>
                                                     <li class="class"><a href="../classes/FormWidgets.html">FormWidgets</a></li>
-                                                    <li class="class"><a href="../classes/HerbHandler.html">HerbHandler</a></li>
                                                     <li class="class"><a href="../classes/Indexer.html">Indexer</a></li>
                                                     <li class="class"><a href="../classes/InlineFormWidgets.html">InlineFormWidgets</a></li>
                                                     <li class="class"><a href="../classes/Instance.html">Instance</a></li>
                                                     <li class="class"><a href="../classes/Mailer.html">Mailer</a></li>
+                                                    <li class="class"><a href="../classes/Maintenance.html">Maintenance</a></li>
                                                     <li class="class"><a href="../classes/Product.html">Product</a></li>
                                                     <li class="class"><a href="../classes/Products.html">Products</a></li>
                                                     <li class="class"><a href="../classes/SafetyBoardMinutes.html">SafetyBoardMinutes</a></li>
@@ -230,6 +230,9 @@ Instance class. In so doing all the heavy lifting is done for you.</p>
                                                                     <a href="../classes/ViewMaker.html#method_bold" class="">bold()</a><br />
                                                                     <a href="../classes/ViewMaker.html#method_bgInfoParagraph" class="">bgInfoParagraph()</a><br />
                                                                     <a href="../classes/ViewMaker.html#method_editBtnSm" class="">editBtnSm()</a><br />
+                                                                    <a href="../classes/ViewMaker.html#method_responsiveTableStart" class="">responsiveTableStart()</a><br />
+                                                                    <a href="../classes/ViewMaker.html#method_responsiveTableClose" class="">responsiveTableClose()</a><br />
+                                                                    <a href="../classes/ViewMaker.html#method_linkButton" class="">linkButton()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/ViewMaker.html#property_ViewData" class="">$ViewData</a><br />
@@ -897,7 +900,7 @@ of HTML nonbreaking spaces.</p>
             <article class="method">
                 <h3 class="public ">h1()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h1(String  <span class="argument">$content</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">h1(String  <span class="argument">$content</span>,   <span class="argument">$centered = false</span>) : Void</pre>
                 <p><em>Encapsulates `$content` in an HTML heading.</em></p>
                 
 
@@ -907,6 +910,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>String</td>
                                 <td>$content </td>
                                 <td><p>The string to encapsulate.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$centered </td>
+                                <td></td>
                             </tr>
                                             </table>
                 
@@ -933,7 +941,7 @@ of HTML nonbreaking spaces.</p>
             <article class="method">
                 <h3 class="public ">h2()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h2(String  <span class="argument">$content</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">h2(String  <span class="argument">$content</span>,   <span class="argument">$centered = false</span>) : Void</pre>
                 <p><em>Ecapsulates `$content` in an HTML heading.</em></p>
                 
 
@@ -943,6 +951,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>String</td>
                                 <td>$content </td>
                                 <td><p>The string to encapsulate</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$centered </td>
+                                <td></td>
                             </tr>
                                             </table>
                 
@@ -969,7 +982,7 @@ of HTML nonbreaking spaces.</p>
             <article class="method">
                 <h3 class="public ">h3()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">h3(String  <span class="argument">$content</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">h3(String  <span class="argument">$content</span>,   <span class="argument">$centered = false</span>) : Void</pre>
                 <p><em>Encapsulates `$content` in an HTML heading.</em></p>
                 
 
@@ -979,6 +992,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>String</td>
                                 <td>$content </td>
                                 <td><p>The string to encasulate</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$centered </td>
+                                <td></td>
                             </tr>
                                             </table>
                 
@@ -1007,7 +1025,7 @@ of HTML nonbreaking spaces.</p>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">bold(String  <span class="argument">$content</span>) : Void</pre>
                 <p><em>Encapsulates `$content` in an HTML strong section.</em></p>
-                
+                <p>This is an inline method bolding.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
@@ -1041,7 +1059,7 @@ of HTML nonbreaking spaces.</p>
             <article class="method">
                 <h3 class="public ">bgInfoParagraph()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">bgInfoParagraph(String  <span class="argument">$content</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">bgInfoParagraph(String  <span class="argument">$content</span>,   <span class="argument">$centered = false</span>) : Void</pre>
                 <p><em>Encapsulate `$content` in an HTML paragraph section in the bg-info bootstrap style.</em></p>
                 
 
@@ -1051,6 +1069,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>String</td>
                                 <td>$content </td>
                                 <td><p>The string to be in the paragraph.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$centered </td>
+                                <td></td>
                             </tr>
                                             </table>
                 
@@ -1117,6 +1140,133 @@ of HTML nonbreaking spaces.</p>
         </aside>
     </div>
 
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_responsiveTableStart" name="method_responsiveTableStart" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">responsiveTableStart()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">responsiveTableStart(Array  <span class="argument">$columnHeadings = null</span>, Boolean  <span class="argument">$centered = false</span>) : Void</pre>
+                <p><em>Ouputs the beginnig responsive table preamable to stream.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$columnHeadings </td>
+                                <td><p>The headings for the table columns if any</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$centered </td>
+                                <td><p>Whether or not to include Bootstrap centering</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Void
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_responsiveTableClose" name="method_responsiveTableClose" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">responsiveTableClose()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">responsiveTableClose(Boolean  <span class="argument">$centered = false</span>) </pre>
+                <p><em>Ouputs the closing responsive table to the stream</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$centered </td>
+                                <td><p>Whether to center the table with Bootstrap</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_linkButton" name="method_linkButton" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">linkButton()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">linkButton(String  <span class="argument">$link</span>, String  <span class="argument">$name</span>, Boolean  <span class="argument">$return = false</span>, Boolean  <span class="argument">$passthru = false</span>) : Mixed</pre>
+                <p><em>Outputs a link formatted as a Bootstrap info button</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$link </td>
+                                <td><p>Application centric link for the button</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$name </td>
+                                <td><p>The name to display on the button</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$return </td>
+                                <td><p>Optional, if set true then the output is returned and not output to the stream buffer</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$passthru </td>
+                                <td><p>Optional, if set true then the link is passed through unaltered.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Mixed
+                                            &mdash; <p>Either a String if $return is true or Void otherwise</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
                                                                     </div>
     </section>
 
@@ -1166,7 +1316,7 @@ of HTML nonbreaking spaces.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 19th, 2018 at 16:59.
+                    on December 3rd, 2018 at 13:37.
                 </section>
             </section>
         </section>

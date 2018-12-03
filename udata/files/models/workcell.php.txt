@@ -119,6 +119,7 @@ class WorkCell {
     private function getCellMaterial () {
         $sql = 
         'SELECT 
+            a.id,
             (SELECT number FROM material WHERE id = bom.partid),
             (SELECT description FROM material WHERE id = bom.partid), 
             a.qty

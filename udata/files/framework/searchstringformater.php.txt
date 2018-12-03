@@ -17,10 +17,21 @@
  */
 class SearchStringFormater {
 
-    public function __construct () {
+    /**
+     * Returns either the object or the formated search string
+     * @param String $string Optional string to format for search
+     * @return Mixed If given string returns the formated search string, otherwise 
+     * returns the SearchStringFormater object
+     */
+    public function __construct ($string=null) {
         return $this;
     }
 
+    /**
+     * Formats a given string for use in a database search query
+     * @param String $string The string to format
+     * @return String A database search formatted string
+     */
     public function formatSearchString ($string) {
         $string = trim($string);
         $pattern[0] = '/("|\')/i';

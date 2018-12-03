@@ -473,8 +473,11 @@ Class ViewMaker {
      * @param String $content The string to encapsulate.
      * @return Void
      */
-    public function h1 ($content) {
-        echo "<h1>{$content}</h1>\n";
+    public function h1 ($content, $centered=false) {
+        if ($centered) 
+            echo "<div class='row'><div class='col-md-3'</div><div class='col-md-6 col-xs-12'><h1>{$content}</h1></div><div class='col-md-3'></div></div>\n";
+        else
+            echo "<h1>{$content}</h1>\n";
     }
 
     /**
@@ -482,8 +485,11 @@ Class ViewMaker {
      * @param String $content The string to encapsulate
      * @return Void
      */
-    public function h2 ($content) {
-        echo "<h2>{$content}</h2>\n";
+    public function h2 ($content, $centered=false) {
+        if ($centered)
+            echo "<div class='row'><div class='col-md-3'></div><div class='col-md-6 col-xs-12'><h2>{$content}</h2></div><div class='col-md-3'></div></div>\n";
+        else
+            echo "<h2>{$content}</h2>\n";
     }
 
     /**
@@ -491,12 +497,17 @@ Class ViewMaker {
      * @param String $content The string to encasulate
      * @return Void
      */
-    public function h3 ($content) {
-        echo "<h3>{$content}</h3>\n";
+    public function h3 ($content, $centered=false) {
+        if ($centered)
+            echo "<div class='row'><div class='col-md-3'></div><div class='col-md-6 col-xs-6'><h3>{$content}</h3></div><div class='col-md-3'></div></div>\n";
+        else
+            echo "<h3>{$content}</h3>\n";
     }
 
     /**
      * Encapsulates `$content` in an HTML strong section.
+     * 
+     * This is an inline method bolding.
      * @param String $content The string to encapsulate.
      * @return Void
      */
@@ -509,8 +520,11 @@ Class ViewMaker {
      * @param String $content The string to be in the paragraph.
      * @return Void
      */
-    public function bgInfoParagraph ($content) {
-        echo "<p class='bg-primary'>{$content}</p>\n";
+    public function bgInfoParagraph ($content, $centered=false) {
+        if ($centered)
+            echo "<div class='row'><div class='col-md-3'></div><div class='col-md-6 col-xs-12'><p class='bg-primary'>{$content}</p></div><div class='col-md-3'></div></div>\n";
+        else
+            echo "<p class='bg-primary'>{$content}</p>\n";
     }
 
     /**
@@ -525,5 +539,53 @@ Class ViewMaker {
         $str = "<a href='{$addr}' class='btn btn-sm btn-warning' role='button'><span class='glyphicon glyphicon-pencil'></span></a>";
         if ($return) return $str;
         else echo $str;
+    }
+
+    /**
+     * Ouputs the beginnig responsive table preamable to stream.
+     * @param Array $columnHeadings The headings for the table columns if any
+     * @param Boolean $centered Whether or not to include Bootstrap centering
+     * @return Void
+     */
+    public function responsiveTableStart (Array $columnHeadings = null, $centered = false) {
+        if ($centered) {
+            echo "<div class='row'><div class='col-md-3'></div><div class='col-md-6 col-xs-12'><div class='table-responsive'><table class='table'>";
+        }
+        else {
+            echo "<div class='table-responsive'><table class='table'>\n";
+        }
+        if (!is_null($columnHeadings)) {
+            echo "<tr>";
+            foreach($columnHeadings as $heading) {
+                echo "<th>{$heading}</th>";
+            }
+            echo "</tr>\n";
+        }
+    }
+
+    /**
+     * Ouputs the closing responsive table to the stream
+     * @param Boolean $centered Whether to center the table with Bootstrap
+     */
+    public function responsiveTableClose ($centered = false) {
+        if ($centered)
+            echo "</table></div><div class='col-md-3'></div></div>\n";
+        else
+            echo "</table></div>\n";
+    }
+
+    /**
+     * Outputs a link formatted as a Bootstrap info button
+     * @param String $link Application centric link for the button
+     * @param String $name The name to display on the button
+     * @param Boolean $return Optional, if set true then the output is returned and not output to the stream buffer
+     * @param Boolean $passthru Optional, if set true then the link is passed through unaltered.
+     * @return Mixed Either a String if $return is true or Void otherwise
+     */
+    public function linkButton ($link,$name,$return=false,$passthru=false) {
+        $link = $passthru ? $link : $this->PageData['approot'].$link;
+        $string = "<a href='{$link}' class='btn btn-info' role='button'>{$name}</a>\n";
+        if ($return) return $string;
+        else echo $string;
     }
 }

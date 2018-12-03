@@ -377,6 +377,11 @@ class Products {
             trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
         }
+        catch (Exception $e) {
+            $this->dbh->rollBack();
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
     }
 
     /**
