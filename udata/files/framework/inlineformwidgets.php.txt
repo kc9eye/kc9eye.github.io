@@ -19,7 +19,7 @@
  * Adds inline form elements to the standard FormWidgets
  * @see FormWidgets
  * @author Paul W. Lane
- * @package UData
+ * @package UData\Framework\UI\Bootstrap3
  */
 class InlineFormWidgets extends FormWidgets {
     

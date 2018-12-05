@@ -23,7 +23,7 @@
   * that make it easier to construct concise controllers.
   *
   * @param array $config Should contain an array for comfiguration options.
-  * @package UData
+  * @package UData\FrameWork
   * @example ../docs/example_ui.php
   * @return Instance
   * @see etc/config.php

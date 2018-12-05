@@ -19,7 +19,7 @@
  * Indexes uploaded files in the application database
  * 
  * @uses FileUpload
- * @package UData
+ * @package UData\FrameWork\Database\Postgres
  * @author Paul W. Lane
  */
 class FileIndexer {

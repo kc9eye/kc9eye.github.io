@@ -28,7 +28,8 @@
  * @uses Instance::$config
  * @example ../safety/hazcomdoc.php On proper document controller syntax
  * @author Paul W. Lane
- * @package UData
+ * @package UData\FrameWork\Database\Postgres
+ * @license GPLv2
  * @todo Rewrite the controller into a method call from a controller
  * 
  */

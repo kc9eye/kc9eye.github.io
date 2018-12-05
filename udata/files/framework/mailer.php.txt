@@ -20,6 +20,7 @@
  * 
  * The application mailer uses PHPMailer as it's background 
  * worker.
+ * @package UData\Framework\PHPMailer
  * @uses https://github.com/PHPMailer/PHPMailer
  * @author Paul W. Lane
  * @see etc/config.php

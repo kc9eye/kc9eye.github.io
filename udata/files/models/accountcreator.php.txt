@@ -15,6 +15,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * AccountCreator Class
+ * 
+ * @package Udata\Models\Database\Postrgres
+ * @link https://kc9eye.gituhub.io/udata/UData_Database_Structure.html
+ * @author Paul W. Lane
+ * @license GPLv2
+ */
 Class AccountCreator {
     const AWAITING_VERIFICATION = 12121212;
 

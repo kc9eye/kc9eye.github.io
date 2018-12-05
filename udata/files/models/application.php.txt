@@ -16,8 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 /**
- * Handles all application settings
+ * Application Class Model
+ * @package UData\Models\Database\Postgres
+ * @link https://kc9eye.github.io/udata/UData_Database_Structure.html
  * @author Paul W. Lane
+ * @license GPLv2
  */
 class Application {
     /**

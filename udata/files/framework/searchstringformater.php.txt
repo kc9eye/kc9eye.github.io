@@ -15,6 +15,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * SearchStringFormater Class Framework
+ * 
+ * @package UData\Framework\Database\Postgres
+ * @link https://www.postgresql.org/docs/9.6/textsearch-tables.html#TEXTSEARCH-TABLES-SEARCH
+ * @author Paul W. Lane
+ * @license GPLv2
+ */
 class SearchStringFormater {
 
     /**

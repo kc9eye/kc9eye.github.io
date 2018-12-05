@@ -24,7 +24,7 @@
  * to be used stand alone. Instead they are called by other methods in the 
  * Instance class. Those methods in Instance class should be employed, not 
  * the ones here.
- * @package UData
+ * @package UData\Framework\Database\Postgres
  * @see Instance::getAuthority()
  * @see Instance::mustBeValidUser()
  * @see Instance::userMustHavePermission()

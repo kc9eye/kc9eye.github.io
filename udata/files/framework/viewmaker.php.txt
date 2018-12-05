@@ -22,7 +22,7 @@
  * 
  * This class can be used stand alone, however it is best instanitated with the 
  * Instance class. In so doing all the heavy lifting is done for you.
- * @package UData
+ * @package UData\Framework\UI\Boostrap3
  * @see Instance::getViewer()
  * @uses Security
  * @uses config.php

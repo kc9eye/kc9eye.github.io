@@ -15,6 +15,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+/**
+ * Indexer Class Framework
+ * 
+ * @package UData\Framework\UI\Bootstrap3
+ * @author Paul W. Lane
+ * @license GPLv2
+ */
 class Indexer extends ViewMaker {
 
     const EDIT_ACCESS_NAME = 'edit';

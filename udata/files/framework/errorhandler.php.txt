@@ -18,9 +18,9 @@
 /**
  * The framework Error/Exception handler.
  * 
- * Handles errors and exceptions in a sane manner
+ * @package UData\Framework
  * @author Paul W. Lane
- * @package UData
+ * @license GPLv2
  */
 Class Errorhandler {
 

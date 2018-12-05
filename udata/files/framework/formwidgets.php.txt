@@ -24,7 +24,7 @@
  * @author Paul W. Lane
  * @example ../safety/addsds.php Of form widget use in a controller
  * @link https://jqueryvalidation.org/documentation/
- * @package UData
+ * @package UData\Framework\UI\Bootstrap3
  */
 Class FormWidgets {
     
