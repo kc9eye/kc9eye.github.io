@@ -102,13 +102,15 @@ Class FormWidgets {
         else {
             $this->formid = $id;
         }
-?>
-<div style='margin:10px'>
-    <?php if (!is_null($header)) {?>
-    <div class='center-text center-block'><h2><?php echo $header;?></h2></div>
-    <?php }?>
-    <form method='<?php echo $method;?>' class='form-horizontal' id='<?php echo $this->formid;?>' <?php if (!is_null($uri)){echo "action='{$uri}'";};?>>
-<?php
+        echo "<div style='margin:10px'>\n";
+        if (!is_null($header)) {
+            echo "<div class='center-text center-block'><h2>{$header}</h2></div>\n";
+        }
+        echo "<form method='{$method}' class='form-horizontal' id='{$this->formid}'";
+        if (!is_null($uri)) {
+            echo " action='{$uri}'";
+        }
+        echo ">\n";
     }
 
     /**
@@ -504,5 +506,47 @@ Class FormWidgets {
         echo "<div class='col-md-3'></div>\n";
         echo "</div>\n";
         echo "</div>\n";
+    }
+
+    /**
+     * Adds a search box input capture to the form
+     * 
+     * Outputs a search box complete with search button to the form,
+     * styled in the centered form style. This search box is it's own form.
+     * This method outputs a completely new form and is intended to be used 
+     * as a stand alone search box, separate from any other forms on the page.
+     * @param String $name The `$_REQUEST` name given to the handler.
+     * @param String $label The UI display name for the widget.
+     * @param String $value Optional pre-inserted value.
+     * @param Mixed $required Optionally either true or an indexed array of jQuery.validate() options
+     * @param String $helpBlock Optional string of help text for the widget
+     * @return Void Output is directed to the stream, and this widget returns no value
+     */
+    public function searchBox ($name, $label, $value = null, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        $this->newForm();
+        echo "<div class='form-group'>\n";
+        echo "<div class='row'>\n";
+        echo "<div class='col-md-3'><!-- Desktop spacing --></div>\n";
+        echo "<div class='col-md-6 col-xs-12'>\n";
+        echo "<label class='error' for='{$name}' generated='true'></label>\n";
+        echo "<div class='input-group'>\n";
+        echo "<input type='text' class='form-control' placeholder='{$label}' name='{$name}' >\n";
+        echo "<div class='input-group-btn'>\n";
+        echo "<button class='btn btn-default' type='submit'>\n";
+        echo "<span class='glyphicon glyphicon-search'></span>\n";
+        echo "</button>\n";
+        echo "</div>\n";
+        if (!is_null($helpBlock)) {
+            echo "<span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "<div class='col-md-3'><!-- Desktop Spacing --></div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+        $this->endForm();
     }
 }

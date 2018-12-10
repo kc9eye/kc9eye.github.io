@@ -106,12 +106,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">216</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">228</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-7476708"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-47090286"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-7476708" class="accordion-body collapse in">
+            <div id="namespace-47090286" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -167,6 +167,7 @@
                                                     <li class="class"><a href="../classes/SDSHandler.html">SDSHandler</a></li>
                                                     <li class="class"><a href="../classes/SearchStringFormater.html">SearchStringFormater</a></li>
                                                     <li class="class"><a href="../classes/Security.html">Security</a></li>
+                                                    <li class="class"><a href="../classes/Tool.html">Tool</a></li>
                                                     <li class="class"><a href="../classes/UploadException.html">UploadException</a></li>
                                                     <li class="class"><a href="../classes/UserAdministrator.html">UserAdministrator</a></li>
                                                     <li class="class"><a href="../classes/UserReset.html">UserReset</a></li>
@@ -273,6 +274,7 @@ $view-&gt;footer();</pre>
                                                                     <a href="../classes/FormWidgets.html#method_checkBox" class="">checkBox()</a><br />
                                                                     <a href="../classes/FormWidgets.html#method_h2" class="">h2()</a><br />
                                                                     <a href="../classes/FormWidgets.html#method_selectBox" class="">selectBox()</a><br />
+                                                                    <a href="../classes/FormWidgets.html#method_searchBox" class="">searchBox()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/FormWidgets.html#property_formid" class="">$formid</a><br />
@@ -1213,6 +1215,66 @@ for the checkbox itself.</p></td>
         </aside>
     </div>
 
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_searchBox" name="method_searchBox" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">searchBox()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">searchBox(String  <span class="argument">$name</span>, String  <span class="argument">$label</span>, String  <span class="argument">$value = null</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) : Void</pre>
+                <p><em>Adds a search box input capture to the form</em></p>
+                <p>Outputs a search box complete with search button to the form,
+styled in the centered form style. This search box is it's own form.
+This method outputs a completely new form and is intended to be used
+as a stand alone search box, separate from any other forms on the page.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$name </td>
+                                <td><p>The <code>$_REQUEST</code> name given to the handler.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$label </td>
+                                <td><p>The UI display name for the widget.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$value </td>
+                                <td><p>Optional pre-inserted value.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Mixed</td>
+                                <td>$required </td>
+                                <td><p>Optionally either true or an indexed array of jQuery.validate() options</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$helpBlock </td>
+                                <td><p>Optional string of help text for the widget</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Void
+                                            &mdash; <p>Output is directed to the stream, and this widget returns no value</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
                                                     <div class="row-fluid">
         <div class="span8 content class">
             <a id="method_addValidation" name="method_addValidation" class="anchor"></a>
@@ -1303,7 +1365,7 @@ for the checkbox itself.</p></td>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on December 5th, 2018 at 16:12.
+                    on December 10th, 2018 at 18:15.
                 </section>
             </section>
         </section>

@@ -215,8 +215,61 @@ class WorkCells {
      * @return Boolean True on succes, false otheriwse
      * @todo Finsih this feature, currently always returns true
      */
-    public function transferWrokCell (Array $data) {
+    public function transferWorkCell (Array $data) {
         trigger_error('Someone called this method',E_USER_WARNING);
         return true;
+    }
+
+    /**
+     * Adds the given tooling data to the cell
+     * 
+     * @param Array $data The tool data in the form `['toolid'=>string,'qty'=>string,'cellid'=>string,'uid'=>string]
+     * @return Boolean True on success, false otherwise.
+     */
+    public function addToolingToCell (Array $data) {
+        $sql = "INSERT INTO cell_tooling VALUES (:id,:cellid,:toolid,:qty,:uid,now())";
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $insert = [
+                ':id'=>uniqid(),
+                ':cellid'=>$data['cellid'],
+                ':toolid'=>$data['toolid'],
+                ':qty'=>$data['qty'],
+                ':uid'=>$data['uid']
+            ];
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Removes a row containing the data for one workcell tool
+     * 
+     * @param String $id The row's cell_tooling ID
+     * @return Boolean True on success, false otherwise
+     */
+    public function removeToolingFromCell ($id) {
+        $sql = "DELETE FROM cell_tooling WHERE id = ?";
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Delete failed: {$sql}");
+            return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
     }
 }

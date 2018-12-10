@@ -569,7 +569,7 @@ Class ViewMaker {
      */
     public function responsiveTableClose ($centered = false) {
         if ($centered)
-            echo "</table></div><div class='col-md-3'></div></div>\n";
+            echo "</table>\n</div>\n</div><div class='col-md-3'></div></div>\n";
         else
             echo "</table></div>\n";
     }
@@ -588,4 +588,30 @@ Class ViewMaker {
         if ($return) return $string;
         else echo $string;
     }
+
+    /**
+     * Outputs a button and beginning preamble for a collapse section.
+     * 
+     * Everything after this method call output to the stream will
+     * be wrapped in a collapse division until the subsequent `ViewMaker::endBtnCollapse()`
+     * is called.
+     * @param String $id The collapse ID for the button
+     * @param String $name The label name of the collapse button.
+     * @return Void This method outputs to the stream and returns nothing.
+     */
+    public function beginBtnCollapse ($name = 'Show Content',$id = null) {
+        if (is_null($id)) $id = uniqid();
+        echo "<button data-toggle='collapse' data-target='#{$id}' class='btn btn-default'>{$name}</button>\n";
+        echo "<div id='{$id}' class='collapse'>\n";
+    }
+
+    /**
+     * Outputs the closing button collapse division
+     * @return Void All out put is directed to the stream and returns no value.
+     * @see ViewMaker::beginBtnCollapse()
+     */
+    public function endBtnCollapse () {
+        echo "</div>\n";
+    }
+
 }

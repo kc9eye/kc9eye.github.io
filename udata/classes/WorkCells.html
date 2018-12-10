@@ -106,12 +106,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">216</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">228</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-414787266"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1352048824"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-414787266" class="accordion-body collapse in">
+            <div id="namespace-1352048824" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -167,6 +167,7 @@
                                                     <li class="class"><a href="../classes/SDSHandler.html">SDSHandler</a></li>
                                                     <li class="class"><a href="../classes/SearchStringFormater.html">SearchStringFormater</a></li>
                                                     <li class="class"><a href="../classes/Security.html">Security</a></li>
+                                                    <li class="class"><a href="../classes/Tool.html">Tool</a></li>
                                                     <li class="class"><a href="../classes/UploadException.html">UploadException</a></li>
                                                     <li class="class"><a href="../classes/UserAdministrator.html">UserAdministrator</a></li>
                                                     <li class="class"><a href="../classes/UserReset.html">UserReset</a></li>
@@ -218,7 +219,9 @@
                                                                     <a href="../classes/WorkCells.html#method_getCheckPointsByCellID" class="">getCheckPointsByCellID()</a><br />
                                                                     <a href="../classes/WorkCells.html#method_removeWorkCell" class="">removeWorkCell()</a><br />
                                                                     <a href="../classes/WorkCells.html#method_updateWorkCell" class="">updateWorkCell()</a><br />
-                                                                    <a href="../classes/WorkCells.html#method_transferWrokCell" class="">transferWrokCell()</a><br />
+                                                                    <a href="../classes/WorkCells.html#method_transferWorkCell" class="">transferWorkCell()</a><br />
+                                                                    <a href="../classes/WorkCells.html#method_addToolingToCell" class="">addToolingToCell()</a><br />
+                                                                    <a href="../classes/WorkCells.html#method_removeToolingFromCell" class="">removeToolingFromCell()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <em>No public properties found</em>
@@ -638,11 +641,11 @@ if the given description is already in use, or false on error.</p>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="method_transferWrokCell" name="method_transferWrokCell" class="anchor"></a>
+            <a id="method_transferWorkCell" name="method_transferWorkCell" class="anchor"></a>
             <article class="method">
-                <h3 class="public ">transferWrokCell()</h3>
+                <h3 class="public ">transferWorkCell()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">transferWrokCell(Array  <span class="argument">$data</span>) : Boolean</pre>
+                <pre class="signature" style="margin-right: 54px;">transferWorkCell(Array  <span class="argument">$data</span>) : Boolean</pre>
                 <p><em>Tranfers a work cell from one product to another</em></p>
                 
 
@@ -676,6 +679,80 @@ if the given description is already in use, or false on error.</p>
                                                                                             <p>Finsih this feature, currently always returns true</p>
                                                     </td>
                     </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addToolingToCell" name="method_addToolingToCell" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addToolingToCell()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addToolingToCell(Array  <span class="argument">$data</span>) : Boolean</pre>
+                <p><em>Adds the given tooling data to the cell</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$data </td>
+                                <td><p>The tool data in the form `['toolid'=&gt;string,'qty'=&gt;string,'cellid'=&gt;string,'uid'=&gt;string]</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p>True on success, false otherwise.</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeToolingFromCell" name="method_removeToolingFromCell" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeToolingFromCell()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeToolingFromCell(String  <span class="argument">$id</span>) : Boolean</pre>
+                <p><em>Removes a row containing the data for one workcell tool</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$id </td>
+                                <td><p>The row's cell_tooling ID</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Boolean
+                                            &mdash; <p>True on success, false otherwise</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
                             </table>
         </aside>
     </div>
@@ -729,7 +806,7 @@ if the given description is already in use, or false on error.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on December 5th, 2018 at 16:12.
+                    on December 10th, 2018 at 18:15.
                 </section>
             </section>
         </section>
