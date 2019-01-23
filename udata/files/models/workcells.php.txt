@@ -95,7 +95,7 @@ class WorkCells {
      */
     public function getCellsFromKey ($key) {
         $sql = 
-            "SELECT id,cell_name,_date,prokey,quality,control,
+            "SELECT id,cell_name,_date,prokey,((quality/control)*100) as qc,
              (SELECT firstname||' '||lastname as author FROM user_accts WHERE id = a.uid)
              FROM work_cell as a
              WHERE prokey = ?
@@ -272,4 +272,126 @@ class WorkCells {
             return false;
         }
     }
+
+    /**
+     * Records a safety document seeking approval
+     * 
+     * Records a cell safety assessment seeking approval and
+     * emails the users that can approve the document.
+     * @param Array $data The data to record in the form `['uid'=>string,'name'=>string,'body'=>string,'url'=>string]`
+     * @param Security  The server security instance.
+     * @param Mailer The server mailer for seeking approval emails.
+     * @return Boolean True on success, false otherwise.
+     */
+    public function seekSafetyApproval (Array $data, Security $security, Mailer $mailer) {
+        $sql = 'INSERT INTO documents (id,name,state,body,oid) VALUES (:id,:name,:state,:body,:oid)';
+        $insert = [
+            ':id'=>uniqid(),
+            ':name'=>$data['name'],
+            ':state'=>DocumentViewer::SEEKING,
+            ':body'=>$data['body'],
+            ':oid'=>$data['uid']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return $this->emailReviewer($data, $security, $mailer);
+
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Updates an existsing rejected seeking_approval document
+     * @param Array $data An array of data for the document `['oid'=>'string','body'=>'string','docid'=>'string']`
+     * @param Security $security The server security object
+     * @param Mailer $mailer The server mailer object
+     */
+    public function editRejected ($data, $security, $mailer) {
+        $sql = 'UPDATE documents SET _date = now(),oid = :oid,body = :body WHERE id = :id';
+        $insert = [
+            ':oid' => $data['uid'],
+            ':body' => $data['body'],
+            ':id' => $data['docid']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (! $pntr->execute($insert)) throw new Exception("Update failed: {$sql}");
+            return $this->emailReviewer($data, $security, $mailer);
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Verifies an approval of a work cell safety assessment
+     * @param Array $data The data submitted;
+     * `['aid'=>string,'docname'=>string,'pending_id'=>string,'obsolete_id'=>string,'username'=>string,'password'=>string]`
+     * @param Security $security The server security object
+     * @return Boolean True on success, false otherwise.
+     */
+    public function approveSafety (Array $data, Security $security) {
+        $approved = 'UPDATE documents SET state = :state, aid = :aid, a_date = now() WHERE id = :id';
+        $obsolete = 'UPDATE documents SET state = :state WHERE id = :id';
+        try {
+            if ($security->verifyLogOn($data['username'],$data['password'])) {
+                $pntr = $this->dbh->prepare($approved);
+                $insert = [
+                    ':state'=>DocumentViewer::APPROVED,
+                    ':aid'=>$data['aid'],
+                    ':id'=>$data['pending_id']
+                ];
+                if ($pntr->execute($insert)) {
+                    $pntr = $this->dbh->prepare($obsolete);
+                    $insert = [
+                        ':state'=>DocumentViewer::OBSOLETE,
+                        ':id'=>$data['obsolete_id']
+                    ];
+                    if (!$pntr->execute($insert)) throw new Exception("Update failed; {$obsolete}");
+                    return true;
+                }
+                else {
+                    throw new Exception("Update failed: {$approved}");
+                }
+            }
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    private function emailReviewer (Array $data, Security $security, Mailer $mailer) {
+        try {
+            $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/docreview.html');
+            $body .= "<a href='{$data['url']}&name={$data['name']}'>{$data['cellname']}</a>";
+            foreach($security->getUsersByPerm('approveCellSafety') as $reviewer) {
+                $mailer->sendMail(['to'=>$reviewer['username'],'subject'=>'Pending Document Change','body'=>$body]);
+            }
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->message,E_USER_WARNING);
+            return false;
+        }
+    }
+
+
 }

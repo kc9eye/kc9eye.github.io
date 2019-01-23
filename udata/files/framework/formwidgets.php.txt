@@ -282,7 +282,8 @@ Class FormWidgets {
      * Generates the submit buttons and optional reset and cancel buttons
      * @param String $label Optional name for the submit button default is 'Submit'
      * @param Boolean $reset Optional to include a form reset button
-     * @param String $cancel Optional hyperlink to use for a cancel button
+     * @param Mixed $cancel Optional hyperlink to use for a cancel button, or optional array of 
+     * `['label'=>'btn_label','url'=>'onlcick_url',type'=>'default|primary|info|warning|danger|success']`
      * @return Void
      */
     public function submitForm ($label = 'Submit', $reset = false, $cancel = null) {
@@ -297,7 +298,22 @@ Class FormWidgets {
                     echo "<button type='reset' class='btn btn-lg btn-default'>Reset</button>&#160;";
                 }
                 if (!is_null($cancel)) {
-                    echo "<button type='button' class='btn btn-lg btn-default' onclick='window.location=\"{$cancel}\";'>Cancel</button>";
+                    if (is_array($cancel)) {
+                        $class = 'btn btn-lg ';
+                        switch ($cancel['type']) {
+                            case 'default': $class .= 'btn-default'; break;
+                            case 'primary': $class .= 'btn-primary'; break;
+                            case 'info': $class .= 'btn-info'; break;
+                            case 'success': $class .= 'btn-success'; break;
+                            case 'warning': $class .= 'btn-warning'; break;
+                            case 'danger': $class .= 'btn-danger'; break;
+                            default: $class .= 'btn-default'; break;
+                        }
+                        echo "<button type='button' class='{$class}' onclick='window.location=\"{$cancel['url']}\";'>{$cancel['label']}</button>";
+                    }
+                    else {
+                        echo "<button type='button' class='btn btn-lg btn-default' onclick='window.location=\"{$cancel}\";'>Cancel</button>";
+                    }
                 }
             ?>
         </div>
@@ -539,14 +555,43 @@ Class FormWidgets {
         echo "<span class='glyphicon glyphicon-search'></span>\n";
         echo "</button>\n";
         echo "</div>\n";
-        if (!is_null($helpBlock)) {
-            echo "<span class='help-block'>{$helpBlock}</span>\n";
-        }
         echo "</div>\n";
+        if (!is_null($helpBlock)) echo "<span class='help-block'>{$helpBlock}</span>\n";
         echo "</div>\n";
         echo "<div class='col-md-3'><!-- Desktop Spacing --></div>\n";
         echo "</div>\n";
         echo "</div>\n";
         $this->endForm();
+    }
+
+    /**
+     * Outputs a formated textarea to the stream
+     * 
+     * @param String $name The `$_REQUEST` name given to the handler.
+     * @param String $id The UI display name for the widget.
+     * @param String $value Optional pre-inserted value.
+     * @param Mixed $required Optionally either true or an indexed array of jQuery.validate() options
+     * @param String $helpBlock Optional string of help text for the widget
+     * @return Void Output is directed to the stream, and this widget returns no value
+     */
+    public function textArea ($name, $id = null, $value = '', $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        if (is_null($id)) {
+            $id = uniqid();
+        }
+        echo "<div class='form-group'>\n";
+        echo "<div class='row'>\n";
+        echo "<div class='col-md-3'><!-- Desktop spacing --></div>\n";
+        echo "<div class='col-md-6 col-xs-12'>\n";
+        echo "<textarea class='form-control' name='{$name}' id='{$id}'>{$value}</textarea>\n";
+        if (!is_null($helpBlock)) {
+            echo "<span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "</div>\n";
+        echo "<div class='col-md-3'></div>\n";
+        echo "</div>\n";
+        echo "</div>\n";      
     }
 }

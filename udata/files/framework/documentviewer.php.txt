@@ -169,13 +169,13 @@ class DocumentViewer extends ViewMaker {
      * The document given by name to the parameter is used in the 
      * interface
      * @param String $name The document name to dsiplay in the interface.
-     * @return Void
+     * @return Boolean If the document is not empty returns true, otherwise false
      */
     public function setDocument ($name) {
         $this->docName = $name;
         $this->setAccessRights();
         try {
-            $sql = 'SELECT id, state FROM documents WHERE name = ?';
+            $sql = 'SELECT id, state, body FROM documents WHERE name = ?';
             $pntr = $this->dbh->prepare($sql);
             $pntr->execute([$name]);
             $this->states = $pntr->fetchAll(PDO::FETCH_ASSOC);
@@ -186,6 +186,12 @@ class DocumentViewer extends ViewMaker {
                 elseif ($doc['state'] == self::SEEKING) {
                     $this->seeking = $doc['id'];
                 } 
+            }
+            if (empty($this->states['body'])) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
         catch (PDOException $e) {
@@ -218,24 +224,33 @@ class DocumentViewer extends ViewMaker {
      * contains the requested document taking into account 
      * the current users access permissions.
      * @param Array $submenu An optional indexed array of links to display in the side navigation
+     * @param Array $queryString An optional array of additional query string variables
      * @see ViewMaker::sideDropDownMenu()
      * @return Void
      */
-    public function displayDoc($submenu = null) {
+    public function displayDoc($submenu = null,$queryString = null) {
         $this->ViewData['pagetitle'] = $this->docName;
         $document = $this->getDocument($this->approved);
+        $edit = '?action=edit';
+        $approve = '?action=approve';
+        if (!is_null($queryString)) {
+            foreach($queryString as $var=>$val) {
+                $edit .= "&{$var}={$val}";
+                $approve .= "&{$var}={$val}";
+            }
+        }
         $this->header();
         if (!is_null($submenu)) {
             $this->sideDropDownMenu($submenu);
         }
         echo "<div>\n";
         if ($this->rights >= 1) {
-            echo "<a href='{$this->docURL}?action=edit' class='btn btn-info' role='button'>Edit Document</a>";
+            echo "<a href='{$this->docURL}{$edit}' class='btn btn-info' role='button'>Edit Document</a>";
         }
         if ($this->rights == 2) {
             foreach($this->states as $doc) {
                 if ($doc['state'] == self::SEEKING) {
-                    echo "&#160;<a href='{$this->docURL}?action=approve' class='btn btn-info' role='button'>See Pending Changes</a>";
+                    echo "&#160;<a href='{$this->docURL}{$approve}' class='btn btn-info' role='button'>See Pending Changes</a>";
                 }
             }
         }
@@ -251,13 +266,17 @@ class DocumentViewer extends ViewMaker {
      * An entire interface with an editable version of the 
      * selected document is output to the stream.
      * @param Array $submenu An optional indexed array of links for the side navigation menu
+     * @param Array $queryString An optional array of additional query string variables
      * @see ViewMaker::sideDropDownMenu()
      * @return Void
      */
-    public function editDisplay ($submenu = null) {
+    public function editDisplay ($submenu = null, $blank_template = '', $queryString = null) {
         if ($this->rights < 1) {return false;}
         $this->ViewData['pagetitle'] = 'Editing:'.$this->docName;
         $document = $this->getDocument($this->approved);
+        if (empty($document['body'])) {
+            $document['body'] = $blank_template;
+        }
         $this->header();
         if (!is_null($submenu)) {
             $this->sideDropDownMenu($submenu);
@@ -265,8 +284,13 @@ class DocumentViewer extends ViewMaker {
         echo "<form method='post'>
             <input type='hidden' name='action' value='submit' />
             <input type='hidden' name=':oid' value='{$this->security->secureUserID}' />
-            <input type='hidden' name=':name' value='{$this->docName}' />
-            <div class='form-group'><textarea class='form-control' name=':body' required>{$document['body']}</textarea>
+            <input type='hidden' name=':name' value='{$this->docName}' />\n";
+        if (!is_null($queryString)) {
+            foreach($queryString as $var=>$val) {
+                echo "<input type='hidden' name='{$var}' value='{$val}' />\n";
+            }
+        }
+        echo "<div class='form-group'><textarea class='form-control' name=':body' required>{$document['body']}</textarea>
             <button type='submit' class='btn btn-danger form-control'>Submit for Approval</button></div>
             </form>";
         $this->footer([
@@ -285,10 +309,11 @@ class DocumentViewer extends ViewMaker {
      * is display. The user has options to approve or disapprove of the 
      * document.
      * @param Array $submenu An optional indexed navigation array
+     * @param Array $queryString An optional array of query string parameters in the form `['variable'=>'value',...]`
      * @see ViewMaker::sideDropDownMenu()
      * @return Void
      */
-    public function approveDisplay ($submenu = null) {
+    public function approveDisplay ($submenu = null, $queryString = null) {
         if ($this->rights != 2) {return false;}
         $document = $this->getDocument($this->seeking);
         $this->header();
@@ -300,8 +325,13 @@ class DocumentViewer extends ViewMaker {
                     <input type='hidden' name='action' value='submitapproval' />
                     <input type='hidden' name=':name' value='{$this->docName}' />
                     <input type='hidden' name=':aid' value='{$this->security->secureUserID}' />
-                    <input type='hidden' name=':id' value='{$this->seeking}' />
-                    <textarea name=':body' required>{$document['body']}</textarea>
+                    <input type='hidden' name=':id' value='{$this->seeking}' />";
+        if (!is_null($queryString)) {
+            foreach($queryString as $var=>$val) {
+                echo  "input type='hidden' name='{$var}' value='{$val}' />\n";
+            }
+        }      
+        echo "      <textarea name=':body' required>{$document['body']}</textarea>
                     <label for='pass'>Password:
                         <input class='form-contorl' id='pass' type='password' name=':password' placeholder='Required for Approval' required/>
                     </label>                    
@@ -329,16 +359,21 @@ class DocumentViewer extends ViewMaker {
      * @see DocumentViewer::editDisplay()
      */
     public function submitForApproval ($data) {
-        if ($this->rights == 0) {return false;}
+        if ($this->rights == 0) return false;
         try {
             $sql = 'INSERT INTO documents (id,name,state,body,oid) VALUES (:id,:name,:state,:body,:oid)';
-            unset($data['action']);
-            $data[':id'] = uniqid();
-            $data[':state'] = self::SEEKING;
+            $insert = [
+                ':id'=>uniqid(),
+                ':state'=>self::SEEKING,
+                ':name'=>$data[':name'],
+                ':body'=>$data[':body'],
+                ':oid'=>$data[':oid']
+            ];
             $pntr = $this->dbh->prepare($sql);
             $this->dbh->beginTransaction();
-            $pntr->execute($data);
-            $this->emailReview($data);
+            $pntr->execute($insert);
+            if (!empty($data['queryString'])) $insert['queryString'] = $data['queryString'];
+            $this->emailReview($insert);
             $this->dbh->commit();
             return true;
         }
@@ -366,6 +401,8 @@ class DocumentViewer extends ViewMaker {
     public function emailReview ($data) {
         try {
             $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/docreview.html');
+            $url = '?action=approve&id='.$data[':id'];
+            if (!empty($data['queryString'])) $url .= '&'.$data['queryString'];
             $body .= "<a href='{$this->docURL}?action=approve&id={$data[':id']}'><strong>{$data[':name']}</strong></a>";
             foreach($this->access[self::APPROVE_ACCESS_NAME] as $perm) {
                 foreach($this->security->getUsersByPerm($perm) as $reviewer) {

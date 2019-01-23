@@ -106,17 +106,17 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">228</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">251</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">9</span>
+                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">2</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1363919171"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1355573151"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1363919171" class="accordion-body collapse in">
+            <div id="namespace-1355573151" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -169,6 +169,7 @@
                                                     <li class="class"><a href="../classes/Security.html">Security</a></li>
                                                     <li class="class"><a href="../classes/Tool.html">Tool</a></li>
                                                     <li class="class"><a href="../classes/UploadException.html">UploadException</a></li>
+                                                    <li class="class"><a href="../classes/User.html">User</a></li>
                                                     <li class="class"><a href="../classes/UserAdministrator.html">UserAdministrator</a></li>
                                                     <li class="class"><a href="../classes/UserReset.html">UserReset</a></li>
                                                     <li class="class"><a href="../classes/ViewMaker.html">ViewMaker</a></li>
@@ -295,6 +296,8 @@ else {
                                                                     <a href="../classes/ViewMaker.html#method_linkButton" class="">linkButton()</a><br />
                                                                     <a href="../classes/ViewMaker.html#method_beginBtnCollapse" class="">beginBtnCollapse()</a><br />
                                                                     <a href="../classes/ViewMaker.html#method_endBtnCollapse" class="">endBtnCollapse()</a><br />
+                                                                    <a href="../classes/ViewMaker.html#method_wrapInWell" class="">wrapInWell()</a><br />
+                                                                    <a href="../classes/ViewMaker.html#method_wrapInPre" class="">wrapInPre()</a><br />
                                                                     <a href="../classes/DocumentViewer.html#method_setDocument" class="">setDocument()</a><br />
                                                                     <a href="../classes/DocumentViewer.html#method_displayDoc" class="">displayDoc()</a><br />
                                                                     <a href="../classes/DocumentViewer.html#method_editDisplay" class="">editDisplay()</a><br />
@@ -1322,7 +1325,7 @@ user to immediately reach the top of the current view scroll</p>
             <article class="method">
                 <h3 class="public ">insertTab()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">insertTab(Int  <span class="argument">$num = 1</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">insertTab(Int  <span class="argument">$num = 1</span>, Boolean  <span class="argument">$return = false</span>) : Void</pre>
                 <p><em>Outputs a standard tab to the stream.</em></p>
                 <p>Inserts a standardized tab to the stream in the form
 of HTML nonbreaking spaces.</p>
@@ -1333,6 +1336,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>Int</td>
                                 <td>$num </td>
                                 <td><p>Optional, the number of tabs to insert.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$return </td>
+                                <td><p>If true output is returned instead of output to the stream</p></td>
                             </tr>
                                             </table>
                 
@@ -1758,7 +1766,7 @@ of HTML nonbreaking spaces.</p>
             <article class="method">
                 <h3 class="public ">linkButton()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">linkButton(String  <span class="argument">$link</span>, String  <span class="argument">$name</span>, Boolean  <span class="argument">$return = false</span>, Boolean  <span class="argument">$passthru = false</span>) : Mixed</pre>
+                <pre class="signature" style="margin-right: 54px;">linkButton(String  <span class="argument">$link</span>, String  <span class="argument">$name</span>, String  <span class="argument">$type = null</span>, Boolean  <span class="argument">$return = false</span>, Boolean  <span class="argument">$passthru = false</span>) : Mixed</pre>
                 <p><em>Outputs a link formatted as a Bootstrap info button</em></p>
                 
 
@@ -1773,6 +1781,11 @@ of HTML nonbreaking spaces.</p>
                                 <td>String</td>
                                 <td>$name </td>
                                 <td><p>The name to display on the button</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$type </td>
+                                <td><p>Available format options 'default'|'primary'|'success'|'info'|'warning'|'danger'</p></td>
                             </tr>
                                                     <tr>
                                 <td>Boolean</td>
@@ -1887,11 +1900,89 @@ is called.</p>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
+            <a id="method_wrapInWell" name="method_wrapInWell" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">wrapInWell()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">wrapInWell(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Inserts a bootstrap well into the stream</em></p>
+                <p>Adds content encapsulated in a bootstrap well.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$content </td>
+                                <td><p>The content to wrapped in a well</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Void
+                                            &mdash; <p>Output is sent directly to the stream and nothing is returned</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_wrapInPre" name="method_wrapInPre" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">wrapInPre()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">wrapInPre(String  <span class="argument">$content</span>) : Void</pre>
+                <p><em>Inserts content wrapped in a bootstrap scrollable &#039;&lt;pre&gt;&#039; section</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$content </td>
+                                <td><p>The content to wrap</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    Void
+                                            &mdash; <p>Outputs directly to the stream and returns nothing</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ViewMaker.html"><div class="path-wrapper">\ViewMaker</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
             <a id="method_setDocument" name="method_setDocument" class="anchor"></a>
             <article class="method">
                 <h3 class="public ">setDocument()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setDocument(String  <span class="argument">$name</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">setDocument(String  <span class="argument">$name</span>) : Boolean</pre>
                 <p><em>Sets the current document for the current interface.</em></p>
                 <p>The document given by name to the parameter is used in the
 interface</p>
@@ -1907,7 +1998,8 @@ interface</p>
                 
                 
                                     <h4>Returns</h4>
-                    Void
+                    Boolean
+                                            &mdash; <p>If the document is not empty returns true, otherwise false</p>
                                     				
                             </article>
         </div>
@@ -1928,7 +2020,7 @@ interface</p>
             <article class="method">
                 <h3 class="public ">displayDoc()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">displayDoc(Array  <span class="argument">$submenu = null</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">displayDoc(Array  <span class="argument">$submenu = null</span>, Array  <span class="argument">$queryString = null</span>) : Void</pre>
                 <p><em>Displays the requested document in an interface</em></p>
                 <p>An entire interface is output to the stream that
 contains the requested document taking into account
@@ -1940,6 +2032,11 @@ the current users access permissions.</p>
                                 <td>Array</td>
                                 <td>$submenu </td>
                                 <td><p>An optional indexed array of links to display in the side navigation</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$queryString </td>
+                                <td><p>An optional array of additional query string variables</p></td>
                             </tr>
                                             </table>
                 
@@ -1968,7 +2065,7 @@ the current users access permissions.</p>
             <article class="method">
                 <h3 class="public ">editDisplay()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">editDisplay(Array  <span class="argument">$submenu = null</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">editDisplay(Array  <span class="argument">$submenu = null</span>,   <span class="argument">$blank_template = &#039;&#039;</span>, Array  <span class="argument">$queryString = null</span>) : Void</pre>
                 <p><em>Outputs an editable version of the selected document inside an interface.</em></p>
                 <p>An entire interface with an editable version of the
 selected document is output to the stream.</p>
@@ -1979,6 +2076,16 @@ selected document is output to the stream.</p>
                                 <td>Array</td>
                                 <td>$submenu </td>
                                 <td><p>An optional indexed array of links for the side navigation menu</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$blank_template </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$queryString </td>
+                                <td><p>An optional array of additional query string variables</p></td>
                             </tr>
                                             </table>
                 
@@ -2007,7 +2114,7 @@ selected document is output to the stream.</p>
             <article class="method">
                 <h3 class="public ">approveDisplay()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">approveDisplay(Array  <span class="argument">$submenu = null</span>) : Void</pre>
+                <pre class="signature" style="margin-right: 54px;">approveDisplay(Array  <span class="argument">$submenu = null</span>, Array  <span class="argument">$queryString = null</span>) : Void</pre>
                 <p><em>Outputs a document that is seeking approval encapsulated in an enitire interface</em></p>
                 <p>An interface with an editted document that is seeking approval
 is display. The user has options to approve or disapprove of the
@@ -2019,6 +2126,11 @@ document.</p>
                                 <td>Array</td>
                                 <td>$submenu </td>
                                 <td><p>An optional indexed navigation array</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Array</td>
+                                <td>$queryString </td>
+                                <td><p>An optional array of query string parameters in the form <code>['variable'=&gt;'value',...]</code></p></td>
                             </tr>
                                             </table>
                 
@@ -2339,7 +2451,7 @@ and the access permissions given in the $access property</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on December 10th, 2018 at 18:15.
+                    on January 23rd, 2019 at 16:22.
                 </section>
             </section>
         </section>

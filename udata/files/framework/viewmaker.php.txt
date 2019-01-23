@@ -155,7 +155,7 @@ Class ViewMaker {
         }
         echo "</div>\n";
         if (!empty($_SESSION['controller-security'])) {
-            echo "<div class='panel panel-default'>\n";
+            echo "<div class='panel panel-default' id='admin-perms'>\n";
             echo "<div class='panel-heading'>\n";
             echo htmlentities('Roles & Permissions on this Page');
             echo "</div><div class='panel-body'>\n";
@@ -192,7 +192,7 @@ Class ViewMaker {
             unset($_SESSION['controller-security']);
         }
         echo "<div class='footer'>\n";
-        echo "Copyright (C) 2008-2018 Paul W. Lane";
+        echo "UData v".APP_VERSION." Copyright (C) 2008-2018 Paul W. Lane";
         $this->insertTab(2);
         echo "<a href='{$this->config['error-support-link']}' target='_blank'>Problem with this page?</a>\n";
         echo "</div>\n";
@@ -444,12 +444,16 @@ Class ViewMaker {
      * Inserts a standardized tab to the stream in the form
      * of HTML nonbreaking spaces.
      * @param Int $num Optional, the number of tabs to insert.
+     * @param Boolean $return If true output is returned instead of output to the stream
      * @return Void
      */
-    public function insertTab ($num = 1) {
+    public function insertTab ($num = 1, $return = false) {
+        $tab = '';
         for ($cnt = 0; $cnt != $num; $cnt++) {
-            echo "&#160;&#160;&#160;";
+            $tab .= "&#160;&#160;&#160;";
         }
+        if ($return) return $tab;
+        else echo $tab;
     }
 
     /**
@@ -578,13 +582,29 @@ Class ViewMaker {
      * Outputs a link formatted as a Bootstrap info button
      * @param String $link Application centric link for the button
      * @param String $name The name to display on the button
+     * @param String $type Available format options 'default'|'primary'|'success'|'info'|'warning'|'danger'
      * @param Boolean $return Optional, if set true then the output is returned and not output to the stream buffer
      * @param Boolean $passthru Optional, if set true then the link is passed through unaltered.
      * @return Mixed Either a String if $return is true or Void otherwise
      */
-    public function linkButton ($link,$name,$return=false,$passthru=false) {
+    public function linkButton ($link ,$name, $type = null, $return=false, $passthru=false) {
         $link = $passthru ? $link : $this->PageData['approot'].$link;
-        $string = "<a href='{$link}' class='btn btn-info' role='button'>{$name}</a>\n";
+        $class = 'btn ';
+        if (!is_null($type)) {
+            switch($type) {
+                case 'default': $class .= 'btn-default'; break;
+                case 'primary': $class .= 'btn-primary'; break;
+                case 'success': $class .= 'btn-success'; break;
+                case 'info': $class .= 'btn-info'; break;
+                case 'warning': $class .= 'btn-warning'; break;
+                case 'danger': $class .= 'btn-danger'; break;
+                default: $class .= 'btn-info'; break;
+            }
+        }
+        else {
+            $class .= 'btn-info';
+        }
+        $string = "<a href='{$link}' class='{$class}' role='button'>{$name}</a>\n";
         if ($return) return $string;
         else echo $string;
     }
@@ -614,4 +634,23 @@ Class ViewMaker {
         echo "</div>\n";
     }
 
+    /**
+     * Inserts a bootstrap well into the stream
+     * 
+     * Adds content encapsulated in a bootstrap well.
+     * @param String $content The content to wrapped in a well
+     * @return Void Output is sent directly to the stream and nothing is returned
+     */
+    public function wrapInWell ($content) {
+        echo "<div class='well'>\n{$content}\n</div>\n";
+    }
+
+    /**
+     * Inserts content wrapped in a bootstrap scrollable '<pre>' section
+     * @param String $content The content to wrap
+     * @return Void Outputs directly to the stream and returns nothing
+     */
+    public function wrapInPre ($content) {
+        echo "<pre class='pre-scrollable'>\n{$content}\n</pre>\n";
+    }
 }

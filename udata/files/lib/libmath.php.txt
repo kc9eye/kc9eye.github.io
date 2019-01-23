@@ -1,5 +1,5 @@
 <?php
-/* This file is part of Udata.
+/* This file is part of UData.
  * Copyright (C) 2018 Paul W. Lane <kc9eye@outlook.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,24 +15,18 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#Instance constants
-/**
- * @var String INCLUDE_ROOT File path to the directory root of the application, relative to the machine.
- */
-define('INCLUDE_ROOT', dirname(__DIR__));
-/**
- * @var String PHPMAILER_DIR File path to the current PHPMailer classes
- */
-define('PHPMAILER_DIR', dirname(__DIR__).'/third-party/PHPMailer/src');
-/**
- * @var Boolean DIALOG_SUCCESS Simplifies calls to newEndUserDialog
- * @see Instance::newEndUserDialog()
- */
-define('DIALOG_SUCCESS', true);
-/**
- * @var Boolean DIALOG_FAILURE Simplifies calls to newEndUserDialog
- * @see Instance::newEndUserDialog()
- */
-define('DIALOG_FAILURE', false);
 
-define('APP_VERSION', '0.0.1 alpha');
+/**
+ * Calculates the percentage of 'quality' compared to 'control'
+ * 
+ * Returns the mathmatical percentage of `$quality` compared to 
+ * `$control`. This precision of the number is determeined by the
+ * optional argument `$precision`.
+ * @param Float $quality The basis of the calculation.
+ * @param Float $control The control to calculate the basis against
+ * @param Integer $presicion The number of decimal points to return
+ * @return Float The percentage representation of quality compared to control
+ */
+function qualityControlPercentage ($quality,$control,$precision = 2) {
+    return (float) round((($quality/$control)*100),$precision,PHP_ROUND_HALF_UP);
+}

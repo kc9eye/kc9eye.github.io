@@ -173,7 +173,7 @@ class InlineFormWidgets extends FormWidgets {
      * @param Mixed $required Optional `true` or array of jquery.validate() properties if required
      * @return Void
      */
-    public function fullPageSearchBar($name, $label = 'Search', $value = null, $required = false) {
+    public function fullPageSearchBar($name, $label = 'Search', $value = null, $required = false, $helpBlock = null) {
         echo "<form>\n";
         echo "<div class='input-group'>\n";
         echo "<input type='text' class='form-control' placeholder='{$label}' name='{$name}' >\n";
@@ -183,6 +183,7 @@ class InlineFormWidgets extends FormWidgets {
         echo "</button>\n";
         echo "</div>\n";
         echo "</div>\n";
+        if (!is_null($helpBlock)) echo "<span class='help-block'>{$helpBlock}</span>\n";
         if ($required) {
             $this->addValidation($name,$required);
             echo "<label class='error' for='{$name}' generated='true'></label>\n";
