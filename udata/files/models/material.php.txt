@@ -1,0 +1,60 @@
+<?php
+/* This file is part of UData.
+ * Copyright (C) 2019 Paul W. Lane <kc9eye@outlook.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+class Material {
+    private $data;
+
+    public function __construct (PDO $dbh, $number) {
+        $this->data = [];
+        $this->number = $number;
+        $this->dbh = $dbh;
+        $this->getMaterialData();
+    }
+
+    public function __set ($name,$value) {
+        $this->data[$name] = $value;
+    }
+
+    public function __get ($name) {
+        try {
+            return $this->data[$name];
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    private function getMaterialData () {
+        $sql = 'SELECT * FROM material WHERE number = ?';
+        $pntr = $this->dbh->prepare($sql);
+        if (!$pntr->execute([$this->number])) throw new Exception("Select failed: {$sql}");
+        if (!empty(($rtn = $pntr->fetchAll(PDO::FETCH_ASSOC)))) $this->setData(['material'=>$rtn[0]]);
+        foreach(['receiving','discrepancies','damaged','inventory'] as $store) {
+            $sql = "SELECT * FROM {$store} WHERE partid = ?";
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$this->material['id']])) throw new Exception("Select failed: {$sql}");
+            if (!empty(($rtn = $pntr->fetchAll(PDO::FETCH_ASSOC)))) $this->setData([$store=>$rtn]);
+        }
+    }
+
+    private function setData (Array $data) {
+        foreach($data as $index=>$value) {
+            $this->$index = $value;
+        }
+    }
+}

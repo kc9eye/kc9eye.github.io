@@ -584,10 +584,11 @@ Class ViewMaker {
      * @param String $name The name to display on the button
      * @param String $type Available format options 'default'|'primary'|'success'|'info'|'warning'|'danger'
      * @param Boolean $return Optional, if set true then the output is returned and not output to the stream buffer
+     * @param String $target Optional target argument to launch new window, default is '_self'
      * @param Boolean $passthru Optional, if set true then the link is passed through unaltered.
      * @return Mixed Either a String if $return is true or Void otherwise
      */
-    public function linkButton ($link ,$name, $type = null, $return=false, $passthru=false) {
+    public function linkButton ($link ,$name, $type = null, $return=false, $target='_self', $passthru=false) {
         $link = $passthru ? $link : $this->PageData['approot'].$link;
         $class = 'btn ';
         if (!is_null($type)) {
@@ -604,7 +605,7 @@ Class ViewMaker {
         else {
             $class .= 'btn-info';
         }
-        $string = "<a href='{$link}' class='{$class}' role='button'>{$name}</a>\n";
+        $string = "<a href='{$link}' class='{$class}' role='button' target='{$target}'>{$name}</a>\n";
         if ($return) return $string;
         else echo $string;
     }
