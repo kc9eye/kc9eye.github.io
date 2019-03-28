@@ -49,6 +49,11 @@ Class FormWidgets {
     protected $rules;
 
     /**
+     * @var Boolean $uploadhack Whether to add the file upload hack script
+     */
+    protected $uploadhack;
+
+    /**
      * Class constructor
      * 
      * @param String $scripts The base filepath to any called scripts, including the jquery.validate() plugin
@@ -123,9 +128,9 @@ Class FormWidgets {
         if ($this->validate) {
             echo "</form>
                   <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'></script>
-                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js'></script>
-                  <script src='{$this->scripts}/btstrapfileinputhack.js'></script>
-                  <script>
+                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js'></script>";
+            if ($this->uploadhack) echo "<script src='{$this->scripts}/btstrapfileinputhack.js'></script>\n";
+            echo "<script>
                         $(document).ready(function(){
                             $('#{$this->formid}').validate(".str_replace('"','',json_encode(['rules'=>$this->rules],JSON_FORCE_OBJECT)).");
                         });
@@ -133,7 +138,10 @@ Class FormWidgets {
             </div>";            
         }
         else {
-            echo "</form></div>";
+            
+            echo "</form>";
+            if ($this->uploadhack) echo "<script src='{$this->scripts}/btstrapfileinputhack.js'></script>\n";
+            echo "</div>";
         }
     }
 
@@ -401,33 +409,40 @@ Class FormWidgets {
      * A file upload entry stylized for Bootstrap and the 
      * standard framework.
      * @param String $name The name given to `$_REQUEST`
+     * @param String $label The label for the form field
+     * @param String $value This parameter is not used. If you require this parameter consider using `standardFileUpload`
+     * @param Boolean $multiple Whether or not to accept multiple files for upload
+     * @param Boolean $required Whether to validate this field for emptiness
+     * @param String $helpBlock A string of optional help text for the field
      * @param Mixed $required Optional `true` or array of jquery.validate() properties
      * @todo rewrite for PHP instead of HTML
      */
-    public function fileUpload ($name, $required = false) {
-        if ($required){
-            $this->addValidation($name, $required);
-        }
-?>
-<div class='form-group'>
-    <div class='row'>
-        <div class='col-md-3'></div>
-        <div class='col-xs-12 col-md-1 right-text'><label>File:</label></div>
-        <div class='col-xs-12 col-md-5'>
-            <div class='input-group'>
-                <label class='input-group-btn'>
-                    <span class='btn btn-info'>
-                        Browse&hellip;
-                        <input type='file' name='<?php echo $name;?>[]' style='display:none;' multiple <?php if ($required){echo 'required';}?>/>
-                    </span>
-                </label>
-                <input type="text" class="form-control" readonly>
-            </div>
-        </div>
-        <div class='col-md-3'></div>
-    </div>
-</div>
-<?php     
+    public function fileUpload ($name, $label = 'File', $value = null, $multiple = false, $required = false, $helpBlock = null) {
+        $this->uploadhack = true;
+        if ($required) $this->addValidation($name,$required);
+        $name = $multiple ? "{$name}[]" : $name;
+        echo "<div class='form-group'>\n";
+        echo "<div class='row'>\n";
+        echo "<div class='col-md-3'></div>\n";
+        echo "<div class='col-xs-12 col-md-1 right-text'><label>{$label}:</label></div>\n";
+        echo "<div class='col-xs-12 col-md-5'>\n";
+        echo "<div class='input-group'>\n";
+        echo "<label class='input-group-btn'>\n";
+        echo "<span class='btn btn-info'>\n";
+        echo "Browse&hellip;";
+        echo "<input type='file' name='{$name}' style='display:none;' ";
+        if ($multiple) echo "mulitple ";
+        if ($required) echo "required ";
+        echo "/>\n";
+        echo "</span>\n";
+        echo "</label>\n";
+        echo "<input type='text' class='form-control' readonly>\n";
+        echo "</div>\n";
+        if (!is_null($helpBlock)) echo "<span class='help-block'>{$helpBlock}</span>\n";
+        echo "</div>\n";
+        echo "<div class='col-md-3'></div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
     }
 
     /**
@@ -593,5 +608,32 @@ Class FormWidgets {
         echo "<div class='col-md-3'></div>\n";
         echo "</div>\n";
         echo "</div>\n";      
+    }
+
+    /**
+     * Outputs a non bootstrap standard HTML 5 file upload to the stream
+     * @param String $name The name given to the $_REQUEST variable
+     * @param String $label The label for the form group
+     * @param String $value Any pre loaded value for the upload
+     * @param Boolean $multiple Default false, whether to accept multiple file or not
+     * @param Mixed $required Either true if validatation required, or array of jquery validate rules
+     * @param String $helpBlock Help block information default is null
+     */
+    public function standardFileUpload ($name, $label = 'File', $value = null, $multiple = false, $required = false, $helpBlock = null) {
+        if ($required) $this->addValidation($name,$required);
+        $name = $multiple ? "{$name}[]" : $name;
+        echo "<div class='form-group'>\n";
+        echo "<div class='row'>\n";
+        echo "<div class='col-md-3'></div>\n";
+        echo "<div class='col-xs-12 col-md-1'><label class='control-label' for='{$name}'>{$label}:</label></div>\n";
+        echo "<div class='col-xs-12 col-md-5'><input class='form-control' type='file' name='{$name}' ";
+        if (!is_null($value)) echo "value='{$value}' ";
+        if ($multiple) echo "multiple ";
+        echo "/>";
+        if (!is_null($helpBlock)) echo "<span class='help-block'>{$helpBlock}</span>\n";
+        echo "</div>\n";
+        echo "<div class='col-md-3'></div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
     }
 }

@@ -114,11 +114,15 @@ class InlineFormWidgets extends FormWidgets {
 
     /**
      * Outputs an inline form submit button to the stream
-     * @param String $label The label for the button
+     * @param String $label An optional label for the button
+     * @param Boolean $reset An optional switch to also output a reset button
+     * @param String $cancel An optional full length hyperlink to disregard the form
      * @return Void
      */
-    public function inlineSubmit ($label) {
+    public function inlineSubmit ($label = 'Submit',$reset = false, $cancel = null) {
         echo "<button class='btn btn-default' type='submit'>{$label}</button>\n";
+        if ($reset) echo "&#160;<button class='btn btn-default' type='reset'>Reset</button>\n";
+        if (!is_null($cancel)) echo "&#160;<a href='{$cancel}' class='btn btn-default'>Cancel</a>\n";
     }
 
     /**
@@ -208,5 +212,57 @@ class InlineFormWidgets extends FormWidgets {
             echo "<button type='button' class='btn btn-info' onclick='{$action}'>{$label}</button>\n";
         }
         echo "</div>\n";
+    }
+
+       /**
+     * Outputs an inline stylized select box to the stream
+     * @param String $name The name given to $_REQUEST
+     * @param String $label The label for the element
+     * @param Array $value A mulitdimensional array in the form `[['opt_val','opt_label'],...]`
+     * @param Mixed $required Optional, either true if required or array of jquery.validate() properties
+     * @param String $helpBlock Optional string to output as help block.
+     */
+    public function inlineSelectBox ($name, $label, Array $value, $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        echo "<div class='form-group'>\n";
+        echo "<label class='control-label' for='{$name}'>{$label}:</label>\n";
+        echo "<select class='form-control' name='{$name}' id='{$name}'>\n";
+        echo "<option value='' selected='selected'></option>\n";
+        foreach($value as $opt) {
+            echo "<option value='{$opt[0]}'>{$opt[1]}</option>\n";
+        }
+        echo "</select>\n";
+        echo "<label class='error' for='{$name}' generated='true'></label>\n";
+        if (!is_null($helpBlock)) {
+            echo "<span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "</div>\n";
+    }
+
+     /**
+     * Outputs an inline formated textarea to the stream
+     * 
+     * @param String $name The `$_REQUEST` name given to the handler.
+     * @param String $label The UI display name for the widget.
+     * @param String $value Optional pre-inserted value.
+     * @param Mixed $required Optionally either true or an indexed array of jQuery.validate() options
+     * @param String $helpBlock Optional string of help text for the widget
+     * @return Void Output is directed to the stream, and this widget returns no value
+     */
+    public function inlineTextArea ($name, $label = null, $value = '', $required = false, $helpBlock = null) {
+        if ($required) {
+            $this->addValidation($name, $required);
+        }
+        $id = uniqid();
+        echo "<div class='form-group'>\n";
+        if (!is_null($label))
+            echo "<label class='control-label' for='{$name}'>{$label}:</label>\n";
+        echo "<textarea class='form-control' name='{$name}' id='{$id}'>{$value}</textarea>\n";
+        if (!is_null($helpBlock)) {
+            echo "<span class='help-block'>{$helpBlock}</span>\n";
+        }
+        echo "</div>\n";      
     }
 }

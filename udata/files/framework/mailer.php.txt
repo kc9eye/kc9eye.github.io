@@ -66,11 +66,10 @@ Class Mailer {
      * 
      * This method is used to send mail. All the details 
      * of the mail being sent should be given in the array.
-     * The form of the array is: 
-     * `['to'=>'to_address','subject'=>'mail_subject','body'=>'message_body','attache=>['attach_filepath',...]]`
-     * It is not possible to send mail as anyone other than the server with this method.
-     * 
-     * @param Array $mail The mail array describing the mail to send.
+     * It is not possible to send mail as anyone other than the server with this method.     * 
+     * @param Array $mail The mail array describing the mail to send. In the form    
+     * `['to'=>'to_address','subject'=>'mail_subject','body'=>'message_body','attach=>['attach_filepath',...]]`
+     * @return Boolean True on success, false otherwise.
      */
     public function sendMail (Array $mail) {
         try {

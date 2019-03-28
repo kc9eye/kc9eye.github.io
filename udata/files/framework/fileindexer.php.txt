@@ -37,16 +37,16 @@ class FileIndexer {
     protected $storage;
 
     /**
-     * @var Array $indexed Files that have been indexed already in the case 
+     * @var Array $indexed File paths that have been indexed already in the case 
      * of a multiple file upload.
      */
-    protected $indexed;
+    public $indexed;
 
     /**
      * @var Array $indexed_ids File ID's that have been indexed in the case 
      * of multiple file uploads.
      */
-    protected $indexed_ids;
+    public $indexed_ids;
 
     /**
      * Class constructor
@@ -65,7 +65,8 @@ class FileIndexer {
      * Indexes files given in a FileUpload class
      * @param FileUpload $f The files to be indexed given in a FileUpload class
      * @param String $uid The user ID of the current user indexing the files
-     * @return Boolean `true` on success, otherwise `false` 
+     * @return Array An unindexed array containing the FID's succesfully indexed files,
+     * otherwise on error, it returns false.
      */
     public function indexFiles (FileUpload $f, $uid) {
         try {
@@ -82,7 +83,7 @@ class FileIndexer {
                     ':orig'=>$file['name'],
                     ':uid'=>$uid
                 ];
-                $pntr->execute($insert);
+                if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
                 if (move_uploaded_file($file['tmp_name'], $this->storage.'/'.$insert[':file'])) {
                     array_push($this->indexed, $this->storage.'/'.$insert[':file']);
                     array_push($this->indexed_ids, $insert[':id']);

@@ -479,7 +479,7 @@ Class ViewMaker {
      */
     public function h1 ($content, $centered=false) {
         if ($centered) 
-            echo "<div class='row'><div class='col-md-3'</div><div class='col-md-6 col-xs-12'><h1>{$content}</h1></div><div class='col-md-3'></div></div>\n";
+            echo "<div class='row'><div class='col-md-3'></div><div class='col-md-6 col-xs-12'><h1>{$content}</h1></div><div class='col-md-3'></div></div>\n";
         else
             echo "<h1>{$content}</h1>\n";
     }
@@ -533,7 +533,7 @@ Class ViewMaker {
 
     /**
      * Outputs an edit button that when clicked goes to the given application centric addtress
-     * @param String $api The application centric API address the user should be sent to.
+     * @param String $addr The application centric API address the user should be sent to.
      * @param Boolean $passthru If true the address is passed through with alteration.
      * @param Boolean $return If true the method returns the string instead of echoing it
      * @return Mixed
@@ -541,6 +541,20 @@ Class ViewMaker {
     public function editBtnSm ($addr, $return = false, $passthru = false) {
         $addr = $passthru ? $addr : $this->PageData['approot'].$addr;
         $str = "<a href='{$addr}' class='btn btn-sm btn-warning' role='button'><span class='glyphicon glyphicon-pencil'></span></a>";
+        if ($return) return $str;
+        else echo $str;
+    }
+
+    /**
+     * Outputs a delete button to the stream that when clicked opens the API given
+     * @param String $addr The application centric API address the user should be sent to.
+     * @param Boolean $passthru If true the address is passed through with alteration.
+     * @param Boolean $return If true the method returns the string instead of echoing it
+     * @return Mixed
+     */
+    public function trashBtnSm ($addr, $return = false, $passthru = false) {
+        $addr = $passthru ? $addr : $this->PageData['approot'].$addr;
+        $str = "<a href='{$addr}' class='btn btn-sm btn-danger' role='button'><span class='glyphicon glyphicon-trash'></span></a>";
         if ($return) return $str;
         else echo $str;
     }
@@ -620,7 +634,7 @@ Class ViewMaker {
      * @param String $name The label name of the collapse button.
      * @return Void This method outputs to the stream and returns nothing.
      */
-    public function beginBtnCollapse ($name = 'Show Content',$id = null) {
+    public function beginBtnCollapse ($name = 'Show/Hide Content',$id = null) {
         if (is_null($id)) $id = uniqid();
         echo "<button data-toggle='collapse' data-target='#{$id}' class='btn btn-default'>{$name}</button>\n";
         echo "<div id='{$id}' class='collapse'>\n";
@@ -640,10 +654,21 @@ Class ViewMaker {
      * 
      * Adds content encapsulated in a bootstrap well.
      * @param String $content The content to wrapped in a well
+     * @param Boolean $centered Centers the well on page
      * @return Void Output is sent directly to the stream and nothing is returned
      */
-    public function wrapInWell ($content) {
+    public function wrapInWell ($content, $centered = false) {
+        if ($centered) {
+            echo "<div class='row'>\n";
+            echo "<div class='col-md-3'></div>\n";
+            echo "<div class='col-xs-12 col-md-6'>\n";
+        }
         echo "<div class='well'>\n{$content}\n</div>\n";
+        if ($centered) {
+            echo "</div>\n";
+            echo "<div class='col-md-3'></div>\n";
+            echo "</div>\n";
+        }
     }
 
     /**

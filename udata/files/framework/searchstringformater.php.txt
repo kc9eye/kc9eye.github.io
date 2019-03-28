@@ -25,14 +25,17 @@
  */
 class SearchStringFormater {
 
+    public $formatedString;
+
     /**
      * Returns either the object or the formated search string
      * @param String $string Optional string to format for search
      * @return Mixed If given string returns the formated search string, otherwise 
      * returns the SearchStringFormater object
      */
-    public function __construct ($string=null) {
-        return $this;
+    public function __construct ($string = null) {
+        if (!is_null($string)) 
+            $this->formatedString = $this->formatSearchString($string);
     }
 
     /**

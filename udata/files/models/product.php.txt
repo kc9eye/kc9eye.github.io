@@ -170,10 +170,9 @@ class Product {
                         id,
                         (SELECT number FROM material WHERE id = a.partid),
                         (SELECT description FROM material WHERE id = a.partid), 
-                        qty,
-                        (SELECT cell_name FROM work_cell WHERE id = a.cellid)
+                        qty
                     FROM bom as a 
-                    WHERE prokey = :key';
+                    WHERE prokey = :key ORDER BY number ASC';
             $pntr = $this->dbh->prepare($sql);
             if (!$pntr->execute([$this->pKey])) throw new Exception("Select failed: {$sql}");
             $this->pBOM = $pntr->fetchAll(PDO::FETCH_ASSOC);

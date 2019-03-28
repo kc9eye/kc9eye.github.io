@@ -126,14 +126,14 @@ class WorkCell {
     }
 
     private function getCellMaterial () {
-        $sql = 
-        'SELECT 
-            a.id,
-            (SELECT number FROM material WHERE id = bom.partid),
-            (SELECT description FROM material WHERE id = bom.partid), 
-            a.qty
-        FROM cell_material as a, bom
-        WHERE a.cellid = ?';
+        $sql = '
+            SELECT 
+                a.id,
+                (SELECT number FROM material WHERE id = (SELECT partid FROM bom WHERE id = a.bomid)),
+                (SELECT description FROM material WHERE id = (SELECT partid FROM bom WHERE id = a.bomid)),
+                a.qty
+            FROM cell_material AS a
+            WHERE a.cellid = ?';
         $pntr = $this->dbh->prepare($sql);
         if (!$pntr->execute([$this->ID])) throw new Exception("Select failed: {$sql}");
         return $pntr->fetchAll(PDO::FETCH_ASSOC);

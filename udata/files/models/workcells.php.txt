@@ -26,6 +26,7 @@
 class WorkCells {
 
     protected $dbh;
+    private $data;
 
     public function __construct (PDO $dbh) {
         $this->dbh = $dbh;
@@ -51,6 +52,7 @@ class WorkCells {
         try {
             $pntr = $this->dbh->prepare($sql);
             if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            $this->newCellID = $insert[':id'];
             return true;
         }
         catch (PDOException $e) {
@@ -194,10 +196,7 @@ class WorkCells {
             $pntr = $this->dbh->prepare($sql);
             if (!$pntr->execute([':name'=>$data['cell_name'],':uid'=>$data['uid'],':id'=>$data['cellid']]))
                 throw new Exception("Update failed: {$sql}");
-            if (!empty($data['transfer_to_product']))
-                return $this->transferWorkCell($data);
-            else 
-                return true;
+            return true;
         }
         catch (PDOException $e) {
             trigger_error($e->getMessage(),E_USER_WARNING);
@@ -207,18 +206,7 @@ class WorkCells {
             trigger_error($e->getMessage(),E_USER_WARNING);
             return false;
         }
-    }
-
-    /**
-     * Tranfers a work cell from one product to another
-     * @param Array $data The data regarding the transfer in the form `['cellid'=>string id,'tranfer_to product'=>string prokey]`
-     * @return Boolean True on succes, false otheriwse
-     * @todo Finsih this feature, currently always returns true
-     */
-    public function transferWorkCell (Array $data) {
-        trigger_error('Someone called this method',E_USER_WARNING);
-        return true;
-    }
+}
 
     /**
      * Adds the given tooling data to the cell
@@ -278,7 +266,7 @@ class WorkCells {
      * 
      * Records a cell safety assessment seeking approval and
      * emails the users that can approve the document.
-     * @param Array $data The data to record in the form `['uid'=>string,'name'=>string,'body'=>string,'url'=>string]`
+     * @param Array $data The data to record in the form `['uid'=>string,'name'=>string,'body'=>string,'url'=>string,'cellname'=>string]`
      * @param Security  The server security instance.
      * @param Mailer The server mailer for seeking approval emails.
      * @return Boolean True on success, false otherwise.
@@ -393,5 +381,20 @@ class WorkCells {
         }
     }
 
+    public function __set ($name, $value) {
+        $this->data[$name] = $value;
+    }
 
+    public function __get ($name) {
+        if (!empty($this->data[$name])) return $this->data[$name];
+        else return null;
+    }
+
+    public function __isset ($name) {
+        return isset($this->data[$name]);
+    }
+
+    public function __unset ($name) {
+        unset($this->data[$name]);
+    }
 }

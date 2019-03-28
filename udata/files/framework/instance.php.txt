@@ -215,7 +215,7 @@ Class Instance {
      * preventing the users from clicky, clicky while their request is processed by the 
      * handler. The given handler must return `boolean true` upon successful completion.
      * @return Void The process ends with either a successful dialog or failure dialog,
-     * depending on the return of the handler. The user will return the the API given in 
+     * depending on the return of the handler. The user will return to the API given in 
      * the `$click` parameter or the main API URL by default.
      * @param Mixed $handler The handler given should be in the form as would be given to 
      * the `call_user_func_array` ({@link http://php.net/manual/en/function.call-user-func-array.php}).
@@ -224,11 +224,12 @@ Class Instance {
      * @param String $click The URL of the API to give the user once the end dialog is reached.
      * @author Paul W. lane
      */
-    public function processingDialog ($handler = null, Array $args = null, $click = null) {
-        $dialog = function(){
+    public function processingDialog ($handler = null, Array $args = null, $click = null, $feedback = null) {
+        $dialog = function($feedback){
+            $feedback = is_null($feedback) ? 'Processing' : $feedback;
             $view = $this->getViewer('Processing...');
             echo "<div class='row'><div class='col-md-3'></div>\n";
-            echo "<div class='col-md-6 col-xs-12 vertical-center'><h3>Processing...</h3><div class='progress'>\n";
+            echo "<div class='col-md-6 col-xs-12 vertical-center'><h3>{$feedback}...</h3><div class='progress'>\n";
             echo "<div class='progress-bar progress-bar-striped active' style='width:100%;'>Please Wait...";
             echo "</div></div></div><div class='col-md-3'></div></div>\n";
             echo "<script>
@@ -255,16 +256,24 @@ Class Instance {
         if (empty($_SESSION['bg_process']['pid'])) {
             $_SESSION['bg_process']['pid'] = '/var/'.uniqid('process_id_');
             $_SESSION['bg_process']['redirect'] = is_null($click) ? $this->config['application-root'] : $click;
+            $_SESSION['bg_process']['time_out'] = 4;
 
             $pid = fopen(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php','w');
             fwrite($pid,"<?php require_once(dirname(__DIR__).'/lib/init.php');\$server->processingDialog();");
             fclose($pid);
 
-            $dialog();
+            $dialog($feedback);
             register_shutdown_function($bg_process,$handler,$args);
         }
         elseif (empty($_SESSION['bg_process']['status'])) {
-            $dialog();
+            if ($_SESSION['bg_process']['time_out'] != 0) {
+                $_SESSION['bg_process']['time_out']--;
+                $dialog($feedback);
+            }
+            else {
+                $_SESSION['bg_process']['status'] = 'timeout';
+                $dialog($feedback);
+            }
         }
         elseif (!empty($_SESSION['bg_process']['status'])) {
             switch($_SESSION['bg_process']['status']) {
@@ -285,6 +294,12 @@ Class Instance {
                     unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
                     unset($_SESSION['bg_process']);
                     $this->newEndUserDialog("Request succeeded.",DIALOG_SUCCESS,$url);
+                break;
+                case 'timeout':
+                    $url = $_SESSION['bg_process']['redirect'];
+                    unlink(INCLUDE_ROOT.$_SESSION['bg_process']['pid'].'.php');
+                    unset($_SESSION['bg_process']);
+                    $this->newEndUserDialog("The operation encountered an error and has timed out.",DIALOG_FAILURE,$url);
                 break;
                 default:
                     $url = $_SESSION['bg_process']['redirect'];

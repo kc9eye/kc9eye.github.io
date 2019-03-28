@@ -106,12 +106,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">265</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">357</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">13</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">12</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-378205040"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1767222533"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-378205040" class="accordion-body collapse in">
+            <div id="namespace-1767222533" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -148,6 +148,7 @@
                                                     <li class="class"><a href="../classes/Application.html">Application</a></li>
                                                     <li class="class"><a href="../classes/Autoloader.html">Autoloader</a></li>
                                                     <li class="class"><a href="../classes/BillOfMaterials.html">BillOfMaterials</a></li>
+                                                    <li class="class"><a href="../classes/CellTransfer.html">CellTransfer</a></li>
                                                     <li class="class"><a href="../classes/DBObjects.html">DBObjects</a></li>
                                                     <li class="class"><a href="../classes/DocumentViewer.html">DocumentViewer</a></li>
                                                     <li class="class"><a href="../classes/Employees.html">Employees</a></li>
@@ -161,6 +162,9 @@
                                                     <li class="class"><a href="../classes/Mailer.html">Mailer</a></li>
                                                     <li class="class"><a href="../classes/Maintenance.html">Maintenance</a></li>
                                                     <li class="class"><a href="../classes/Material.html">Material</a></li>
+                                                    <li class="class"><a href="../classes/MaterialDiscrepancy.html">MaterialDiscrepancy</a></li>
+                                                    <li class="class"><a href="../classes/Materials.html">Materials</a></li>
+                                                    <li class="class"><a href="../classes/Notification.html">Notification</a></li>
                                                     <li class="class"><a href="../classes/Product.html">Product</a></li>
                                                     <li class="class"><a href="../classes/Products.html">Products</a></li>
                                                     <li class="class"><a href="../classes/SafetyBoardMinutes.html">SafetyBoardMinutes</a></li>
@@ -240,7 +244,7 @@ $form-&gt;inputCapture(&#039;name&#039;,&#039;Product Name&#039;,null,true);
 $form-&gt;inputCapture(&#039;dist&#039;,&#039;Distributor&#039;,null,true);
 $form-&gt;inputCapture(&#039;used&#039;,&#039;Location Used&#039;,null,true);
 $form-&gt;inputCapture(&#039;meta&#039;,&#039;Keywords&#039;);
-$form-&gt;fileUpload(FileIndexer::UPLOAD_NAME,true);
+$form-&gt;fileUpload(FileIndexer::UPLOAD_NAME,&#039;File&#039;,null,true,true);
 $form-&gt;submitForm(&#039;Add SDS&#039;,false,$server-&gt;config[&#039;application-root&#039;].&#039;/safety/main&#039;);
 $form-&gt;endForm();
 
@@ -278,6 +282,7 @@ $view-&gt;footer();</pre>
                                                                     <a href="../classes/FormWidgets.html#method_selectBox" class="">selectBox()</a><br />
                                                                     <a href="../classes/FormWidgets.html#method_searchBox" class="">searchBox()</a><br />
                                                                     <a href="../classes/FormWidgets.html#method_textArea" class="">textArea()</a><br />
+                                                                    <a href="../classes/FormWidgets.html#method_standardFileUpload" class="">standardFileUpload()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/FormWidgets.html#property_formid" class="">$formid</a><br />
@@ -294,6 +299,7 @@ $view-&gt;footer();</pre>
                             <section class="span4">
                                                                     <a href="../classes/FormWidgets.html#property_validate" class="">$validate</a><br />
                                                                     <a href="../classes/FormWidgets.html#property_rules" class="">$rules</a><br />
+                                                                    <a href="../classes/FormWidgets.html#property_uploadhack" class="">$uploadhack</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -439,6 +445,30 @@ $view-&gt;footer();</pre>
                                 <h4>Type</h4>
                 Array
                 &mdash; Array eventually encoded to JSON for the jquery.validate() plugin                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_uploadhack" name="property_uploadhack" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$uploadhack</h3>
+                <pre class="signature">$uploadhack : Boolean</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                Boolean
+                &mdash; Whether to add the file upload hack script                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1019,7 +1049,7 @@ array. The value array should be indexed thusly: <code>button_label=&gt;button_v
             <article class="method">
                 <h3 class="public ">fileUpload()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">fileUpload(String  <span class="argument">$name</span>, Mixed  <span class="argument">$required = false</span>) </pre>
+                <pre class="signature" style="margin-right: 54px;">fileUpload(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;File&#039;</span>, String  <span class="argument">$value = null</span>, Boolean  <span class="argument">$multiple = false</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) </pre>
                 <p><em>Outputs a form upload dialog entry to the stream</em></p>
                 <p>A file upload entry stylized for Bootstrap and the
 standard framework.</p>
@@ -1032,9 +1062,29 @@ standard framework.</p>
                                 <td><p>The name given to <code>$_REQUEST</code></p></td>
                             </tr>
                                                     <tr>
+                                <td>String</td>
+                                <td>$label </td>
+                                <td><p>The label for the form field</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$value </td>
+                                <td><p>This parameter is not used. If you require this parameter consider using <code>standardFileUpload</code></p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$multiple </td>
+                                <td><p>Whether or not to accept multiple files for upload</p></td>
+                            </tr>
+                                                    <tr>
                                 <td>Mixed</td>
                                 <td>$required </td>
                                 <td><p>Optional <code>true</code> or array of jquery.validate() properties</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$helpBlock </td>
+                                <td><p>A string of optional help text for the field</p></td>
                             </tr>
                                             </table>
                 
@@ -1336,6 +1386,65 @@ as a stand alone search box, separate from any other forms on the page.</p>
         </aside>
     </div>
 
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_standardFileUpload" name="method_standardFileUpload" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">standardFileUpload()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">standardFileUpload(String  <span class="argument">$name</span>, String  <span class="argument">$label = &#039;File&#039;</span>, String  <span class="argument">$value = null</span>, Boolean  <span class="argument">$multiple = false</span>, Mixed  <span class="argument">$required = false</span>, String  <span class="argument">$helpBlock = null</span>) </pre>
+                <p><em>Outputs a non bootstrap standard HTML 5 file upload to the stream</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>String</td>
+                                <td>$name </td>
+                                <td><p>The name given to the $_REQUEST variable</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$label </td>
+                                <td><p>The label for the form group</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$value </td>
+                                <td><p>Any pre loaded value for the upload</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Boolean</td>
+                                <td>$multiple </td>
+                                <td><p>Default false, whether to accept multiple file or not</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>Mixed</td>
+                                <td>$required </td>
+                                <td><p>Either true if validatation required, or array of jquery validate rules</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>String</td>
+                                <td>$helpBlock </td>
+                                <td><p>Help block information default is null</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
                                                     <div class="row-fluid">
         <div class="span8 content class">
             <a id="method_addValidation" name="method_addValidation" class="anchor"></a>
@@ -1426,7 +1535,7 @@ as a stand alone search box, separate from any other forms on the page.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on January 24th, 2019 at 15:30.
+                    on March 28th, 2019 at 15:21.
                 </section>
             </section>
         </section>

@@ -214,6 +214,7 @@ Class Errorhandler {
      * @author Paul W. Lane
      */
     public function DisplayErrorScreen () {
+        unset($_SESSION);
         $oldbuff = ob_get_contents();
         ob_clean();
         

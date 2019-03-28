@@ -126,6 +126,113 @@ class BillOfMaterials {
         }
     }
 
+    /**
+     * Retrieves a record by ID
+     * @param String $id The records ID
+     * @return Array The record in array form or false otherwise.
+     */
+    public function getmaterialByID ($id) {
+        $sql = '
+            SELECT *,
+            (SELECT description as "productname" FROM products WHERE product_key = a.prokey),
+            (SELECT number FROM material WHERE id = a.partid),
+            (SELECT description FROM material WHERE id = a.partid)
+            FROM bom as a
+            WHERE id = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Select failed: {$sql}");
+            if (!empty(($rtn = $pntr->fetchAll(PDO::FETCH_ASSOC)))) return $rtn[0];
+            else return false;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Updates an existing record on the BOM
+     * @param Array $data The data in array form of `['id'=>string,'uid'=>string,'qty'=>float]`
+     * @return Boolean True on succes, false otherwise
+     */
+    public function amendBOMByID (Array $data) {
+        $sql = 'UPDATE bom SET qty = :qty, uid = :uid WHERE id = :id';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $update = [
+                ':qty' =>(float)$data['qty'],
+                ':uid' =>$data['uid'],
+                ':id' =>$data['id']
+            ];
+            if (!$pntr->execute($update)) throw new Exception("Update failed: {$sql}");
+            return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Deletes the given record from the BOM
+     * @param String $id The record ID
+     * @return Boolean True on success, false on failure.
+     */
+    public function removeMaterialByID ($id) {
+        $sql = 'DELETE FROM bom WHERE id = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Delete failed: {$sql}");
+            return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMesssage(),E_USER_WARNING);
+            $this->dbh->rollBack();
+            return false;
+        }
+    }
+
+    /**
+     * Adds an addendum to an existsing BOM
+     * @param Array $data `['prokey'=>string,'number'=>string,'qty'=>float,'uid'=>string]`
+     * @return Boolean true on success, false otherwise
+     */
+    public function addendumBOM ($data) {
+        if ($this->verifyMaterialNotEntered($data['number'])) return false;
+        $sql = 'INSERT INTO bom (id,prokey,partid,qty,uid)
+            SELECT :id,:prokey,(SELECT id FROM material WHERE number = :num),:qty,:uid';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $insert = [
+                ':id'=>uniqid(),
+                ':prokey'=>$data['prokey'],
+                ':num'=>$data['number'],
+                ':qty'=>$data['qty'],
+                ':uid'=>$data['uid']
+            ];
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+
+    }
+
     protected function verifyMaterialNotEntered ($number) {
         $sql = 'SELECT count(*) FROM material WHERE number = ?';
         try {
@@ -138,5 +245,15 @@ class BillOfMaterials {
             trigger_error($e->getMessage(), E_USER_WARNING);
             return false;
         }
+    }
+
+    /**
+     * Verifies that a given material number exists
+     * @param String $number The material part number
+     * @return Boolean True if the material exists, false otherwise
+     */
+    public function verifyMaterialExists ($number) {
+        if ($this->verifyMaterialNotEntered($number)) return false;
+        return true;
     }
 }
