@@ -55,7 +55,8 @@ class SearchStringFormater {
         $replacment[2] = ' | ';
         $replacment[3] = ' | ';
         $replacment[4] = '$1';
-        return preg_filter($pattern,$replacment,$string);
+        $this->formatedString = preg_filter($pattern,$replacment,$string);
+        return $this->formatedString;
     }
 
 }

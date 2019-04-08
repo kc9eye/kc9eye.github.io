@@ -233,7 +233,15 @@ Class ViewMaker {
         <div class='collapse navbar-collapse' id='myNavbar'>
             <ul class='nav navbar-nav'>
                 <?php foreach($this->config['navbar-links'] as $label=>$link) {
-                    echo "<li><a href='{$this->PageData['approot']}{$link}'>{$label}</a></li>\n";
+                    if (is_string($link))
+                        echo "<li><a href='{$this->PageData['approot']}{$link}'>{$label}</a></li>\n";
+                    elseif (is_array($link)) {
+                        if ($link[1]) 
+                            echo "<li><a href='{$link[0]}'>{$label}</a></li>\n";
+                        else
+                            echo "<li><a href='{$this->PageData['approot']}{$link}'>{$label}</a></li>\n";
+                    }
+
                 }
                 ?>
             </ul>

@@ -59,7 +59,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">357</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">358</span>
                                 </a>
                             </li>
                             <li>
@@ -97,7 +97,8 @@
                                                                                                     <li><a href="#models\user.php"><i class="icon-file"></i> models\user.php</a></li>
                                                                                                     <li><a href="#models\sdshandler.php"><i class="icon-file"></i> models\sdshandler.php</a></li>
                                                                                                     <li><a href="#framework\fileindexer.php"><i class="icon-file"></i> framework\fileindexer.php</a></li>
-                                                                                                                                                            <li><a href="#models\billofmaterials.php"><i class="icon-file"></i> models\billofmaterials.php</a></li>
+                                                                                                                                                            <li><a href="#framework\notification.php"><i class="icon-file"></i> framework\notification.php</a></li>
+                                                                                                    <li><a href="#models\billofmaterials.php"><i class="icon-file"></i> models\billofmaterials.php</a></li>
                                                                                                     <li><a href="#framework\indexer.php"><i class="icon-file"></i> framework\indexer.php</a></li>
                                                                                                     <li><a href="#models\accountcreator.php"><i class="icon-file"></i> models\accountcreator.php</a></li>
                                                                                                     <li><a href="#models\celltransfer.php"><i class="icon-file"></i> models\celltransfer.php</a></li>
@@ -118,6 +119,7 @@
                                                                                                     <li><a href="#models\userreset.php"><i class="icon-file"></i> models\userreset.php</a></li>
                                                                                                     <li><a href="#framework\mailer.php"><i class="icon-file"></i> framework\mailer.php</a></li>
                                                                                                     <li><a href="#lib\libtransfer.php"><i class="icon-file"></i> lib\libtransfer.php</a></li>
+                                                                                                    <li><a href="#models\materialdiscrepancy.php"><i class="icon-file"></i> models\materialdiscrepancy.php</a></li>
                                                                                                     <li><a href="#models\useradministrator.php"><i class="icon-file"></i> models\useradministrator.php</a></li>
                                                                                                     <li><a href="#lib\libmath.php"><i class="icon-file"></i> lib\libmath.php</a></li>
                                                                                                     <li><a href="#models\maintenance.php"><i class="icon-file"></i> models\maintenance.php</a></li>
@@ -126,8 +128,6 @@
                                                                                                     <li><a href="#etc\constants.php"><i class="icon-file"></i> etc\constants.php</a></li>
                                                                                                     <li><a href="#framework\viewmaker.php"><i class="icon-file"></i> framework\viewmaker.php</a></li>
                                                                                                     <li><a href="#framework\security.php"><i class="icon-file"></i> framework\security.php</a></li>
-                                                                                                    <li><a href="#framework\notification.php"><i class="icon-file"></i> framework\notification.php</a></li>
-                                                                                                    <li><a href="#models\materialdiscrepancy.php"><i class="icon-file"></i> models\materialdiscrepancy.php</a></li>
                                                                     </ul>
         </div>
 
@@ -194,7 +194,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             models\material.php
-                            <small style="float: right;padding-right: 10px;">18</small>
+                            <small style="float: right;padding-right: 10px;">19</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -213,87 +213,92 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>18</td>
-                                        <td>No summary for class \Material</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>21</td>
+                                        <td>28</td>
                                         <td>Argument $dbh is missing from the Docblock of __construct</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>21</td>
+                                        <td>28</td>
                                         <td>Argument $number is missing from the Docblock of __construct</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>21</td>
+                                        <td>28</td>
+                                        <td>Argument $id is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
                                         <td>No summary for method __construct()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>28</td>
+                                        <td>39</td>
                                         <td>Argument $name is missing from the Docblock of __set</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>28</td>
+                                        <td>39</td>
                                         <td>Argument $value is missing from the Docblock of __set</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>28</td>
+                                        <td>39</td>
                                         <td>No summary for method __set()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>32</td>
+                                        <td>43</td>
                                         <td>Argument $name is missing from the Docblock of __get</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>32</td>
+                                        <td>43</td>
                                         <td>No summary for method __get()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>45</td>
+                                        <td>56</td>
                                         <td>Argument $name is missing from the Docblock of __isset</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>45</td>
+                                        <td>56</td>
                                         <td>No summary for method __isset()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>49</td>
+                                        <td>60</td>
                                         <td>Argument $name is missing from the Docblock of __unset</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>49</td>
+                                        <td>60</td>
                                         <td>No summary for method __unset()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>53</td>
-                                        <td>No summary for method getMaterialData()</td>
+                                        <td>64</td>
+                                        <td>No summary for method getMaterialDataByNumber()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>77</td>
+                                        <td>88</td>
+                                        <td>No summary for method getMaterialDataByID()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>112</td>
                                         <td>Argument $data is missing from the Docblock of setData</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>77</td>
+                                        <td>112</td>
                                         <td>No summary for method setData()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>19</td>
+                                        <td>26</td>
                                         <td>No summary for property $data</td>
                                     </tr>
                                                             </tbody>
@@ -697,6 +702,62 @@
                         </div>
                                     </div>
                             <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="framework\notification.php" id="framework\notification.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            framework\notification.php
+                            <small style="float: right;padding-right: 10px;">7</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>No summary for class \Notification</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $dbh is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $mailer is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $dbh</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $mailer</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
                                     </div>
                             <div class="package-contents">
                                             <a name="models\billofmaterials.php" id="models\billofmaterials.php"></a>
@@ -2102,6 +2163,117 @@
                         </div>
                                     </div>
                             <div class="package-contents">
+                                            <a name="models\materialdiscrepancy.php" id="models\materialdiscrepancy.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            models\materialdiscrepancy.php
+                            <small style="float: right;padding-right: 10px;">18</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>No summary for class \MaterialDiscrepancy</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>Argument $dbh is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>Argument $id is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>Argument $id is missing from the Docblock of getDiscrepancy</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for method getDiscrepancy()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>Argument $name is missing from the Docblock of __set</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>Argument $value is missing from the Docblock of __set</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>No summary for method __set()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>Argument $name is missing from the Docblock of __unset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>No summary for method __unset()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>74</td>
+                                        <td>Argument $name is missing from the Docblock of __get</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>74</td>
+                                        <td>No summary for method __get()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>Argument $name is missing from the Docblock of __isset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>79</td>
+                                        <td>No summary for method __isset()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $dbh</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $data</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
                                             <a name="models\useradministrator.php" id="models\useradministrator.php"></a>
                         <h3>
                             <i class="icon-file"></i>
@@ -2481,72 +2653,72 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>480</td>
+                                        <td>488</td>
                                         <td>Argument $centered is missing from the Docblock of h1</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>480</td>
+                                        <td>488</td>
                                         <td>Name of argument $centered does not match with the DocBlock&#039;s name $content in h1()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>492</td>
+                                        <td>500</td>
                                         <td>Argument $centered is missing from the Docblock of h2</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>492</td>
+                                        <td>500</td>
                                         <td>Name of argument $centered does not match with the DocBlock&#039;s name $content in h2()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>504</td>
+                                        <td>512</td>
                                         <td>Argument $centered is missing from the Docblock of h3</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>504</td>
+                                        <td>512</td>
                                         <td>Name of argument $centered does not match with the DocBlock&#039;s name $content in h3()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>527</td>
+                                        <td>535</td>
                                         <td>Argument $centered is missing from the Docblock of bgInfoParagraph</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>527</td>
+                                        <td>535</td>
                                         <td>Name of argument $centered does not match with the DocBlock&#039;s name $content in bgInfoParagraph()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>541</td>
+                                        <td>549</td>
                                         <td>Name of argument $return does not match with the DocBlock&#039;s name $passthru in editBtnSm()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>541</td>
+                                        <td>549</td>
                                         <td>Name of argument $passthru does not match with the DocBlock&#039;s name $return in editBtnSm()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>555</td>
+                                        <td>563</td>
                                         <td>Name of argument $return does not match with the DocBlock&#039;s name $passthru in trashBtnSm()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>555</td>
+                                        <td>563</td>
                                         <td>Name of argument $passthru does not match with the DocBlock&#039;s name $return in trashBtnSm()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>637</td>
+                                        <td>645</td>
                                         <td>Name of argument $name does not match with the DocBlock&#039;s name $id in beginBtnCollapse()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>637</td>
+                                        <td>645</td>
                                         <td>Name of argument $id does not match with the DocBlock&#039;s name $name in beginBtnCollapse()</td>
                                     </tr>
                                                             </tbody>
@@ -2574,173 +2746,6 @@
                                         <td>error</td>
                                         <td>0</td>
                                         <td>No summary was found for this file</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="framework\notification.php" id="framework\notification.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            framework\notification.php
-                            <small style="float: right;padding-right: 10px;">7</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>18</td>
-                                        <td>No summary for class \Notification</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>25</td>
-                                        <td>Argument $dbh is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>25</td>
-                                        <td>Argument $mailer is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>25</td>
-                                        <td>No summary for method __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>22</td>
-                                        <td>No summary for property $dbh</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>23</td>
-                                        <td>No summary for property $mailer</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="models\materialdiscrepancy.php" id="models\materialdiscrepancy.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            models\materialdiscrepancy.php
-                            <small style="float: right;padding-right: 10px;">18</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>18</td>
-                                        <td>No summary for class \MaterialDiscrepancy</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>22</td>
-                                        <td>Argument $dbh is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>22</td>
-                                        <td>Argument $id is missing from the Docblock of __construct</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>22</td>
-                                        <td>No summary for method __construct()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>28</td>
-                                        <td>Argument $id is missing from the Docblock of getDiscrepancy</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>28</td>
-                                        <td>No summary for method getDiscrepancy()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>66</td>
-                                        <td>Argument $name is missing from the Docblock of __set</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>66</td>
-                                        <td>Argument $value is missing from the Docblock of __set</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>66</td>
-                                        <td>No summary for method __set()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>70</td>
-                                        <td>Argument $name is missing from the Docblock of __unset</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>70</td>
-                                        <td>No summary for method __unset()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>74</td>
-                                        <td>Argument $name is missing from the Docblock of __get</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>74</td>
-                                        <td>No summary for method __get()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>79</td>
-                                        <td>Argument $name is missing from the Docblock of __isset</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>79</td>
-                                        <td>No summary for method __isset()</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>19</td>
-                                        <td>No summary for property $dbh</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>20</td>
-                                        <td>No summary for property $data</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -2785,7 +2790,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on March 28th, 2019 at 15:21.
+                    on April 8th, 2019 at 13:37.
                 </section>
             </section>
         </section>

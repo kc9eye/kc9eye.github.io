@@ -20,7 +20,7 @@
  * The main server init script.
  * 
  * This file should be sourced in the first line of any controller
- * or model scripts. This file creates the server instance and makes 
+ * scripts. This file creates the server instance and makes 
  * it available globally as the `$server` variable. This gives you access
  * to the Security model, the instance PDO, configuration variables,
  * interface widgets and the like. 

@@ -393,6 +393,24 @@ class Materials {
     }
 
     /**
+     * Searches material records for matching
+     * @param String $search_string A database formated search string
+     * @return Array An array of results, possibly empty, or false on error
+     */
+    public function searchMaterial ($search_string) {
+        $sql = "SELECT * FROM material WHERE to_tsvector(number)||':'||search @@ to_tsquery(?) ORDER BY number";
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$search_string])) throw new Exception("Select failed: {$sql}");
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
      * Inserts a new material record
      * @param Array $data The data array in the form `['uid'=>string,'number'=>string,'description'=>string,'uom'=>string,'cat'=>string]`
      * @return Boolean True on success, false otherwise.
