@@ -39,6 +39,11 @@ Class FormWidgets {
     public $scripts;
 
     /**
+     * @var String $third_party The URL to the third-party apps storage
+     */
+    public $third_party;
+
+    /**
      * @var Boolean $validate Whether the jquery.validate() plugin is required
      */
     protected $validate;
@@ -54,13 +59,20 @@ Class FormWidgets {
     protected $uploadhack;
 
     /**
+     * @var Boolean $wysiwyg Whether to include the textArea 'tinymce' editor
+     */
+    protected $wysiwyg;
+
+    /**
      * Class constructor
      * 
      * @param String $scripts The base filepath to any called scripts, including the jquery.validate() plugin
      */
     public function __construct ($scripts) {
         $this->validate = false;
+        $this->wysiwyg = false;
         $this->scripts = $scripts;
+        $this->third_party = dirname(dirname($scripts)).'/third-party';
     }
 
     /**
@@ -125,23 +137,29 @@ Class FormWidgets {
      * @return Void
      */
     public function endForm () {
+        echo "</form>\n";
+        echo "</div>\n";
         if ($this->validate) {
-            echo "</form>
-                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'></script>
-                  <script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js'></script>";
-            if ($this->uploadhack) echo "<script src='{$this->scripts}/btstrapfileinputhack.js'></script>\n";
-            echo "<script>
-                        $(document).ready(function(){
-                            $('#{$this->formid}').validate(".str_replace('"','',json_encode(['rules'=>$this->rules],JSON_FORCE_OBJECT)).");
-                        });
-                  </script>
-            </div>";            
+            echo "<script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js'></script>\n";
+            echo "<script src='https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js'></script>\n";
+            echo "<script>\n";
+            echo "  $(document).ready(function(){\n";
+            echo "    $('#{$this->formid}').validate(".str_replace('"','',json_encode(['rules'=>$this->rules],JSON_FORCE_OBJECT)).");\n";
+            echo "  });\n";
+            echo "</script>\n";            
         }
-        else {
-            
-            echo "</form>";
-            if ($this->uploadhack) echo "<script src='{$this->scripts}/btstrapfileinputhack.js'></script>\n";
-            echo "</div>";
+        if ($this->wysiwyg) {
+            echo "<script src='{$this->third_party}/tinymce/tinymce.min.js'></script>\n";
+            echo "<script>\n";
+            echo "  $(document).ready(function(){\n";
+            echo "      tinymce.init({\n";
+            echo "          selector: 'textarea', plugins: 'autoresize'\n";
+            echo "      });\n";
+            echo "  });\n";
+            echo "</script>\n";
+        }   
+        if ($this->uploadhack) {
+            echo "<script src='{$this->scripts}/btstrapfileinputhack.js'></script>\n";
         }
     }
 
@@ -460,9 +478,10 @@ Class FormWidgets {
      * @param String $value The value of the element if the checkbox is checked
      * @param Mixed $required Optional `true` or array of jquery.validate() properties
      * @param String $helpBlock Optional helpblock message for the user
+     * @param String $default An optional default value for the unchecked checkbox.
      * @return Void 
      */
-    public function checkBox ($name, Array $label, $value, $required = false, $helpBlock = null) {
+    public function checkBox ($name, Array $label, $value, $required = false, $helpBlock = null, $default = null) {
         if ($required) {
             $this->addValidation($name, $required);
         }
@@ -474,6 +493,7 @@ Class FormWidgets {
         echo "      </div>\n";
         echo "      <div class='col-md-5 col-xs-12'>\n";
         echo "          <div class='checkbox'>\n";
+        if (!is_null($default)) echo "              <input type='hidden' name='{$name}' value='{$default}' />\n";
         echo "              <label><input type='checkbox' id='{$name}' name='{$name}' value='{$value}' />{$label[1]}</label>\n";
         echo "          </div>\n";
         echo "          <label class='error' for='{$name}' generated='true'></label>\n";
@@ -511,8 +531,10 @@ Class FormWidgets {
      * @param Array $value A mulitdimensional array in the form `[['opt_val','opt_label'],...]`
      * @param Mixed $required Optional, either true if required or array of jquery.validate() properties
      * @param String $helpBlock Optional string to output as help block.
+     * @param Array Optional array in the same form as `$value` array. The given option will be the selected default value 
+     * of the select box.
      */
-    public function selectBox ($name, $label, Array $value, $required = false, $helpBlock = null) {
+    public function selectBox ($name, $label, Array $value, $required = false, $helpBlock = null, $default = null) {
         if ($required) {
             $this->addValidation($name, $required);
         }
@@ -524,7 +546,8 @@ Class FormWidgets {
         echo "</div>\n";
         echo "<div class='col-md-5 col-xs-12'>\n";
         echo "<select class='form-control' name='{$name}' id='{$name}'>\n";
-        echo "<option value='' selected='selected'></option>\n";
+        if (!is_null($default)) echo "<option value='{$default[0]}' selected='selected'>{$default[1]}</option>\n";
+        else echo "<option value='' selected='selected'></option>\n";
         foreach($value as $opt) {
             echo "<option value='{$opt[0]}'>{$opt[1]}</option>\n";
         }
@@ -589,7 +612,8 @@ Class FormWidgets {
      * @param String $helpBlock Optional string of help text for the widget
      * @return Void Output is directed to the stream, and this widget returns no value
      */
-    public function textArea ($name, $id = null, $value = '', $required = false, $helpBlock = null) {
+    public function textArea ($name, $id = null, $value = '', $required = false, $helpBlock = null, $wysiwyg = false) {
+        $this->wysiwyg = $wysiwyg;
         if ($required) {
             $this->addValidation($name, $required);
         }

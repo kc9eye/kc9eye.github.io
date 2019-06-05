@@ -222,6 +222,7 @@ Class Instance {
      * @param Array $args The arguments to the handler in the same form as given to 
      * `call_user_func_array` ({@link http://php.net/manual/en/function.call-user-func-array.php}).
      * @param String $click The URL of the API to give the user once the end dialog is reached.
+     * @param String $feedback Optional, The feedback to display to the user during the dialog.
      * @author Paul W. lane
      */
     public function processingDialog ($handler = null, Array $args = null, $click = null, $feedback = null) {

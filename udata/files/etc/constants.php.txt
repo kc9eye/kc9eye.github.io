@@ -35,8 +35,5 @@ define('DIALOG_SUCCESS', true);
  */
 define('DIALOG_FAILURE', false);
 
-/**
- * Defines the current version of the application
- * @var String APP_VERSION The current application version
- */
-define('APP_VERSION', '0.0.1 alpha');
+define('APP_VERSION', '0.1.242 beta');
+

@@ -267,11 +267,10 @@ class WorkCells {
      * Records a cell safety assessment seeking approval and
      * emails the users that can approve the document.
      * @param Array $data The data to record in the form `['uid'=>string,'name'=>string,'body'=>string,'url'=>string,'cellname'=>string]`
-     * @param Security  The server security instance.
-     * @param Mailer The server mailer for seeking approval emails.
+      * @param Mailer The server mailer for seeking approval emails.
      * @return Boolean True on success, false otherwise.
      */
-    public function seekSafetyApproval (Array $data, Security $security, Mailer $mailer) {
+    public function seekSafetyApproval (Array $data, Mailer $mailer) {
         $sql = 'INSERT INTO documents (id,name,state,body,oid) VALUES (:id,:name,:state,:body,:oid)';
         $insert = [
             ':id'=>uniqid(),
@@ -283,7 +282,7 @@ class WorkCells {
         try {
             $pntr = $this->dbh->prepare($sql);
             if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
-            return $this->emailReviewer($data, $security, $mailer);
+            return $this->emailReviewer($data, 'New Cell Safety', $mailer);
 
         }
         catch (PDOException $e) {
@@ -299,10 +298,9 @@ class WorkCells {
     /**
      * Updates an existsing rejected seeking_approval document
      * @param Array $data An array of data for the document `['oid'=>'string','body'=>'string','docid'=>'string']`
-     * @param Security $security The server security object
      * @param Mailer $mailer The server mailer object
      */
-    public function editRejected ($data, $security, $mailer) {
+    public function editRejected ($data, $mailer) {
         $sql = 'UPDATE documents SET _date = now(),oid = :oid,body = :body WHERE id = :id';
         $insert = [
             ':oid' => $data['uid'],
@@ -312,7 +310,7 @@ class WorkCells {
         try {
             $pntr = $this->dbh->prepare($sql);
             if (! $pntr->execute($insert)) throw new Exception("Update failed: {$sql}");
-            return $this->emailReviewer($data, $security, $mailer);
+            return $this->emailReviewer($data, 'New Cell Safety', $mailer);
         }
         catch (PDOException $e) {
             trigger_error($e->getMessage(),E_USER_WARNING);
@@ -366,13 +364,12 @@ class WorkCells {
         }
     }
 
-    private function emailReviewer (Array $data, Security $security, Mailer $mailer) {
+    private function emailReviewer (Array $data, $notification, Mailer $mailer) {
         try {
+            $notifier = new Notification($this->dbh, $mailer);
             $body = file_get_contents(INCLUDE_ROOT.'/wwwroot/templates/email/docreview.html');
             $body .= "<a href='{$data['url']}&name={$data['name']}'>{$data['cellname']}</a>";
-            foreach($security->getUsersByPerm('approveCellSafety') as $reviewer) {
-                $mailer->sendMail(['to'=>$reviewer['username'],'subject'=>'Pending Document Change','body'=>$body]);
-            }
+            $notifier->notify($notification,'Pending Document Change',$body);
             return true;
         }
         catch (Exception $e) {

@@ -687,4 +687,26 @@ Class ViewMaker {
     public function wrapInPre ($content) {
         echo "<pre class='pre-scrollable'>\n{$content}\n</pre>\n";
     }
+
+    /**
+     * Inserts a responsive image into the buffer stream, or returns as such.
+     * @param String $file The URI of the image file to insert
+     * @param Boolean $return Optional true if the method should return the image instead of inserting to the stream
+     */
+    public function responsiveImage ($file, $return = false) {
+        $image = "<img class='img-responsive' src='{$file}' alt='[IMAGE]' />";
+        if ($return) return $image;
+        else echo $image;
+    }
+
+    /**
+     * Inserts an image thumbnail to stream, or returns as such
+     * @param String $file The URI of the image file to insert
+     * @param Boolean $return Optional true if the method should return the image instead of inserting to the stream
+     */
+    public function imageThumbnail ($file, $return = false) {
+        $image = "<img class='img-thumbnail' src='{$file}' alt='[IMAGE]' />";
+        if ($return) return $image;
+        else echo $image;
+    }
 }

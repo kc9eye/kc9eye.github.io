@@ -84,7 +84,7 @@ function transfer_safety (Array $data) {
             'url'=>$data['request']['safetyreviewurl'],
             'cellname'=>$data['request']['cell_name']
         ];
-        if (!$wc->seekSafetyApproval($insert,$server->security,$server->mailer)) throw new Exception("Failed to seek safety approval.");
+        if (!$wc->seekSafetyApproval($insert,$server->mailer)) throw new Exception("Failed to seek safety approval.");
         $_SESSION['cell_transfer']['safety'] = true;
         return true;
     }
