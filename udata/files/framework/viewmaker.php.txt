@@ -429,7 +429,7 @@ Class ViewMaker {
                 onclick='document.body.scrollTop=0;document.documentElement.scrollTop=0;'
                 id='scrollTopBtn'
                 title='Go to top'
-                style='display:none;position:fixed;bottom:20px;left:30px;z-index:99;'>
+                style='display:none;position:fixed;bottom:20px;right:30px;z-index:99;'>
                     <span class='glyphicon glyphicon-arrow-up'></span>&#160;Top
             </button>
             <script>

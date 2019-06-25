@@ -150,6 +150,7 @@ class Employee {
     private function setCommentsData () {
         $sql = 
             "SELECT
+                id,
                 (SELECT firstname||' '||lastname FROM user_accts WHERE id = a.uid) as author,
                 _date as date,
                 comments

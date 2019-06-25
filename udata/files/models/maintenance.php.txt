@@ -106,7 +106,140 @@ class Maintenance {
     }
 
     /**
-     * Retrieves a listing of existsing catergories
+     * Retrieves all records for equipment that have inspections available
+     * @return Array An array of records, or false on failure
+     */
+    public function getEquipement () {
+        $sql = 'SELECT * FROM equipment';
+        try {
+            if (!($pntr = $this->dbh->query($sql))) throw new Exception("Select failed: {$sql}");
+            return $pntr->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Adds new equipment for inspections
+     * @param Array $data In the form `['uid'=>string,'description'=>string,'interval'=>string]`
+     * @return Boolean True on success, or false on failure.
+     */
+    public function addNewEquipment (Array $data) {
+        $sql = 'INSERT INTO equipment VALUES (:id,:description,:timeframe,now(),:uid)';
+        $insert = [
+            ':id'=>uniqid(),
+            ':description'=>$data['description'],
+            ':timeframe'=>$data['interval'],
+            ':uid'=>$data['uid']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Adds a new inspection point to the given equipment inspection
+     * @param Array $data `['uid'=>string,'inspection'=>string,'eqid'=>string]`
+     * @return Boolean True on success, false on failure
+     */
+    public function addInspectionPoint (Array $data) {
+        $sql = 'INSERT INTO insp_forms VALUES (:id,:eqid,:inspection,now(),:uid)';
+        $insert = [
+            ':id'=>uniqid(),
+            ':eqid'=>$data['eqid'],
+            ':inspection'=>$data['inspection'],
+            ':uid'=>$data['uid']
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Removes an inspection point from an inspection form
+     * @param String $id The inspection point ID
+     * @return Boolean True on success, other wise false.
+     */
+    public function removeInspectionPoint ($id) {
+        $sql = 'DELETE FROM insp_forms WHERE id = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Delete failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Removes an equipment reocrd from the database
+     * @param String $id The equipment ID to remove
+     * @return Boolean True on success, false otherwise.
+     */
+    public function removeEquipment ($id) {
+        $sql = 'DELETE FROM equipment WHERE id = ?';
+        $sql1 = 'DELETE FROM insp_forms WHERE eqid = ?';
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            $pntr1 = $this->dbh->prepare($sql);
+            if (!$pntr->execute([$id])) throw new Exception("Delete failed: {$sql}");
+            if (!$pntr->execute([$id])) throw new Exception("Delete failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Adds a new equipment inspection
+     * @param String $uid The inspectors User ID
+     * @param String $eqid The Equipment ID
+     * @param String $comments Any truths the inspector would like to say why they lied about the validatity of their inspection.
+     * @return Boolean True on success, false otherwise
+     */
+    public function addNewEquipmentInspection ($uid, $eqid, $comments) {
+        $sql = 'INSERT INTO inspections VALUES (:id,:eqid,now(),:uid,:comments)';
+        $insert = [
+            ':id'=>uniqid(),
+            ':eqid'=>$eqid,
+            ':uid'=>$uid,
+            ':comments'=>$comments
+        ];
+        try {
+            $pntr = $this->dbh->prepare($sql);
+            if (!$pntr->execute($insert)) throw new Exception("Insert failed: {$sql}");
+            return true;
+        }
+        catch (Exception $e) {
+            trigger_error($e->getMessage(),E_USER_WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves a listing of existsing tool catergories
      * 
      * Returns an array of records for each catergory already existsing.
      * @return Array If an error is encountered then false is returned.
