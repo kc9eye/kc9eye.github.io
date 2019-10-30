@@ -140,11 +140,11 @@ Class Instance {
         $view = new ViewMaker($this);
         $view->ViewData['pagetitle'] = 'DEBUG CONTENT';
         $view->header();
-        echo "<pre class='scrollable'>\n";
+        echo "<pre class='scrollable'>";
         echo "Your debug info:\n----------\n{$debug}\n---------\n\n";
         echo "Session info\n--------\n".print_r($_SESSION, true)."\n----------\n\n";
         echo "Server Variables\n-----------\n".print_r($_SERVER, true)."\n-----------\n\n";
-        echo "</pre>\n";
+        echo "</pre>";
         $view->footer();
         die();
     }
@@ -185,25 +185,29 @@ Class Instance {
      * 
      * @author Paul W. Lane
      */
-    public function newEndUserDialog ($message, $success = DIALOG_FAILURE, $target_link = null) {
+    public function newEndUserDialog ($message = '', $success = DIALOG_FAILURE, $target_link = null) {
         $target_link = !is_null($target_link) ? $target_link : $this->config['application-root'];
         $view = $this->getViewer('User Dialog');
-        echo "<div class='col-md-3'></div>\n";
-        echo "<div class='col-xs-12 col-md-6'>\n";
-        echo "<div class='well well-lg'>\n";
-        echo "<h2>";
-        if ($success) echo 'Success';
-        else echo 'Failure';
-        echo "!</h2>\n";
-        echo "<p class='";
-        if ($success) echo 'bg-success';
-        else echo 'bg-danger';
-        echo "'>{$message}</p>\n";
-        echo "<button type='button' class='btn ";
-        if ($success) echo "btn-success";
-        else echo "btn-danger";
-        echo "' onclick='window.open(\"{$target_link}\",\"_self\")'>Close</button>\n";
-        echo "</div></div><div class='col-md-3'></div>\n";
+        echo "<div class='row'>";
+        echo "<div class='col-md-3'></div>";
+        switch($success){
+            case DIALOG_SUCCESS:
+                $message = empty($message) ? 'The requested operation completed successfull.' : $message;
+                echo "<div class='col-xs-12 col-md-6 alert alert-success'>";
+                echo "<strong>Success!</strong><br /> {$message}<br />";
+                echo "<a class='btn btn-light' href='{$target_link}'>Continue</a>";
+                echo "</div>";
+            break;
+            case DIALOG_FAILURE:
+                $message = empty($message) ? 'The requested operation failed to complete.' : $message;
+                echo "<div class='col-xs-12 col-md-6 alert alert-danger'>";
+                echo "<strong>Warning!</strong><br /> {$message}<br />";
+                echo "<a class='btn btn-light' href='{$target_link}'>Continue</a>";
+                echo "</div>";
+            break;
+        }
+        echo "<div class='col-md-3'></div>";
+        echo "</div>";
         $view->footer();
         die();
     }
@@ -230,15 +234,15 @@ Class Instance {
         $dialog = function($feedback){
             $feedback = is_null($feedback) ? 'Processing' : $feedback;
             $view = $this->getViewer('Processing...');
-            echo "<div class='row'><div class='col-md-3'></div>\n";
-            echo "<div class='col-md-6 col-xs-12 vertical-center'><h3>{$feedback}...</h3><div class='progress'>\n";
-            echo "<div class='progress-bar progress-bar-striped active' style='width:100%;'>Please Wait...";
-            echo "</div></div></div><div class='col-md-3'></div></div>\n";
+            echo "<div class='row'><div class='col-md-3'></div>";
+            echo "<div class='col-md-6 col-xs-12 vertical-center'><h3>{$feedback}...</h3><div class='progress'>";
+            echo "<div class='progress-bar progress-bar-striped progress-bar-animated' style='width:100%;'>Please Wait...";
+            echo "</div></div></div><div class='col-md-3'></div></div>";
             echo "<script>
             setTimeout(function(){
                 window.open('{$view->PageData['approot']}{$_SESSION['bg_process']['pid']}','_self');
             },3000);";
-            echo "</script>\n";
+            echo "</script>";
             $view->footer();
         };
 
@@ -585,6 +589,32 @@ Class Instance {
         
         $_SESSION['login-redirect'] = $uri;
         return true;
+    }
+
+    /**
+     * Records attempts by users to access views beyond their permissions
+     * @param String $uid The users UID
+     * @param String $api The URL to the API attempted to be accessed
+     * @return Void
+     */
+    public function userRightsEscalation ($uid, $api) {
+        $log = INCLUDE_ROOT.'/var/access_log.xml';
+        $xml = "<attempt><id>".uniqid()."</id><date>".date('c')."</date><uid>{$uid}</uid><api>$api</api></attempt>";
+        if (!file_exists($log)) {
+            $fh = fopen($log, 'w');
+            flock($fh,LOCK_EX);
+            fwrite($fh,"<?xml version='1.0' ?>\n");
+            fwrite($fh,"<access_log>\n");
+        }
+        else {
+            $fh = fopen($log, 'c');
+            flock($fh,LOCK_EX);
+            fseek($fh,-14,SEEK_END);
+         }
+        fwrite($fh,$xml);
+        fwrite($fh,"\n</access_log>\n");
+        flock($fh,LOCK_UN);
+        fclose($fh);
     }
 
     private function runservice () {
